@@ -1,0 +1,1836 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GamSkillHub — Gambia's Skilled Worker Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#070708;--sur:#0F0F11;--card:#161618;--ch:#1C1C1F;--b:#222226;--bl:#2A2A2F;--am:#F59E0B;--al:#FCD34D;--ad:rgba(245,158,11,.08);--tx:#EDEDF0;--td:#9999A8;--mt:#555560;--ok:#22C55E;--er:#EF4444;--inf:#3E6EB0;--red:#CE1126;--blue:#3E6EB0;--green:#3A7728;--nav:rgba(7,7,8,.96)}
+[data-theme="light"]{--bg:#F5F5F0;--sur:#FFFFFF;--card:#FFFFFF;--ch:#F0F0EB;--b:#E0E0D8;--bl:#C8C8C0;--am:#E8940A;--al:#F5B429;--ad:rgba(232,148,10,.09);--tx:#1A1A1A;--td:#555558;--mt:#909090;--ok:#16A34A;--er:#DC2626;--inf:#2563EB;--red:#CE1126;--blue:#3E6EB0;--green:#3A7728;--nav:rgba(255,255,255,.97)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.bc{font-family:'Barlow Condensed',sans-serif;font-weight:800;line-height:.93;text-transform:uppercase;letter-spacing:-.01em}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bl);border-radius:10px}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:var(--nav);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;user-select:none}
+.logo .r{color:var(--red)}.logo .a{color:var(--am)}
+.nl{display:flex;gap:4px;align-items:center}
+.nb{height:31px;padding:0 13px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap}
+.nb:hover{border-color:var(--am);color:var(--am)}
+.nb.ac{background:var(--am);border-color:var(--am);color:#000;font-weight:600}.nb.ac:hover{background:var(--al)}
+.nb.bl{background:rgba(62,110,176,.14);border-color:rgba(62,110,176,.35);color:var(--inf)}.nb.bl:hover{background:var(--inf);color:#fff}
+.flagbar{height:4px;background:linear-gradient(90deg,var(--red) 0 33%,#fff 33% 36%,var(--blue) 36% 64%,#fff 64% 67%,var(--green) 67% 100%)}
+
+/* PAGES */
+.pg{display:none;min-height:100vh;padding-top:54px}.pg.on{display:block}
+
+/* HERO */
+.hero{position:relative;padding:60px 38px 44px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:40px 40px;opacity:.28;mask-image:radial-gradient(ellipse 80% 80% at 50% 0%,black 40%,transparent 100%)}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:480px;height:480px;background:radial-gradient(circle,rgba(245,158,11,.055) 0%,transparent 65%);pointer-events:none}
+.hi{position:relative;max-width:1160px;margin:0 auto}
+.htag{display:inline-flex;align-items:center;gap:7px;background:var(--ad);border:1px solid rgba(245,158,11,.22);color:var(--am);font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:20px;animation:fid .5s ease both}
+.hero h1{font-size:clamp(50px,8vw,96px);margin-bottom:18px;animation:fid .5s .08s ease both}
+.hero h1 em{font-style:normal;color:var(--am)}
+.hsub{font-size:14px;color:var(--td);max-width:420px;line-height:1.65;margin-bottom:28px;animation:fid .5s .16s ease both;font-weight:300}
+.sw{max-width:540px;background:var(--sur);border:1px solid var(--bl);border-radius:10px;display:flex;gap:4px;padding:4px;margin-bottom:44px;animation:fid .5s .24s ease both;transition:box-shadow .2s}
+.sw:focus-within{box-shadow:0 0 0 2px rgba(245,158,11,.22);border-color:rgba(245,158,11,.38)}
+.sw input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--tx);padding:7px 10px}
+.sw input::placeholder{color:var(--mt)}
+.sbtn{background:var(--am);color:#000;border:none;padding:8px 18px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .18s;white-space:nowrap}
+.sbtn:hover{background:var(--al)}
+.hstats{display:flex;border-top:1px solid var(--b);padding-top:32px;animation:fid .5s .32s ease both;flex-wrap:wrap;gap:16px}
+.hsi{padding-right:32px;border-right:1px solid var(--b)}
+.hsi:last-child{border-right:none;padding-right:0}
+.sv{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:var(--am);line-height:1}
+.sl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-top:4px}
+
+/* BROWSE */
+.brw{max-width:1160px;margin:0 auto;padding:0 38px 80px}
+.bh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.bt{font-size:26px}.rc{font-size:12px;color:var(--mt)}
+.fr{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:22px}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:100px;border:1px solid var(--b);background:var(--sur);color:var(--td);font-size:10px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
+.pill:hover{border-color:rgba(245,158,11,.4);color:var(--am)}
+.pill.on{background:var(--am);border-color:var(--am);color:#000;font-weight:600}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px}
+
+/* WORKER CARD */
+.wc{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.wc::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--am);transform:scaleY(0);transform-origin:bottom;transition:transform .22s}
+.wc:hover{background:var(--ch);border-color:var(--bl);transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.wc:hover::after{transform:scaleY(1)}
+.ct{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.wav{width:46px;height:46px;border-radius:9px;background:var(--ad);border:1px solid rgba(245,158,11,.18);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
+.wav img{width:100%;height:100%;object-fit:cover;border-radius:9px}
+.wi{flex:1;min-width:0}
+.wn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wps{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--am);margin-top:2px}
+.wrat{display:flex;align-items:center;gap:3px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700}
+.wrat .s{color:var(--am);font-size:11px}
+.wm{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.wmi{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--td)}
+.wtags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:11px}
+.tag{padding:2px 7px;border-radius:100px;border:1px solid var(--bl);font-size:9px;font-weight:500;color:var(--mt);text-transform:uppercase;letter-spacing:.4px}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px}
+.dot-ok{background:var(--ok)}.dot-er{background:var(--er)}
+.wf{display:flex;align-items:center;justify-content:space-between;padding-top:11px;border-top:1px solid var(--b)}
+.cl-link{display:flex;align-items:center;gap:4px;background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);padding:5px 11px;border-radius:6px;font-size:10px;font-weight:600;text-decoration:none;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
+.cl-link:hover{background:var(--am);color:#000}
+.ord-btn{background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf);padding:5px 11px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
+.ord-btn:hover{background:var(--inf);color:#fff}
+
+/* MODALS */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);z-index:1000;padding:18px;overflow-y:auto}
+.ov.on{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--sur);border:1px solid var(--bl);border-radius:14px;width:100%;max-width:680px;margin:auto;overflow:hidden;animation:mi .26s ease both}
+@keyframes mi{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mhd{padding:22px 22px 0;display:flex;align-items:flex-start;gap:14px}
+.mava{width:72px;height:72px;border-radius:11px;background:var(--ad);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
+.mava img{width:100%;height:100%;object-fit:cover}
+.mtb{flex:1;padding-top:3px}
+.mn{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;line-height:1}
+.msk{color:var(--am);font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+.mloc{color:var(--td);font-size:12px;margin-top:2px}
+.xb{width:30px;height:30px;border-radius:7px;background:var(--card);border:1px solid var(--b);color:var(--mt);font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .18s}
+.xb:hover{border-color:var(--am);color:var(--am)}
+.mbd{padding:18px 22px 22px}
+.ms{margin-bottom:18px}
+.mst{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mt);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--b)}
+.mbio{font-size:13px;color:var(--td);line-height:1.65}
+.ctns{display:flex;gap:7px;flex-wrap:wrap}
+.ctab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:12px;text-decoration:none;cursor:pointer;border:none;transition:all .18s}
+.cc{background:var(--am);color:#000}.cc:hover{background:var(--al)}
+.cw{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25D366}.cw:hover{background:rgba(37,211,102,.2)}
+.co{background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf)}.co:hover{background:var(--inf);color:#fff}
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.pi{background:var(--card);border:1px solid var(--b);border-radius:7px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;overflow:hidden;position:relative}
+.pi img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pi-ic{font-size:20px;margin-bottom:4px}.pi-lb{font-size:9px;font-weight:600;color:var(--td);text-transform:uppercase;letter-spacing:.4px}
+.stars{display:flex;gap:2px;margin-top:5px}
+.star{font-size:14px;color:var(--am)}.star.e{color:var(--b)}
+.id-row{background:var(--card);border:1px solid var(--bl);border-radius:7px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--td)}
+.id-row a{color:var(--am);text-decoration:none;font-weight:600}
+
+/* FORMS */
+.fwrap{max-width:640px;margin:0 auto;padding:52px 38px 90px}
+.fhd{margin-bottom:36px}
+.fhd h2{font-size:clamp(38px,6vw,64px);margin-bottom:10px}
+.fhd p{font-size:13px;color:var(--td);line-height:1.7;max-width:460px}
+.fg{margin-bottom:15px}
+.fl{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
+.fi,.fta,.fse{width:100%;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:9px 12px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .18s}
+.fi:focus,.fta:focus,.fse:focus{border-color:rgba(245,158,11,.58)}
+.fi::placeholder{color:var(--mt)}
+.fta{resize:vertical;min-height:88px}
+.fse{cursor:pointer}option{background:var(--sur)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* STEPS */
+.steps{display:flex;align-items:center;margin-bottom:36px}
+.snd{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.snd:not(:last-child)::after{content:'';position:absolute;top:15px;left:56%;right:-44%;height:1px;background:var(--b);transition:background .3s}
+.snd.dn:not(:last-child)::after{background:var(--am)}
+.sc{width:30px;height:30px;border-radius:50%;border:2px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--mt);background:var(--bg);position:relative;z-index:1;transition:all .25s}
+.snd.ac .sc{border-color:var(--am);color:var(--am)}
+.snd.dn .sc{background:var(--am);border-color:var(--am);color:#000}
+.slb{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mt);transition:color .25s}
+.snd.ac .slb{color:var(--am)}.snd.dn .slb{color:var(--td)}
+.fstep{display:none;animation:fir .28s ease both}.fstep.on{display:block}
+@keyframes fir{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+
+/* UPLOAD ZONES */
+.upz{background:var(--sur);border:2px dashed var(--bl);border-radius:9px;padding:24px 18px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.upz:hover,.upz.drag{border-color:var(--am);background:var(--ad)}
+.upz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upz-ic{font-size:26px;margin-bottom:8px}
+.upz-lb{font-size:12px;font-weight:500;color:var(--td)}
+.upz-sub{font-size:10px;color:var(--mt);margin-top:3px}
+.up-prev{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.uth{width:64px;height:64px;border-radius:7px;object-fit:cover;border:2px solid var(--am)}
+.uthw{position:relative;display:inline-block}
+.urm{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:var(--er);color:#fff;border:none;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.ufi{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--b);border-radius:6px;padding:7px 10px;font-size:11px;color:var(--td);margin-top:5px}
+.ufi .rm{background:none;border:none;color:var(--er);cursor:pointer;font-size:12px;margin-left:auto}
+
+/* SKILL PICKER */
+.spk{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:6px}
+.sko{background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:11px 7px;text-align:center;cursor:pointer;transition:all .18s;user-select:none}
+.sko:hover{border-color:rgba(245,158,11,.35)}
+.sko.pk{background:var(--ad);border-color:rgba(245,158,11,.5)}
+.sk-ic{font-size:18px;display:block;margin-bottom:4px}
+.sk-nm{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--td)}
+.sko.pk .sk-nm{color:var(--am)}
+
+/* WORK ENTRIES */
+.we{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;margin-bottom:8px}
+.weh{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.wet{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.rmb{background:none;border:none;color:var(--mt);font-size:13px;cursor:pointer;transition:color .18s}.rmb:hover{color:var(--er)}
+.add-we{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:7px;background:var(--sur);border:2px dashed var(--bl);color:var(--td);font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;margin-bottom:16px}
+.add-we:hover{border-color:var(--am);color:var(--am)}
+
+/* REVIEW */
+.rvbox{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:18px;margin-bottom:16px}
+.rvg{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.rvl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-bottom:2px}
+.rvv{font-size:12px;font-weight:500}
+.ckrow{display:flex;gap:9px;align-items:flex-start;background:var(--sur);border:1px solid var(--b);border-radius:7px;padding:11px}
+.ckrow input{margin-top:2px;accent-color:var(--am);width:14px;height:14px;flex-shrink:0;cursor:pointer}
+.ckrow label{font-size:11px;color:var(--td);line-height:1.55;cursor:pointer}
+
+/* BUTTONS */
+.brow{display:flex;gap:8px;margin-top:22px}
+.btn{padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all .18s}
+.bp{background:var(--am);color:#000}.bp:hover{background:var(--al)}.bp:disabled{opacity:.6;cursor:not-allowed}
+.bg{background:var(--sur);border:1px solid var(--b);color:var(--td)}.bg:hover{border-color:var(--am);color:var(--am)}
+.okp{display:none;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.25);border-radius:9px;padding:16px 18px;margin-bottom:18px;color:var(--ok);font-size:13px;font-weight:500;line-height:1.55}
+.okp.on{display:block}
+
+/* PORTAL */
+.pwrap{max-width:880px;margin:0 auto;padding:44px 38px 90px}
+.phd{margin-bottom:32px}
+.phd h2{font-size:clamp(34px,5vw,56px);margin-bottom:8px}
+.phd p{font-size:13px;color:var(--td);line-height:1.65}
+.ptabs{display:flex;gap:3px;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:3px;margin-bottom:20px}
+.pt{flex:1;padding:7px 12px;border-radius:6px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--mt);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px}
+.pt.on{background:var(--card);color:var(--am)}
+.badge{background:var(--am);color:#000;border-radius:100px;padding:1px 6px;font-size:9px;font-weight:700}
+
+/* ORDER CARDS */
+.oc{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:9px;transition:border-color .18s}
+.oc:hover{border-color:var(--bl)}
+.oct{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.ocs{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;text-transform:uppercase}
+.ocm{display:flex;gap:10px;font-size:11px;color:var(--td);margin-bottom:8px;flex-wrap:wrap}
+.ocd{font-size:12px;color:var(--td);margin-bottom:10px}
+.oca{display:flex;gap:7px;flex-wrap:wrap}
+.sta{padding:2px 9px;border-radius:100px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.sta-pending{background:rgba(245,158,11,.1);color:var(--am)}
+.sta-assigned{background:rgba(62,110,176,.1);color:var(--inf)}
+.sta-accepted{background:rgba(34,197,94,.1);color:var(--ok)}
+.sta-worker_arrived{background:rgba(34,197,94,.18);color:var(--ok)}
+.sta-completed{background:rgba(34,197,94,.07);color:var(--ok);border:1px solid rgba(34,197,94,.18)}
+.sta-cancelled{background:rgba(239,68,68,.1);color:var(--er)}
+.asm{padding:6px 11px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
+.ag{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--ok)}.ag:hover{background:var(--ok);color:#000}
+.ab{background:rgba(62,110,176,.1);border-color:rgba(62,110,176,.25);color:var(--inf)}.ab:hover{background:var(--inf);color:#fff}
+.aa{background:var(--ad);border-color:rgba(245,158,11,.25);color:var(--am)}.aa:hover{background:var(--am);color:#000}
+.ar{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:var(--er)}.ar:hover{background:var(--er);color:#fff}
+.wk-detail{background:var(--sur);border:1px solid var(--b);border-radius:7px;padding:11px;margin-bottom:10px;font-size:12px;color:var(--td);line-height:1.7}
+.wk-detail a{color:var(--am);font-weight:600;text-decoration:none}
+
+/* RATING */
+.rrow{display:flex;gap:5px;margin:9px 0}
+.rs{font-size:26px;cursor:pointer;color:var(--b);transition:color .15s;user-select:none}
+.rs.on{color:var(--am)}
+
+/* ADMIN */
+.awrap{max-width:1080px;margin:0 auto;padding:44px 38px 90px}
+.atop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.atop h2{font-size:40px}
+.tabbar{display:flex;gap:3px;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:3px;margin-bottom:20px;flex-wrap:wrap}
+.tb{padding:6px 12px;border-radius:6px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--mt);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.tb.on{background:var(--card);color:var(--am)}
+.cbg{background:var(--am);color:#000;border-radius:100px;padding:1px 6px;font-size:9px;font-weight:700}
+.acard{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .18s;flex-wrap:wrap}
+.acard:hover{border-color:var(--bl)}
+.aav{width:38px;height:38px;border-radius:7px;background:var(--ad);border:1px solid rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
+.aav img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+.ainfo{flex:1;min-width:180px}
+.anm{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase}
+.amet{font-size:11px;color:var(--td);margin-top:2px;display:flex;gap:9px;flex-wrap:wrap}
+.aacts{display:flex;gap:6px;flex-wrap:wrap}
+.aappr{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--ok);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
+.aappr:hover{background:var(--ok);color:#000}
+.arej{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--er);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
+.arej:hover{background:var(--er);color:#fff}
+.aview{background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
+.aview:hover{background:var(--am);color:#000}
+
+/* ORDER ROW */
+.orow{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px 18px;margin-bottom:8px;transition:border-color .18s}
+.orow:hover{border-color:var(--bl)}
+.ort{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:7px}
+.ors{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase}
+.orm{font-size:11px;color:var(--td);margin-bottom:7px;display:flex;gap:10px;flex-wrap:wrap}
+.ora{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.asel{background:var(--sur);border:1px solid var(--b);border-radius:6px;padding:6px 10px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;cursor:pointer}
+
+/* SKILLS & ADMIN MANAGER */
+.skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-bottom:18px}
+.ski{background:var(--card);border:1px solid var(--b);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:9px}
+.ski-ic{font-size:20px}.ski-nm{font-size:12px;font-weight:600;flex:1}
+.ski-dl{background:none;border:none;color:var(--mt);font-size:13px;cursor:pointer;transition:color .18s}.ski-dl:hover{color:var(--er)}
+.addbox{background:var(--sur);border:1px dashed var(--bl);border-radius:8px;padding:16px;display:grid;grid-template-columns:56px 1fr 1fr auto;gap:9px;align-items:end;margin-top:4px}
+.admrow{background:var(--card);border:1px solid var(--b);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:11px;margin-bottom:7px}
+.admav{width:34px;height:34px;border-radius:7px;background:rgba(62,110,176,.15);border:1px solid rgba(62,110,176,.3);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--inf)}
+.adminfo{flex:1}.admnm{font-size:13px;font-weight:600}.admmt{font-size:10px;color:var(--td)}
+.addadmbox{background:var(--sur);border:1px dashed var(--bl);border-radius:8px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:9px;align-items:end;margin-top:14px}
+
+/* LOGIN */
+.lov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1100;align-items:center;justify-content:center}
+.lov.on{display:flex}
+.lbox{background:var(--sur);border:1px solid var(--bl);border-radius:14px;padding:32px;width:340px;animation:mi .22s ease both}
+.lbox h3{font-size:26px;margin-bottom:5px}
+.lsub{font-size:12px;color:var(--td);margin-bottom:22px;line-height:1.55}
+.lerr{display:none;font-size:11px;color:var(--er);margin-top:8px;font-weight:500}
+
+/* SHARED */
+.sp{display:flex;justify-content:center;padding:56px}
+.spin{width:28px;height:28px;border:3px solid var(--bl);border-top-color:var(--am);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:64px 36px;color:var(--td)}
+.empi{font-size:36px;margin-bottom:12px}
+.empty h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;margin-bottom:6px;color:var(--tx)}
+.empty p{font-size:12px;color:var(--mt)}
+#toast{position:fixed;bottom:20px;right:20px;z-index:2000;background:var(--card);border:1px solid var(--bl);border-radius:9px;padding:11px 15px;font-size:12px;font-weight:500;opacity:0;transform:translateY(8px);transition:all .24s;pointer-events:none;max-width:290px}
+#toast.on{opacity:1;transform:translateY(0)}
+#toast.ok{border-color:rgba(34,197,94,.4);color:var(--ok)}
+#toast.er{border-color:rgba(239,68,68,.4);color:var(--er)}
+.sep{border:none;border-top:1px solid var(--b);margin:18px 0}
+.shtit{font-family:'Barlow Condensed',sans-serif;font-size:20px;margin-bottom:14px}
+@keyframes fid{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){
+  .hero,.brw,.fwrap,.pwrap,.awrap{padding-left:16px;padding-right:16px}
+  .hero{padding-top:32px}.frow,.addbox,.addadmbox{grid-template-columns:1fr}
+  .port-grid{grid-template-columns:repeat(2,1fr)}.hstats{gap:12px}
+  .hsi{border-right:none;border-bottom:1px solid var(--b);padding-bottom:12px}
+  .hsi:last-child{border-bottom:none}
+  nav{padding:0 12px}.nb{display:none}.nb.ac,.nb.bl{display:flex;font-size:10px;padding:0 8px}
+  .tabbar,.ptabs{flex-wrap:wrap}
+}
+
+/* ─── SPLIT SECTIONS ─── */
+.split-section{padding:72px 38px;position:relative}
+.split-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.split-col{}
+
+/* Green homeowner side */
+.green-side{background:linear-gradient(160deg,#1a4d2e 0%,#2d7a45 60%,#3a9455 100%)}
+/* fade bottom of green into blue */
+.green-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,#1E3A5F);pointer-events:none}
+
+/* Blue worker side */
+.blue-side{background:linear-gradient(160deg,#1E3A5F 0%,#2d5a96 60%,#3E6EB0 100%)}
+/* fade bottom of blue into page bg */
+.blue-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
+
+.section-label{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:6px 16px;border-radius:100px;margin-bottom:20px}
+.section-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,5.5vw,70px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:18px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.section-sub{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:28px;max-width:400px}
+
+/* ─── HOW IT WORKS (simple) ─── */
+.hiw-simple{display:flex;flex-direction:column;gap:22px}
+.hiw-s-step{display:flex;gap:14px;align-items:flex-start}
+.hiw-s-num{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
+.hiw-s-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:4px}
+.hiw-s-desc{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+
+/* ─── BOOK CARD ─── */
+.book-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:28px;backdrop-filter:blur(6px)}
+.book-card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px}
+.book-card-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:10px}
+.book-card-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:20px;line-height:1.6}
+.book-search-wrap{display:flex;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:5px;margin-bottom:14px}
+.book-search-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:8px 10px}
+.book-search-input::placeholder{color:rgba(255,255,255,.5)}
+.book-search-btn{background:#FCD34D;color:#1a4d2e;border:none;padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .18s;white-space:nowrap}
+.book-search-btn:hover{background:#fff}
+.book-popular{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.book-pop-lbl{font-size:11px;color:rgba(255,255,255,.55);font-weight:500}
+.book-pop-tag{padding:4px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:11px;font-weight:500;cursor:pointer;transition:all .18s}
+.book-pop-tag:hover{background:rgba(255,255,255,.25);color:#fff}
+
+/* ─── WORKER SIDE (reuse ws- classes) ─── */
+.ws-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.ws-perk{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.88)}
+.ws-perk-ic{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.ws-cta{display:inline-flex;align-items:center;gap:8px;background:#FCD34D;color:#1E3A5F;border:none;padding:13px 28px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.ws-cta:hover{background:#fff;transform:translateY(-2px)}
+.ws-howto-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#FCD34D;letter-spacing:1px;margin-bottom:18px}
+.ws-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.ws-step-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:#FCD34D;flex-shrink:0}
+.ws-step-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:3px}
+.ws-step-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
+
+/* ─── UNIFIED LOGIN MODAL ─── */
+.lmode-tabs{display:flex;gap:4px;background:var(--ch);border-radius:8px;padding:3px;margin-bottom:20px}
+.lmode-tab{flex:1;padding:7px;border-radius:6px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;transition:all .18s;text-align:center}
+.lmode-tab.on{background:var(--sur);color:#0D9488}
+
+@media(max-width:768px){
+  .split-section{padding:48px 18px}
+  .split-inner{grid-template-columns:1fr;gap:36px}
+  .green-side::after,.blue-side::after{height:40px}
+}
+
+
+/* HERO SPLIT */
+.hero-split{display:flex;align-items:center;gap:48px;max-width:1160px;margin:0 auto;position:relative;z-index:2}
+.hero-left{flex:1;min-width:0}
+.hero-right{flex:0 0 420px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,140px);gap:10px}
+.wsc{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.wsc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.wsc:nth-child(1){grid-row:span 2}
+.wsc:nth-child(4){grid-row:span 2}
+.wsc-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82)}
+.wsc-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:12px 10px 10px}
+.wsc-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;color:#fff;line-height:1}
+.wsc-skill{font-size:10px;font-weight:600;color:var(--am);letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
+.wsc-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,.88);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;letter-spacing:.5px}
+@media(max-width:900px){
+  .hero-split{flex-direction:column}
+  .hero-right{flex:none;width:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,120px)}
+  .wsc:nth-child(1),.wsc:nth-child(4){grid-row:span 1}
+}
+/* THEME TOGGLE BTN */
+.theme-btn{height:31px;width:36px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.theme-btn:hover{border-color:var(--am);color:var(--am)}
+
+
+[data-theme="light"] .hero::before{background:linear-gradient(135deg,rgba(206,17,38,.12) 0%,rgba(245,245,240,.75) 40%,rgba(245,245,240,.98) 100%)!important}
+[data-theme="light"] .wsc-img{filter:brightness(.88)}
+
+</style>
+</head>
+<body>
+<div class="flagbar"></div>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:12px;padding:4px 0;cursor:pointer" onclick="nav('home')">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABuAG4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7AoooqQCiiigAooooAKKKM0AFFFFABRRRQAUYoooAKKB0ooAKKKKACis7xNeXmneHdRv9OshfXltayTQWxfaJnVSQmQDjOMV8nw/tO67c+CtZ0zWNIhk1W7iljs720byUgWRSPmU5JKZ4IOT3weTrToyqK8TOdWMNz2/x18S/FNjNNB4M+GPiDxEsRIa9kia3t2I6+WCN8g9wAD2zXnWgftP3cGtNp3i/wTJYhH2TG1lfzoT/ALUUgBP0yDXlPwL+NFx8O21lby0uddjv40MSNe8xSoGAJLZ+U7gDjnjvWh8TPEF/4r8EeH/FvjKwsrLxBqF7OtjNbwmI3OnKoO6QHssh2oepXJ9z1+wjDSS07nDWxMlTc4vVdD7K8Ma/o/iXR4dW0O/ivbOX7siHoe6sDyrDuDzWnXwV8OPiI3gfxHa31hqknkvNGt9bwESCWHcN25ehIXOD1z0r7R8HeOvCfi7d/wAI9rMN4VUPs2tG+09wrgEj1x0rhmuV+RWBx6xMfeVn+fodJRRRUnoBSGlpDQAoooHSigAoNFAxkZ6Z5oA+Sv2rdT+JnhnxtPdp4kvLXw5rMJgsobO6ZUCIgEiOnZ/mJLDqGGDxgdV+zL8FtAi8J2PjDxVpsGp6jqEYntLe5TfDbQn7h2HhnYfNk5wCAO5ryX9orw78U4NUuNa8cvd3ek/bZbfT7hp43iRWLFAqIf3eVUdQMkc819OfDXx74eHwL0fxTdXscNnY6dFb3QUgsk0SiMxBf7xIGB33A9K76jcaKUfwOKPL7RufTuP+Lmm/DfTPCUtz4n8L6NeRg7La3FqiSSydQqMoBA9SDgDOfSvHPC15dfEjxBPoviVbGbwzcTRxXiXB8uK2kcbIIrQggxzHAChT90HcCK5LxL4m8TfF34k2+nadERdXTGOytt2Y7G3ByzufYcs3c8DsKrfF6ymt/H2hfCzwFc3N2+jsgHkSBHn1R8tJMzZGHUBRkn5ACOMGuKNCdWqk5WS1PP8AbTxVXnirQX4n014u+D/gfW/BjeHrLw/pWlvFDssbqC1Ae3cDhiVwzj1BJzznmsX4CfCu+8Gz3eq+IpLaXU8tBarbuXjji6FwSB8zenYcdSa6D4D6f4803wObf4iXkt1qxu3aMy3CTOkG1QoLr1Odx5JPPWu/pz0916nqfVqU5xquOqCiiioOkKCaKT60AKKKBRQAUHpRWJ46sP7R8K38CapNpMqRGWG+iuPJNu68q5foFzwc5GCc0Dik2ruyPMv2o/BfiXxlpGkQ2Gu2Om+HbWczaybltgiQDIuGJPzqgDfJxywP0+d/EOo3/ia3t/DPw48O6nceF9JJ+yRxQkm5lPD3dxJwodv9ogKvAxW9qPxX8Z3NpJpWqeLdTaMkB4LvwzDMzYPHP3W5GQfoayr+/wBd1qFW1Ia7qVsOVbW7oWFmv+7Cp5+imu6FPFQjZ07ebaS/PUK+Fy9rmrYlcvaKk2/vUUvm0SeAh4j8EWWo2kXi7w5omq6qALq50+B9U1NU7Qx+X+6iA68NnPfgYg0HwpbaFrtpr2la349tdTtpvPjvX8PRsN+eSyedvYHJyOcgn1rW8MeG9c10fZdLOp3sfRoNBtfslsPZp2G5vx/On/EfwNH4E0+xvNf8MWkX22RkiYajNLMGUAnLK+B16isfaRi7Orr/AHY3X3tq5zTzHLKcP3NCUor7UpW+5RjZfez7D0DULfV9EstUsphc291AkscqRlQ4IznaeV+h5HSr3I6gj6ivgiPX9XulSO61rUZbKNAtsmo6/IqJGPugRwjceO5wT3rr/hjf6teeLtN0vSfFsOkG6mEZubTVrg7PTMNwCsuSAAPUionQqR1vH/wJX+79LnTDFZbNqPtrN/3dF5N3v90T7IopsKssSK7mRgoBcgAsfXA4H4U6shBRRSGgBaKKKACs7xHouleI9FudG1qyivbC5XbLDJnDYORyOQQQCCK434o614gHi3wp4J8O6mujz689zLcal5KyyQwwIGZYlbK72J6kHAFZeg+PrLTPDWqzW3iO+8Wz2F/HBMdYMGkva+YhKqzypGrD5SRwWO4Y4rRU21czlKOsWVH/AGfvDkUmNM8U+LNOts8W8V+GRR6DIzj863PDnwX8B6POLqXT59Yuhz52pzmbn/d4X8waxrf4422oWtk2i+EdU1K5ubC7vHhS6gQQi1k2SguTtYdwy53ZHrUN98WNc8Q6HeWng/wtqFprV9oR1fw+920Mn2uESIrkRhjtcBiVVj82B64o9hLqjmWHwqfNyo9gghhghWCCOOKJBhY0UKqj2A4Fcz8Rvh/4W+IFlZ2fiiyluo7OYzQeVcPEVYjB5U8gjsa8mvfiLLpHh+3vI/H/AIglng1/TYdXt9d0yK1uLG2cuZdyiMZRwvUZxt4PNafjn4oXV14as9b0iPW9FbUNI1i70k+bAY5kggDRzzIVJGeqKDkfxDtVqhJM3dSDVmj0Dw38Mfh/4eQDSvCelow/5aTRefJ/31JuNamq+EfC+q25gv8AQNNlXqrC3VHQjoVZQGUj1Brw8fE7xdY3Xn3GqXd1bx+IdDtZIYbNZZXgn0/zZo0VVyWd+eOewxXS+Hfi3PP8RtU0+7s9UOnXer6dpem211aC1mtGmt5Hd3VwGKkpnnnkY4odCRC9jbl5V9x7Mg2oq7mbAxljkn3NOrxK9+KWv6h8TNJsPDWjX15brJq9jcaYJoYzcy2rRgS+Y/CqNxwM55Awa9P8AeKLLxl4Us/ENhBPbx3G9HgnAEkMiOUdGxxkMpGR1qJU5RV2bRmpOyN6iikNZli0UUUAc7448HaR4ugshqD3lrd6fP8AaLG+spzDcWsmMEo4z1HBBBB9K5tfg/4fy11LrXiOfVjqMWpf2rLeI1yJ44jEp5TZgISuNvp6V6NRVqckrJkuEW7tHA6D8JvC2jXAuLSbVXkFre2paa6DkpdyeZKSduS27oe3vUkPwu0G3h0tbHUNcsZtL0b+xrS4trwJKkG9Hzu2/fyg56YyMc13VFHtJdw5I9jz1PhH4bkna71O/wBb1fUHvrW8kvL+6WSWQ2xYxRkBAvlgsxKgDOeTUc3wb8ISQG1EurR2ai/WC2S6AjtlvU2zJGNuVXuoydpJ+lejUU/az7i5I9jhLf4U+F7e9iu431LzI9RstSXNwMedaQeTF/D93Z1Hc88UviP4W+HNc1XUNWnudWtdRvby1vhc2t0Ee3mto2jjaP5Tj5WIIOc13VFL2kt7j5I9jzSD4MeGrSe3utP1jxNY3ttLdTRXcGo/vg9yVMpLFTuzsHXPU+2O08HeHNL8J+G7TQNGjkSytVYJ5khd3ZmLM7MerMxJJ9616KJTlLRsFBLZBQcUUGoKCiiigAooooAKKKKACiiigAooooAKKKKACg0UUAf/2Q==" style="height:40px;width:40px;object-fit:contain;border-radius:8px" alt="GamSkillHub">
+    <div class="logo"><span class="r">GAM</span><span class="a">SKILL</span>HUB</div>
+  </div>
+  <div class="nl">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle Light/Dark">🌓</button>
+    <button class="nb" onclick="nav('home')">Browse</button>
+    <button class="nb" onclick="openLoginPortal()" style="background:#0D9488;border-color:#0D9488;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase">LOGIN</button>
+  </div>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<section id="pg-home" class="pg on">
+  <div class="hero">
+    <div class="hero-split">
+      <!-- LEFT: text -->
+      <div class="hero-left">
+        <div class="htag">🇬🇲 &nbsp; Serving All Regions of The Gambia</div>
+        <h1>THE GAMBIAN<br><em>HOME</em> FOR<br>SKILLED WORKERS.</h1>
+        <p class="hsub">From emergency repairs to creative projects, connect with agency-vetted experts across The Gambia. Fast, Reliable, and Guaranteed.</p>
+        <div class="sw">
+          <input id="srch" type="text" placeholder="Search by name or skill…" onkeydown="if(event.key==='Enter')doSearch()">
+          <button class="sbtn" onclick="doSearch()">Search</button>
+        </div>
+        <div class="hstats">
+          <div class="hsi"><div class="sv" id="stat-n">0</div><div class="sl">Verified Workers</div></div>
+          <div class="hsi"><div class="sv" id="stat-o">0</div><div class="sl">Jobs Done</div></div>
+          <div class="hsi"><div class="sv">20+</div><div class="sl">Skill Types</div></div>
+        </div>
+      </div>
+      <!-- RIGHT: worker photo grid -->
+      <div class="hero-right">
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=600&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=600&fit=crop'" alt="Plumber">
+          <div class="wsc-overlay"><div class="wsc-name">Modou J.</div><div class="wsc-skill">🔧 Plumbing</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Electrician">
+          <div class="wsc-overlay"><div class="wsc-name">Omar S.</div><div class="wsc-skill">⚡ Electrical</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Painter">
+          <div class="wsc-overlay"><div class="wsc-name">Fatou C.</div><div class="wsc-skill">🎨 Painting</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1588784109889-e9bc9c9d7506?w=400&h=600&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=600&fit=crop'" alt="Carpenter">
+          <div class="wsc-overlay"><div class="wsc-name">Lamin T.</div><div class="wsc-skill">🪚 Carpentry</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Cleaner">
+          <div class="wsc-overlay"><div class="wsc-name">Aminata D.</div><div class="wsc-skill">🧹 Cleaning</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+        <div class="wsc">
+          <img class="wsc-img" src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Welder">
+          <div class="wsc-overlay"><div class="wsc-name">Baba S.</div><div class="wsc-skill">🔩 Welding</div></div>
+          <div class="wsc-badge">✓ VERIFIED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ HOMEOWNER + HOW IT WORKS (GREEN) ═══ -->
+  <div class="split-section green-side">
+    <div class="split-inner">
+
+      <!-- LEFT: How It Works (simple) -->
+      <div class="split-col hiw-col">
+        <div class="section-label">FOR CLIENTS &amp; HOMEOWNERS</div>
+        <h2 class="section-h2">HOW IT<br><em style="color:#FCD34D">WORKS</em></h2>
+        <div class="hiw-simple">
+          <div class="hiw-s-step">
+            <div class="hiw-s-num">1</div>
+            <div>
+              <div class="hiw-s-title">Search a Skill</div>
+              <div class="hiw-s-desc">Type what you need — plumber, electrician, cleaner — and browse verified workers near you.</div>
+            </div>
+          </div>
+          <div class="hiw-s-step">
+            <div class="hiw-s-num">2</div>
+            <div>
+              <div class="hiw-s-title">Book Instantly</div>
+              <div class="hiw-s-desc">Enter your address, describe the job, and hit Book Now. Done in under a minute.</div>
+            </div>
+          </div>
+          <div class="hiw-s-step">
+            <div class="hiw-s-num">3</div>
+            <div>
+              <div class="hiw-s-title">A Verified Pro Arrives</div>
+              <div class="hiw-s-desc">GamSkillHub dispatches an ID-verified, agency-approved worker directly to your door.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Search + Book form -->
+      <div class="split-col book-col">
+        <div class="book-card">
+          <div class="book-card-tag">📋 BOOK A WORKER</div>
+          <h3 class="book-card-h">Find the right skill,<br>right now.</h3>
+          <p class="book-card-sub">Tell us what you need and we'll connect you with a vetted expert.</p>
+          <div class="book-search-wrap">
+            <input id="book-srch" class="book-search-input" type="text" placeholder="e.g. Plumbing, Electrician…" onkeydown="if(event.key==='Enter')bookSearch()">
+            <button class="book-search-btn" onclick="bookSearch()">BOOK NOW</button>
+          </div>
+          <div class="book-popular">
+            <span class="book-pop-lbl">Popular:</span>
+            <span class="book-pop-tag" onclick="quickBook('Plumbing')">🔧 Plumbing</span>
+            <span class="book-pop-tag" onclick="quickBook('Electrical')">⚡ Electrical</span>
+            <span class="book-pop-tag" onclick="quickBook('Home Cleaning')">🧹 Cleaning</span>
+            <span class="book-pop-tag" onclick="quickBook('Carpentry')">🪚 Carpentry</span>
+            <span class="book-pop-tag" onclick="quickBook('Barber (Home)')">✂️ Barber</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ WORKER SIDE (BLUE) ═══ -->
+  <div class="split-section blue-side">
+    <div class="split-inner">
+
+      <!-- LEFT: Pitch + CTA -->
+      <div class="split-col">
+        <div class="section-label" style="color:rgba(255,255,255,.6)">FOR SKILLED WORKERS</div>
+        <h2 class="section-h2" style="color:#fff">GET LISTED TO<br><em style="color:#FCD34D;font-size:110%">GROW YOUR WORK.</em></h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.8)">Join The Gambia's fastest-growing skilled worker network. Reach clients who need your skills — anywhere in The Gambia.</p>
+        <div class="ws-perks">
+          <div class="ws-perk"><div class="ws-perk-ic">✓</div>Free to register — no upfront cost</div>
+          <div class="ws-perk"><div class="ws-perk-ic">🔐</div>Agency-verified badge on your profile</div>
+          <div class="ws-perk"><div class="ws-perk-ic">📋</div>Receive job orders directly to your portal</div>
+          <div class="ws-perk"><div class="ws-perk-ic">⭐</div>Build your reputation with client reviews</div>
+        </div>
+        <button class="ws-cta" onclick="nav('register')">GET LISTED — IT'S FREE →</button>
+      </div>
+
+      <!-- RIGHT: How to sign up -->
+      <div class="split-col">
+        <div class="ws-howto-title">HOW TO SIGN UP</div>
+        <div class="ws-step"><div class="ws-step-num">1</div><div><div class="ws-step-title">Fill Your Personal Info</div><div class="ws-step-desc">Name, phone, location, years of experience. Takes 2 minutes.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">2</div><div><div class="ws-step-title">Select Your Skills</div><div class="ws-step-desc">Pick all the services you offer — plumbing, electrical, cleaning, carpentry and more.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">3</div><div><div class="ws-step-title">Upload Your Documents</div><div class="ws-step-desc">Profile photo + valid ID (National ID, passport or driver's licence). Certifications optional.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">4</div><div><div class="ws-step-title">Add Your Portfolio</div><div class="ws-step-desc">Upload photos of past work to build trust with clients and get booked faster.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">5</div><div><div class="ws-step-title">Get Approved &amp; Go Live</div><div class="ws-step-desc">Our team reviews every application within 24–48 hours. Once approved, clients can find and book you.</div></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ WORKER GRID ═══ -->
+  <div class="brw">
+    <div class="bh"><h2 class="bt">BROWSE WORKERS</h2><div class="rc" id="rcount"></div></div>
+    <div class="fr" id="fpills"><span class="pill on" onclick="filterBy('all',this)">All Skills</span></div>
+    <div id="wbox"><div class="sp"><div class="spin"></div></div></div>
+  </div>
+</section>
+
+<!-- ═══ CLIENT PORTAL ═══ -->
+<section id="pg-client" class="pg">
+  <div class="pwrap">
+    <div class="phd"><h2>CLIENT<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Place orders, track bookings, rate workers.</p></div>
+    <div id="cl-auth">
+      <div class="frow" style="max-width:480px">
+        <div class="fg"><label class="fl">Your Name *</label><input class="fi" id="cl-name" placeholder="Full name"></div>
+        <div class="fg"><label class="fl">Phone *</label><input class="fi" id="cl-phone" type="tel" placeholder="+220 7XX XXXX"></div>
+      </div>
+      <div class="fg" style="max-width:480px"><label class="fl">Email (optional)</label><input class="fi" id="cl-email" type="email" placeholder="you@email.com"></div>
+      <div class="brow"><button class="btn bp" onclick="clientLogin()">Continue →</button></div>
+    </div>
+    <div id="cl-dash" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;color:var(--td)">Welcome, <span id="cl-hi" style="color:var(--tx);font-weight:600"></span></div>
+        <button class="nb" onclick="clientOut()">Log out</button>
+      </div>
+      <div class="ptabs">
+        <button class="pt on" onclick="clTab('order',this)">📋 New Order</button>
+        <button class="pt" onclick="clTab('track',this)">📍 My Bookings <span class="badge" id="cl-cnt">0</span></button>
+      </div>
+      <div id="cl-order-tab">
+        <div style="background:var(--card);border:1px solid var(--b);border-radius:11px;padding:22px;margin-bottom:20px">
+          <div class="shtit">PLACE AN ORDER</div>
+          <div class="frow">
+            <div class="fg"><label class="fl">Skill Needed *</label><select class="fse" id="ord-skill"><option value="">Select…</option></select></div>
+            <div class="fg"><label class="fl">Preferred Date/Time</label><input class="fi" id="ord-dt" type="datetime-local"></div>
+          </div>
+          <div class="fg"><label class="fl">Your Address *</label><input class="fi" id="ord-addr" placeholder="Where should the worker come?"></div>
+          <div class="fg"><label class="fl">Describe the Job *</label><textarea class="fta" id="ord-desc" placeholder="What needs to be done?"></textarea></div>
+          <div class="brow"><button class="btn bp" onclick="placeOrder()">Submit Order ✓</button></div>
+        </div>
+      </div>
+      <div id="cl-track-tab" style="display:none"><div id="cl-orders"><div class="sp"><div class="spin"></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WORKER PORTAL ═══ -->
+<section id="pg-wportal" class="pg">
+  <div class="pwrap">
+    <div class="phd"><h2>WORKER<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Accept orders assigned by the agency and update job status.</p></div>
+    <div id="wp-auth">
+      <div class="fg" style="max-width:300px"><label class="fl">Your Registered Phone</label><input class="fi" id="wp-phone" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')workerLogin()"></div>
+      <div class="brow"><button class="btn bp" onclick="workerLogin()">Login →</button></div>
+    </div>
+    <div id="wp-dash" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;color:var(--td)">Logged in: <span id="wp-hi" style="color:var(--am);font-weight:600"></span></div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <span id="wp-avlbl" style="font-size:11px;color:var(--td)"></span>
+          <button class="asm ag" id="wp-avbtn" onclick="toggleAvail()">Set Available</button>
+          <button class="nb" onclick="workerOut()">Log out</button>
+        </div>
+      </div>
+      <div class="ptabs">
+        <button class="pt on" onclick="wpTab('new',this)">🔔 New Orders</button>
+        <button class="pt" onclick="wpTab('active',this)">⚡ Active</button>
+        <button class="pt" onclick="wpTab('done',this)">✅ Completed</button>
+      </div>
+      <div id="wp-content"><div class="sp"><div class="spin"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REGISTER ═══ -->
+<section id="pg-register" class="pg">
+  <div class="fwrap">
+    <div class="fhd"><h2>JOIN OUR<br><em style="font-style:normal;color:var(--am)">AGENCY</em></h2><p>Register as a verified skilled worker. Upload your ID and certifications. Our team reviews every application.</p></div>
+    <div class="steps">
+      <div class="snd ac" id="sn1"><div class="sc">1</div><div class="slb">Personal</div></div>
+      <div class="snd" id="sn2"><div class="sc">2</div><div class="slb">Skills</div></div>
+      <div class="snd" id="sn3"><div class="sc">3</div><div class="slb">Documents</div></div>
+      <div class="snd" id="sn4"><div class="sc">4</div><div class="slb">Portfolio</div></div>
+      <div class="snd" id="sn5"><div class="sc">5</div><div class="slb">Submit</div></div>
+    </div>
+    <div id="reg-ok" class="okp">✓ &nbsp;Application received! Our team will review and contact you within 24–48 hours.</div>
+    <!-- Step 1 -->
+    <div class="fstep on" id="fs1">
+      <div class="frow">
+        <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="rn" placeholder="Your full name"></div>
+        <div class="fg"><label class="fl">Phone *</label><input class="fi" id="rp" type="tel" placeholder="+220 7XX XXXX"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Email</label><input class="fi" id="re" type="email" placeholder="you@email.com"></div>
+        <div class="fg"><label class="fl">Area / Location *</label><input class="fi" id="rl" placeholder="e.g. Serrekunda"></div>
+      </div>
+      <div class="fg"><label class="fl">Shop / Work Address</label><input class="fi" id="rsa" placeholder="e.g. Mosque Road, Serrekunda (optional)"></div>
+      <div class="fg" style="max-width:190px"><label class="fl">Years of Experience *</label><input class="fi" id="rx" type="number" min="0" max="60" placeholder="e.g. 5"></div>
+      <div class="brow"><button class="btn bp" onclick="goStep(2)">Next: Skills →</button></div>
+    </div>
+    <!-- Step 2 -->
+    <div class="fstep" id="fs2">
+      <div class="fg"><label class="fl">Your Skills — pick all that apply *</label><div class="spk" id="spicker"></div></div>
+      <div class="brow"><button class="btn bg" onclick="goStep(1)">← Back</button><button class="btn bp" onclick="goStep(3)">Next: Documents →</button></div>
+    </div>
+    <!-- Step 3 -->
+    <div class="fstep" id="fs3">
+      <p style="font-size:12px;color:var(--td);margin-bottom:18px;line-height:1.6">Upload your photo, a valid ID, and any skill certifications. Used for verification only.</p>
+      <div class="fg"><label class="fl">Profile Photo *</label>
+        <div class="upz" id="uz-photo" ondragover="dzo(event,'uz-photo')" ondragleave="dzout('uz-photo')" ondrop="dzd(event,'uz-photo','photo')">
+          <input type="file" accept="image/*" onchange="hf(this,'photo')">
+          <div class="upz-ic">📷</div><div class="upz-lb">Upload a clear photo of yourself</div><div class="upz-sub">JPG or PNG · Max 5MB</div>
+          <div class="up-prev" id="prev-photo"></div>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">ID Document * <span style="color:var(--mt);font-weight:400;letter-spacing:0;text-transform:none">(National ID, Passport, or Driver's License)</span></label>
+        <div class="upz" id="uz-id" ondragover="dzo(event,'uz-id')" ondragleave="dzout('uz-id')" ondrop="dzd(event,'uz-id','id')">
+          <input type="file" accept="image/*,.pdf" onchange="hf(this,'id')">
+          <div class="upz-ic">🪪</div><div class="upz-lb">Upload ID, passport or license</div><div class="upz-sub">JPG, PNG or PDF · Max 10MB</div>
+          <div class="up-prev" id="prev-id"></div>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Certifications <span style="color:var(--mt);font-weight:400;letter-spacing:0;text-transform:none">(optional)</span></label>
+        <div class="upz" id="uz-cert" ondragover="dzo(event,'uz-cert')" ondragleave="dzout('uz-cert')" ondrop="dzd(event,'uz-cert','cert')">
+          <input type="file" accept="image/*,.pdf" multiple onchange="hfs(this,'cert')">
+          <div class="upz-ic">📜</div><div class="upz-lb">Upload certificates or training docs</div><div class="upz-sub">JPG, PNG or PDF · Multiple OK</div>
+          <div class="up-prev" id="prev-cert"></div>
+        </div>
+      </div>
+      <div class="brow"><button class="btn bg" onclick="goStep(2)">← Back</button><button class="btn bp" onclick="goStep(4)">Next: Portfolio →</button></div>
+    </div>
+    <!-- Step 4 -->
+    <div class="fstep" id="fs4">
+      <p style="font-size:12px;color:var(--td);margin-bottom:16px;line-height:1.6">Add photos and examples of past work. Clients see these to build trust.</p>
+      <div class="fg"><label class="fl">Portfolio Photos</label>
+        <div class="upz" id="uz-port" ondragover="dzo(event,'uz-port')" ondragleave="dzout('uz-port')" ondrop="dzd(event,'uz-port','port')">
+          <input type="file" accept="image/*" multiple onchange="hfs(this,'port')">
+          <div class="upz-ic">🖼️</div><div class="upz-lb">Upload photos of your past work</div><div class="upz-sub">JPG or PNG · Multiple OK</div>
+          <div class="up-prev" id="prev-port"></div>
+        </div>
+      </div>
+      <label class="fl" style="margin-top:10px">Work Examples (text)</label>
+      <div id="we-list"></div>
+      <button class="add-we" onclick="addWE()">＋ Add Work Example</button>
+      <div class="brow"><button class="btn bg" onclick="goStep(3)">← Back</button><button class="btn bp" onclick="goStep(5)">Next: Review →</button></div>
+    </div>
+    <!-- Step 5 -->
+    <div class="fstep" id="fs5">
+      <div class="rvbox" id="rev-box"></div>
+      <div class="fg"><label class="fl">Short Bio *</label><textarea class="fta" id="rbio" placeholder="Tell clients about your experience and work ethic…"></textarea></div>
+      <div class="fg"><div class="ckrow"><input type="checkbox" id="ragree"><label for="ragree">I confirm all information is accurate and agree to GamSkillHub's terms.</label></div></div>
+      <div class="brow"><button class="btn bg" onclick="goStep(4)">← Back</button><button class="btn bp" id="sbtn" onclick="submitApp()">Submit Application ✓</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ADMIN ═══ -->
+<section id="pg-admin" class="pg">
+  <div class="awrap">
+    <div class="atop">
+      <div><h2>ADMIN<br><em style="font-style:normal;color:var(--am)">DASHBOARD</em></h2><div style="font-size:12px;color:var(--td);margin-top:5px">GamSkillHub Agency Panel</div></div>
+      <div style="display:flex;gap:7px;align-items:center"><span id="adm-who" style="font-size:11px;color:var(--td)"></span><button class="nb" onclick="adminOut()">Log Out</button></div>
+    </div>
+    <div class="tabbar">
+      <button class="tb on" onclick="aTab('pending',this)">Pending <span class="cbg" id="pcnt">0</span></button>
+      <button class="tb" onclick="aTab('approved',this)">Approved</button>
+      <button class="tb" onclick="aTab('rejected',this)">Rejected</button>
+      <button class="tb" onclick="aTab('orders',this)">📋 Orders <span class="cbg" id="ocnt">0</span></button>
+      <button class="tb" onclick="aTab('assign',this)">🔀 Assign</button>
+      <button class="tb" onclick="aTab('skills',this)">🛠 Skills</button>
+      <button class="tb" onclick="aTab('admins',this)">👥 Admins</button>
+    </div>
+    <div id="adm-content"><div class="sp"><div class="spin"></div></div></div>
+  </div>
+</section>
+
+<!-- ═══ PROFILE MODAL ═══ -->
+<div class="ov" id="profMod" onclick="closeMod(event,'profMod')">
+  <div class="modal">
+    <div class="mhd">
+      <div class="mava" id="mAva"></div>
+      <div class="mtb"><div class="mn" id="mName"></div><div class="msk" id="mSk"></div><div class="mloc" id="mLoc"></div><div id="mStars" class="stars" style="margin-top:5px"></div></div>
+      <button class="xb" onclick="closeMod(null,'profMod')">✕</button>
+    </div>
+    <div class="mbd">
+      <div class="ms"><div class="mst">Contact Worker</div><div class="ctns" id="mCont"></div></div>
+      <div class="ms"><div class="mst">About</div><div class="mbio" id="mBio"></div></div>
+      <div id="mShopSec" class="ms" style="display:none"><div class="mst">Shop / Work Location</div><div class="mbio" id="mShopAddr"></div></div>
+      <div class="ms"><div class="mst">Skills</div><div class="wtags" id="mTags"></div></div>
+      <div id="mIdSec" class="ms" style="display:none"><div class="mst">Verified ID</div><div class="id-row">🪪 &nbsp;ID document on file &nbsp;<a id="mIdLink" href="#" target="_blank">View</a></div></div>
+      <div class="ms"><div class="mst">Portfolio</div><div class="port-grid" id="mPort"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ORDER MODAL ═══ -->
+<div class="ov" id="ordMod" onclick="closeMod(event,'ordMod')">
+  <div class="modal" style="max-width:500px">
+    <div class="mhd" style="padding-bottom:14px">
+      <div class="mtb"><div class="mn">PLACE ORDER</div><div class="msk" id="om-who"></div></div>
+      <button class="xb" onclick="closeMod(null,'ordMod')">✕</button>
+    </div>
+    <div class="mbd" style="padding-top:0">
+      <div class="fg"><label class="fl">Service / Skill</label><input class="fi" id="om-sk" readonly></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Your Name *</label><input class="fi" id="om-nm" placeholder="Full name"></div>
+        <div class="fg"><label class="fl">Your Phone *</label><input class="fi" id="om-ph" type="tel" placeholder="+220 7XX XXXX"></div>
+      </div>
+      <div class="fg"><label class="fl">Your Address *</label><input class="fi" id="om-ad" placeholder="Where to come?"></div>
+      <div class="fg"><label class="fl">Describe the Job *</label><textarea class="fta" id="om-dc" placeholder="What needs to be done?"></textarea></div>
+      <div class="brow"><button class="btn bg" onclick="closeMod(null,'ordMod')">Cancel</button><button class="btn bp" onclick="submitQuickOrder()">Send Request ✓</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RATE MODAL ═══ -->
+<div class="ov" id="rateMod" onclick="closeMod(event,'rateMod')">
+  <div class="modal" style="max-width:440px">
+    <div class="mhd" style="padding-bottom:14px">
+      <div class="mtb"><div class="mn">RATE WORKER</div><div class="msk" id="rate-wn"></div></div>
+      <button class="xb" onclick="closeMod(null,'rateMod')">✕</button>
+    </div>
+    <div class="mbd" style="padding-top:0">
+      <div class="fg"><label class="fl">Star Rating *</label>
+        <div class="rrow"><span class="rs" onclick="setRating(1)">★</span><span class="rs" onclick="setRating(2)">★</span><span class="rs" onclick="setRating(3)">★</span><span class="rs" onclick="setRating(4)">★</span><span class="rs" onclick="setRating(5)">★</span></div>
+      </div>
+      <div class="fg"><label class="fl">Comments</label><textarea class="fta" id="rate-cm" placeholder="Tell us about the experience…" style="min-height:76px"></textarea></div>
+      <div class="brow"><button class="btn bg" onclick="closeMod(null,'rateMod')">Cancel</button><button class="btn bp" onclick="submitRating()">Submit ✓</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ UNIFIED LOGIN MODAL ═══ -->
+<div class="lov" id="loginMod">
+    <div class="lbox">
+      <div id="ltabs" class="lmode-tabs" style="display:none">
+        <button id="ltab-worker" class="lmode-tab on" onclick="switchLoginMode('worker')">WORKER</button>
+        <button id="ltab-admin" class="lmode-tab" onclick="switchLoginMode('admin')">ADMIN</button>
+      </div>
+      
+      <div id="lf-worker">
+        <h3 onclick="secretAdmin()" style="cursor:default">WORKER<br><em style="font-style:normal;color:var(--am)">LOGIN</em></h3>
+        <div class="lsub">Login with your phone number and password.</div>
+        <div class="fg"><label class="fl">Phone Number</label><input class="fi" id="wp-phone-modal" type="tel" placeholder="+220 7XX XXXX"></div>
+        <div class="fg"><label class="fl">Password</label><input class="fi" id="wp-pw-modal" type="password" placeholder="Your password"></div>
+        <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="loginWorkerModal()">Login →</button></div>
+      </div>
+
+      <div id="lf-admin" style="display:none">
+        <h3>ADMIN<br><em style="font-style:normal;color:var(--am)">LOGIN</em></h3>
+        <div class="lsub">Enter your agency admin credentials.</div>
+        <div class="fg"><label class="fl">Email</label><input class="fi" id="adm-em" type="email" placeholder="admin@gamskillhub.gm"></div>
+        <div class="fg"><label class="fl">Password</label><input class="fi" id="adm-pw" type="password" placeholder="Password"></div>
+        <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="tryLogin()">Admin Login →</button></div>
+      </div>
+      
+      <div class="lerr" id="lerr">❌ Incorrect credentials.</div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ══ CONFIG ══ */
+const CFG = {
+  supabaseUrl: 'https://lhzlqzpkqdppgnesitwo.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoemxxenBrcWRwcGduZXNpdHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NjY0ODEsImV4cCI6MjA5MTE0MjQ4MX0.zEqZv9O5LuC8Ma5mMQSGycwxnwXa4l7aL7dIZ6_Cosg',
+  adminEmail:  'admin@gamskillhub.gm',
+};
+
+/* ══ SKILLS ══ */
+const DEFAULT_SKILLS = [
+  {id:1,name:'Plumbing',icon:'🔧'},{id:2,name:'Electrical',icon:'⚡'},{id:3,name:'Carpentry',icon:'🪚'},
+  {id:4,name:'Masonry',icon:'🧱'},{id:5,name:'Painting',icon:'🎨'},{id:6,name:'Roofing',icon:'🏠'},
+  {id:7,name:'Tiling',icon:'⬜'},{id:8,name:'Welding',icon:'🔩'},{id:9,name:'AC/HVAC',icon:'❄️'},
+  {id:10,name:'Security Systems',icon:'🔐'},{id:11,name:'Landscaping',icon:'🌿'},{id:12,name:'General Labour',icon:'🛠️'},
+  {id:13,name:'Barber (Home)',icon:'✂️'},{id:14,name:'Home Cleaning',icon:'🧹'},{id:15,name:'Pest Control',icon:'🐛'},
+  {id:16,name:'Home Nursing',icon:'💊'},{id:17,name:'Laundry Service',icon:'👕'},{id:18,name:'Auto Mechanic',icon:'🔋'},
+  {id:19,name:'Solar Energy',icon:'☀️'},{id:20,name:'IT/Tech Support',icon:'💻'},
+];
+
+/* ══ DEMO DATA ══ */
+const DW = [
+  {id:'d1',name:'Modou Jallow',phone:'+220 700 1234',bio:'Expert plumber with 10 years experience. Fast, reliable, affordable.',location:'Serrekunda',shop_address:'Mosque Road, Serrekunda',years_experience:10,status:'approved',completed_jobs:87,rating:4.8,rating_count:23,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Plumbing','Roofing'],work_history:[{title:'Bathroom Overhaul',description:'Full replumb + new fixtures'},{title:'Roof Drainage',description:'Gutter repair'}]},
+  {id:'d2',name:'Fatou Ceesay',phone:'+220 770 5678',bio:'Professional painter. Premium paint, clean finishes.',location:'Bakau',shop_address:'',years_experience:6,status:'approved',completed_jobs:54,rating:4.9,rating_count:18,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Painting'],work_history:[{title:'Office Repaint',description:'Full interior, 4 rooms'}]},
+  {id:'d3',name:'Omar Sanyang',phone:'+220 720 9012',bio:'Certified electrician. Solar installations and repairs.',location:'Brikama',shop_address:'Brikama Highway',years_experience:12,status:'approved',completed_jobs:120,rating:5.0,rating_count:31,is_available:false,photo_url:'',id_doc_url:'has_id',skills:['Electrical','AC/HVAC','Solar Energy'],work_history:[{title:'5kW Solar Install',description:'Full panel + inverter'}]},
+  {id:'d4',name:'Lamin Touray',phone:'+220 780 3456',bio:'Skilled carpenter and furniture maker.',location:'Latrikunda',shop_address:'Latrikunda garage area',years_experience:8,status:'approved',completed_jobs:63,rating:4.7,rating_count:14,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Carpentry'],work_history:[{title:'Built-in Wardrobe',description:'Floor-to-ceiling unit'}]},
+  {id:'d5',name:'Aminata Dibba',phone:'+220 750 7890',bio:'Expert mason and tiler, 9 years.',location:'Sukuta',shop_address:'',years_experience:9,status:'approved',completed_jobs:44,rating:4.6,rating_count:9,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Masonry','Tiling'],work_history:[{title:'House Floor Tiling',description:'Full ceramic tile job'}]},
+  {id:'d6',name:'Baba Sowe',phone:'+220 760 2345',bio:'Professional welder. Gates, grills, roofing frames.',location:'Kanifing',shop_address:'Kanifing Industrial Area',years_experience:15,status:'approved',completed_jobs:98,rating:4.9,rating_count:27,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Welding','Roofing'],work_history:[{title:'Steel Gate',description:'Double-panel driveway gate'},{title:'Window Grills',description:'12 security grills'}]},
+  {id:'d7',name:'Mariama Jobe',phone:'+220 730 1122',bio:'Home barber. Professional haircuts at your doorstep.',location:'Fajara',shop_address:'',years_experience:4,status:'approved',completed_jobs:210,rating:4.8,rating_count:44,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Barber (Home)'],work_history:[]},
+  {id:'d8',name:'Ousman Fatty',phone:'+220 775 3344',bio:'Home cleaning specialist. Deep cleaning offices and homes.',location:'Kololi',shop_address:'',years_experience:5,status:'approved',completed_jobs:132,rating:4.7,rating_count:19,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Home Cleaning','Pest Control'],work_history:[]},
+  {id:'p1',name:'Isatou Sillah',phone:'+220 710 1111',bio:'',location:'Banjul',years_experience:3,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Painting','General Labour'],work_history:[]},
+  {id:'p2',name:'Kebba Gaye',phone:'+220 720 2222',bio:'',location:'Fajara',years_experience:7,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Electrical','Security Systems'],work_history:[]},
+];
+const DO = [
+  {id:'o1',client_name:'Alieu Bah',client_phone:'+220 711 0000',skill_needed:'Plumbing',description:'Leaking bathroom pipe needs fixing',client_address:'16 Atlantic Road, Kololi',status:'pending',created_at:new Date(Date.now()-3600000).toISOString(),worker_id:null},
+  {id:'o2',client_name:'Hawa Njie',client_phone:'+220 722 0000',skill_needed:'Home Cleaning',description:'Full house deep clean, 3 bedrooms',client_address:'Kairaba Ave, Fajara',status:'accepted',created_at:new Date(Date.now()-86400000).toISOString(),worker_id:'d8'},
+  {id:'o3',client_name:'Yankuba Touray',client_phone:'+220 733 0000',skill_needed:'Electrical',description:'Install 3 ceiling fans',client_address:'Brusubi near school',status:'completed',created_at:new Date(Date.now()-172800000).toISOString(),worker_id:'d3'},
+];
+
+/* ══ STATE ══ */
+let SB=null, DEMO=false;
+let workers=[], adminW=[], allOrders=[], skills=[...DEFAULT_SKILLS];
+let curFilter='all', curStep=1, pickedSkills=[], weN=0;
+let curAdminTab='pending', adminUser=null;
+let clientUser=null, workerUser=null;
+let curWpTab='new';
+let rateOId=null, rateWId=null, rateScore=0;
+let qWorker=null;
+let UF={photo:null,id:null,cert:[],port:[]};
+const WC={}; // worker cache — avoids JSON in onclick
+
+/* ══ INIT ══ */
+async function init() {
+  try {
+    SB=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
+    DEMO=false;
+    console.log('✓ Supabase connected successfully');
+  } catch(e){console.error('Supabase connection failed:', e); DEMO=true;}
+  
+  // Check for saved session
+  const saved = localStorage.getItem('gsh_admin');
+  if(saved){
+    try {
+      const {u, exp} = JSON.parse(saved);
+      if(Date.now() < exp){
+        adminUser = u;
+        const who = document.getElementById('adm-who');
+        if(who) who.textContent = u.name + ' (' + u.role + ')';
+        nav('admin');
+      } else {
+        localStorage.removeItem('gsh_admin');
+      }
+    } catch(e){}
+  }
+
+  try { await loadSkills(); } catch(e){console.warn('Skills load failed:', e);}
+  buildPills();
+  console.log('App initialized. DEMO mode:', DEMO);
+  buildPicker();
+  fillSkillSelect('ord-skill');
+  await fetchWorkers();
+}
+
+/* ══ NAVIGATION ══ */
+function nav(p){
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pg-'+p).classList.add('on');
+  window.scrollTo({top:0});
+  if(p==='admin'&&adminUser) loadAdmin();
+}
+
+/* ══ SKILLS ══ */
+async function loadSkills(){
+  if(DEMO) return;
+  try{
+    const {data}=await SB.from('skill_categories').select('*').eq('is_active',true).order('name');
+    if(data&&data.length) skills=data;
+  }catch(e){}
+}
+
+function buildPills(){
+  const row=document.getElementById('fpills');
+  // remove old dynamic pills, keep first "All Skills"
+  while(row.children.length>1) row.removeChild(row.lastChild);
+  skills.forEach(s=>{
+    const p=document.createElement('span');
+    p.className='pill';
+    p.textContent=s.icon+' '+s.name;
+    p.onclick=()=>filterBy(s.name,p);
+    row.appendChild(p);
+  });
+}
+
+function buildPicker(){
+  const g=document.getElementById('spicker');
+  if(!g) return;
+  g.innerHTML='';
+  skills.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='sko';d.dataset.name=s.name;
+    d.innerHTML=`<span class="sk-ic">${s.icon}</span><div class="sk-nm">${x(s.name)}</div>`;
+    d.onclick=()=>{d.classList.toggle('pk');pickedSkills=Array.from(document.querySelectorAll('.sko.pk')).map(e=>e.dataset.name);};
+    g.appendChild(d);
+  });
+}
+
+function fillSkillSelect(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.innerHTML='<option value="">Select a skill…</option>';
+  skills.forEach(s=>{const o=document.createElement('option');o.value=s.name;o.textContent=s.icon+' '+s.name;el.appendChild(o);});
+}
+
+/* ══ FETCH & RENDER WORKERS ══ */
+async function fetchWorkers(search=''){
+  const box=document.getElementById('wbox');
+  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
+  try{
+    if(!DEMO&&SB){
+      let q=SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('status','approved');
+      if(search) q=q.ilike('name','%'+search+'%');
+      const {data,error}=await q;
+      if(error) throw error;
+      workers=(data||[]).map(w=>({...w,
+        skills:(w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean),
+        work_history:w.work_history||[]
+      }));
+    } else {
+      await wait(280);
+      workers=DW.filter(w=>w.status==='approved'&&(!search||
+        w.name.toLowerCase().includes(search.toLowerCase())||
+        (w.skills||[]).some(s=>s.toLowerCase().includes(search.toLowerCase()))
+      ));
+    }
+  }catch(e){ workers=DW.filter(w=>w.status==='approved'); }
+  renderWorkers();
+  anim('stat-n',workers.length);
+  anim('stat-o',workers.reduce((a,w)=>a+(w.completed_jobs||0),0));
+}
+
+function doSearch(){ fetchWorkers(document.getElementById('srch').value.trim()); }
+
+function filterBy(cat,el){
+  curFilter=cat;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  renderWorkers();
+}
+
+function renderWorkers(){
+  const list=curFilter==='all'?workers:workers.filter(w=>(w.skills||[]).includes(curFilter));
+  document.getElementById('rcount').textContent=list.length+' worker'+(list.length!==1?'s':'')+' found';
+  const box=document.getElementById('wbox');
+  if(!list.length){
+    box.innerHTML=`<div class="empty"><div class="empi">🔍</div><h3>No Workers Found</h3><p>Try a different skill or search term.</p></div>`;
+    return;
+  }
+  box.innerHTML='';
+  const g=document.createElement('div');g.className='wgrid';
+  list.forEach(w=>{
+    WC[w.id]=w;
+    const ini=initials(w.name);
+    const pri=(w.skills||[])[0]||'Skilled Worker';
+    const av=w.is_available!==false;
+    const c=document.createElement('div');c.className='wc';
+    c.onclick=()=>openProfile(w.id);
+    c.innerHTML=`
+      <div class="ct">
+        <div class="wav">${w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.style.display='none'">`:''}<span style="${w.photo_url?'display:none':''}">` +ini+`</span></div>
+        <div class="wi"><div class="wn">${x(w.name)}</div><div class="wps">${x(pri)}</div></div>
+        <div class="wrat"><span class="s">★</span>${parseFloat(w.rating||5).toFixed(1)}</div>
+      </div>
+      <div class="wm">
+        <span class="wmi">📍 ${x(w.location||'Gambia')}</span>
+        <span class="wmi">🛠 ${w.years_experience||0}yrs</span>
+        <span class="wmi"><span class="dot ${av?'dot-ok':'dot-er'}"></span>${av?'Available':'Busy'}</span>
+      </div>
+      <div class="wtags">${(w.skills||[]).slice(0,3).map(s=>`<span class="tag">${x(s)}</span>`).join('')}</div>
+      <div class="wf">
+        <span style="font-size:10px;color:var(--mt)"><span style="color:var(--td);font-weight:600">${w.completed_jobs||0}</span> jobs · <span style="color:var(--td);font-weight:600">${w.rating_count||0}</span> reviews</span>
+        <div style="display:flex;gap:4px">
+          <a class="cl-link" href="tel:${x(w.phone)}" onclick="event.stopPropagation()">📞 Call</a>
+          <button class="ord-btn" onclick="event.stopPropagation();openOrdModal('${w.id}')">📋 Order</button>
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+  box.appendChild(g);
+}
+
+/* ══ PROFILE MODAL ══ */
+function openProfile(id){
+  const w=WC[id]; if(!w) return;
+  const ini=initials(w.name);
+  const ava=document.getElementById('mAva');
+  ava.innerHTML=w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.textContent='${ini}'">`:ini;
+  document.getElementById('mName').textContent=w.name;
+  document.getElementById('mSk').textContent=(w.skills||[]).join(' · ')||'Skilled Worker';
+  document.getElementById('mLoc').textContent='📍 '+(w.location||'The Gambia')+(w.shop_address?' · '+w.shop_address:'');
+  document.getElementById('mBio').textContent=w.bio||'No bio provided.';
+  const rv=Math.round(parseFloat(w.rating||5));
+  document.getElementById('mStars').innerHTML=[1,2,3,4,5].map(i=>`<span class="star${i<=rv?'':' e'}">★</span>`).join('');
+  const ss=document.getElementById('mShopSec');
+  if(w.shop_address){document.getElementById('mShopAddr').textContent='📍 '+w.shop_address;ss.style.display='block';}else ss.style.display='none';
+  document.getElementById('mCont').innerHTML=`
+    <a class="ctab cc" href="tel:${x(w.phone)}">📞 ${x(w.phone)}</a>
+    <a class="ctab cw" href="https://wa.me/${w.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
+    <button class="ctab co" onclick="closeMod(null,'profMod');openOrdModal('${w.id}')">📋 Place Order</button>
+    <div style="margin-top:12px;padding:10px;background:rgba(252,211,77,0.1);border-radius:8px;border:1px dashed var(--am);font-size:11px;color:var(--td)">
+      💳 <strong>Payment Info:</strong> Secure payments via Wave or Bank Transfer. Escrow protection enabled.
+    </div>`;
+  const ids=document.getElementById('mIdSec');
+  if(w.id_doc_url){document.getElementById('mIdLink').href=w.id_doc_url==='has_id'?'#':w.id_doc_url;ids.style.display='block';}else ids.style.display='none';
+  document.getElementById('mTags').innerHTML=(w.skills||[]).map(s=>`<span class="tag">${x(s)}</span>`).join('')||'<span style="color:var(--mt)">None listed</span>';
+  const ph=document.getElementById('mPort');
+  const wh=w.work_history||[];
+  const pi=(w.portfolio_urls||[]).filter(Boolean);
+  if(!wh.length&&!pi.length){ph.innerHTML='<p style="color:var(--mt);font-size:12px;grid-column:1/-1">No portfolio items yet.</p>';}
+  else{
+    const sk=skills.find(c=>(w.skills||[]).includes(c.name));
+    ph.innerHTML=pi.map(u=>`<div class="pi"><img src="${x(u)}" onerror="this.style.display='none'"></div>`).join('')+
+      wh.map(i=>`<div class="pi"><div class="pi-ic">${sk?.icon||'🔨'}</div><div class="pi-lb">${x(i.title)}</div></div>`).join('');
+  }
+  openMod('profMod');
+}
+
+/* ══ ORDER MODAL ══ */
+function openOrdModal(id){
+  const w=WC[id]; if(!w) return;
+  qWorker=w;
+  document.getElementById('om-who').textContent=w.name;
+  document.getElementById('om-sk').value=(w.skills||[])[0]||'';
+  if(clientUser){document.getElementById('om-nm').value=clientUser.name||'';document.getElementById('om-ph').value=clientUser.phone||'';}
+  openMod('ordMod');
+}
+
+async function submitQuickOrder(){
+  const nm=g('om-nm'),ph=g('om-ph'),ad=g('om-ad'),dc=g('om-dc');
+  if(!nm||!ph||!ad){toast('Fill in required fields.','er');return;}
+  
+  // Payment Method Selection (Mock)
+  const payMethod = confirm("Would you like to pay securely via Wave/Bank Transfer now to enable Escrow Protection?\n\n(Click Cancel to pay cash on delivery)") ? 'digital' : 'cash';
+
+  try{
+    const p={worker_id:qWorker?.id||null,skill_needed:document.getElementById('om-sk').value||'General',
+      description:dc,client_address:ad,client_name:nm,client_phone:ph,
+      status:qWorker?'assigned':'pending',user_id:clientUser?.id||null,
+      payment_method: payMethod};
+    
+    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
+    else await wait(380);
+
+    if(payMethod === 'digital') {
+      toast('Redirecting to Secure Payment Gateway...', 'ok');
+      await wait(1500);
+      alert('MODEM PAY INTEGRATION:\nIn a live environment, you would now be redirected to Wave/Bank portal to complete the payment of D500.00.');
+    }
+
+    closeMod(null,'ordMod');
+    toast('Order placed! We\'ll confirm shortly. ✓','ok');
+    ['om-nm','om-ph','om-ad','om-dc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
+}
+
+/* ══ MODAL HELPERS ══ */
+function openMod(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
+function closeMod(e,id){
+  if(e&&e.target!==document.getElementById(id))return;
+  document.getElementById(id).classList.remove('on');
+  document.body.style.overflow='';
+}
+
+/* ══ CLIENT PORTAL ══ */
+async function clientLogin(){
+  const nm=g('cl-name'),ph=g('cl-phone');
+  if(!nm||!ph){toast('Name and phone required.','er');return;}
+  try{
+    if(!DEMO&&SB){
+      let {data:ex}=await SB.from('users').select('*').eq('phone',ph).maybeSingle();
+      if(!ex){const {data,error}=await SB.from('users').insert([{name:nm,phone:ph,email:g('cl-email')}]).select().single();if(error)throw error;clientUser=data;}
+      else clientUser=ex;
+    }else{await wait(280);clientUser={id:'demo-cl',name:nm,phone:ph};}
+    document.getElementById('cl-hi').textContent=clientUser.name;
+    document.getElementById('cl-auth').style.display='none';
+    document.getElementById('cl-dash').style.display='block';
+    fillSkillSelect('ord-skill');
+    loadClientOrders();
+  }catch(e){toast('Login failed.','er');}
+}
+function clientOut(){clientUser=null;document.getElementById('cl-auth').style.display='block';document.getElementById('cl-dash').style.display='none';}
+
+function clTab(t,el){
+  document.querySelectorAll('.pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  document.getElementById('cl-order-tab').style.display=t==='order'?'block':'none';
+  document.getElementById('cl-track-tab').style.display=t==='track'?'block':'none';
+  if(t==='track')loadClientOrders();
+}
+
+async function placeOrder(){
+  if(!clientUser){toast('Please log in first.','er');return;}
+  const sk=g('ord-skill'),ad=g('ord-addr'),dc=g('ord-desc');
+  if(!sk||!ad){toast('Skill and address are required.','er');return;}
+  try{
+    const p={user_id:clientUser.id,skill_needed:sk,description:dc,client_address:ad,
+      client_name:clientUser.name,client_phone:clientUser.phone,status:'pending',
+      scheduled_at:document.getElementById('ord-dt').value||null};
+    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
+    else await wait(380);
+    toast('Order placed! ✓','ok');
+    ['ord-skill','ord-addr','ord-desc','ord-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    clTab('track',document.querySelectorAll('.pt')[1]);
+  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
+}
+
+async function loadClientOrders(){
+  const box=document.getElementById('cl-orders');
+  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
+  let orders=[];
+  try{
+    if(!DEMO&&SB&&clientUser){
+      const {data}=await SB.from('orders').select('*,workers(name,phone,photo_url,location,shop_address)').eq('user_id',clientUser.id).order('created_at',{ascending:false});
+      orders=data||[];
+    }else{
+      await wait(250);
+      orders=DO.slice(0,2).map(o=>({...o,workers:o.worker_id?DW.find(w=>w.id===o.worker_id):null}));
+    }
+  }catch(e){orders=[];}
+  document.getElementById('cl-cnt').textContent=orders.length;
+  if(!orders.length){box.innerHTML='<div class="empty"><div class="empi">📋</div><h3>No Bookings Yet</h3><p>Place your first order to get started.</p></div>';return;}
+  box.innerHTML=orders.map(o=>{
+    const wk=o.workers;
+    const acts=[];
+    if(o.status==='accepted') acts.push(`<button class="asm ag" onclick="updOrder('${o.id}','worker_arrived')">✓ Worker Arrived</button>`);
+    if(o.status==='worker_arrived') acts.push(`<button class="asm aa" onclick="updOrder('${o.id}','completed')">✓ Mark Complete</button>`);
+    if(o.status==='completed') acts.push(`<button class="asm ab" onclick="openRateMod('${o.id}','${o.worker_id||''}','${x(wk?.name||'')}')">⭐ Rate Worker</button>`);
+    if(['pending','assigned'].includes(o.status)) acts.push(`<button class="asm ar" onclick="updOrder('${o.id}','cancelled')">Cancel</button>`);
+    return `<div class="oc">
+      <div class="oct"><div class="ocs">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
+      <div class="ocm"><span>📅 ${fd(o.created_at)}</span><span>📍 ${x(o.client_address)}</span>${wk?`<span>👷 ${x(wk.name)}</span>`:'<span>⏳ Awaiting worker</span>'}</div>
+      ${o.description?`<div class="ocd">${x(o.description)}</div>`:''}
+      ${wk&&o.status!=='pending'?`<div class="wk-detail">👷 <strong>${x(wk.name)}</strong> · <a href="tel:${x(wk.phone)}">📞 ${x(wk.phone)}</a>${wk.location?' · 📍 '+x(wk.location):''}${wk.shop_address?' · Shop: '+x(wk.shop_address):''}</div>`:''}
+      ${acts.length?`<div class="oca">${acts.join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+async function updOrder(id,status){
+  try{
+    const u={status};
+    if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
+    if(status==='completed')u.completed_at=new Date().toISOString();
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',id);if(error)throw error;}
+    else{const o=DO.find(x=>x.id===id);if(o)Object.assign(o,u);}
+    toast('Updated ✓','ok');
+    loadClientOrders();
+    if(adminUser)loadAdmin();
+  }catch(e){toast('Failed.','er');}
+}
+
+/* ══ RATING ══ */
+function openRateMod(oId,wId,wName){
+  rateOId=oId;rateWId=wId;rateScore=0;
+  document.getElementById('rate-wn').textContent=wName;
+  document.getElementById('rate-cm').value='';
+  setRating(0);openMod('rateMod');
+}
+function setRating(n){rateScore=n;document.querySelectorAll('.rs').forEach((s,i)=>s.classList.toggle('on',i<n));}
+async function submitRating(){
+  if(!rateScore){toast('Select a star rating.','er');return;}
+  try{
+    const p={order_id:rateOId,worker_id:rateWId,user_id:clientUser?.id||null,score:rateScore,comment:g('rate-cm')};
+    if(!DEMO&&SB){const {error}=await SB.from('ratings').insert([p]);if(error)throw error;}
+    else await wait(280);
+    closeMod(null,'rateMod');toast('Rating submitted ✓','ok');
+    loadClientOrders();fetchWorkers();
+  }catch(e){toast('Already rated or failed.','er');}
+}
+
+/* ══ WORKER PORTAL ══ */
+async function workerLogin(){
+  const ph=g('wp-phone');if(!ph){toast('Enter your registered phone.','er');return;}
+  try{
+    if(!DEMO&&SB){
+      const {data,error}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('phone',ph).eq('status','approved').maybeSingle();
+      if(error||!data){toast('Not found or not approved yet.','er');return;}
+      workerUser={...data,skills:(data.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean)};
+    }else{
+      await wait(280);
+      workerUser=DW.find(w=>w.phone===ph&&w.status==='approved');
+      if(!workerUser){toast('Not found or not approved yet.','er');return;}
+    }
+    WC[workerUser.id]=workerUser;
+    document.getElementById('wp-hi').textContent=workerUser.name;
+    document.getElementById('wp-auth').style.display='none';
+    document.getElementById('wp-dash').style.display='block';
+    updAvail();loadWpOrders();
+  }catch(e){toast('Login failed.','er');}
+}
+function workerOut(){workerUser=null;document.getElementById('wp-auth').style.display='block';document.getElementById('wp-dash').style.display='none';}
+function updAvail(){
+  const av=workerUser?.is_available!==false;
+  document.getElementById('wp-avlbl').textContent=av?'🟢 Available':'🔴 Busy';
+  document.getElementById('wp-avbtn').textContent=av?'Set Busy':'Set Available';
+}
+async function toggleAvail(){
+  const nv=!(workerUser?.is_available!==false);
+  try{
+    if(!DEMO&&SB)await SB.from('workers').update({is_available:nv}).eq('id',workerUser.id);
+    workerUser.is_available=nv;updAvail();
+    toast(nv?'You are now Available ✓':'Set as Busy','ok');
+  }catch(e){toast('Failed.','er');}
+}
+
+function wpTab(t,el){
+  curWpTab=t;document.querySelectorAll('.pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  loadWpOrders();
+}
+
+async function loadWpOrders(){
+  if(!workerUser)return;
+  const box = document.getElementById('wp-orders') || document.getElementById('wp-content');
+  if(!box) return;
+  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
+  let orders=[];
+  try{
+    const smap={new:['pending','assigned'],active:['accepted','worker_arrived'],done:['completed']};
+    const stats=smap[curWpTab]||['pending'];
+    if(!DEMO&&SB){
+      let q=SB.from('orders').select('*').in('status',stats);
+      if(curWpTab!=='new')q=q.eq('worker_id',workerUser.id);
+      const {data}=await q.order('created_at',{ascending:false});
+      orders=data||[];
+    }else{
+      await wait(220);
+      orders=DO.filter(o=>stats.includes(o.status)&&(curWpTab==='new'||(o.worker_id===workerUser.id)));
+    }
+  }catch(e){orders=[];}
+  const cnt = document.getElementById('wp-cnt');
+  if(cnt) cnt.textContent = orders.length;
+  if(!orders.length){box.innerHTML=`<div class="empty"><div class="empi">📋</div><h3>No ${curWpTab} jobs</h3><p>Jobs will appear here.</p></div>`;return;}
+  box.innerHTML=orders.map(o=>{
+    const acts=[];
+    if(curWpTab==='new') acts.push(`<button class="asm ag" onclick="wAccept('${o.id}')">✓ Accept Job</button>`);
+    if(o.status==='accepted') acts.push(`<button class="asm aa" onclick="wUpdStatus('${o.id}','worker_arrived')">📍 I\'ve Arrived</button>`);
+    if(o.status==='worker_arrived') acts.push(`<button class="asm ab" onclick="wUpdStatus('${o.id}','completed')">✅ Mark Complete</button>`);
+    return `<div style="background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:9px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:7px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase">${x(o.skill_needed)}</div>
+        <span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span>
+      </div>
+      <div style="font-size:12px;color:var(--td);line-height:1.7;margin-bottom:11px">
+        📍 ${x(o.client_address)}<br>
+        👤 ${x(o.client_name)} · <a href="tel:${x(o.client_phone)}" style="color:var(--am)">📞 ${x(o.client_phone)}</a><br>
+        ${o.description?`📝 ${x(o.description)}<br>`:''}
+        📅 ${fd(o.created_at)}
+      </div>
+      ${acts.length?`<div style="display:flex;gap:6px;flex-wrap:wrap">${acts.join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+async function wAccept(oId){
+  try{
+    const u={status:'accepted',worker_id:workerUser.id,accepted_at:new Date().toISOString()};
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
+    toast('Job accepted! ✓','ok');loadWpOrders();
+  }catch(e){toast('Failed.','er');}
+}
+async function wUpdStatus(oId,status){
+  const u={status};
+  if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
+  if(status==='completed')u.completed_at=new Date().toISOString();
+  try{
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
+    toast('Status updated ✓','ok');loadWpOrders();
+  }catch(e){toast('Failed.','er');}
+}
+
+/* ══ FILE UPLOADS ══ */
+function hf(inp,t){
+  const f=inp.files[0];if(!f)return;
+  UF[t]=f;
+  const prev=document.getElementById('prev-'+t);
+  if(f.type.startsWith('image/')){
+    const r=new FileReader();r.onload=e=>{prev.innerHTML=`<div class="uthw"><img class="uth" src="${e.target.result}"><button class="urm" onclick="clf('${t}')">✕</button></div>`;};r.readAsDataURL(f);
+  }else{prev.innerHTML=`<div class="ufi">📄 ${x(f.name)}<button class="rm" onclick="clf('${t}')">✕</button></div>`;}
+}
+function hfs(inp,t){
+  const files=Array.from(inp.files);if(!files.length)return;
+  if(t==='cert')UF.cert.push(...files);
+  if(t==='port')UF.port.push(...files);
+  const prev=document.getElementById('prev-'+t);
+  files.forEach(f=>{
+    if(f.type.startsWith('image/')){const r=new FileReader();r.onload=e=>{prev.innerHTML+=`<div class="uthw"><img class="uth" src="${e.target.result}"></div>`;};r.readAsDataURL(f);}
+    else{prev.innerHTML+=`<div class="ufi">📄 ${x(f.name)}</div>`;}
+  });
+}
+function clf(t){UF[t]=t==='cert'||t==='port'?[]:null;document.getElementById('prev-'+t).innerHTML='';}
+function dzo(e,id){e.preventDefault();document.getElementById(id).classList.add('drag');}
+function dzout(id){document.getElementById(id).classList.remove('drag');}
+function dzd(e,id,t){e.preventDefault();dzout(id);const f=e.dataTransfer.files;if(f.length){t==='cert'||t==='port'?hfs({files:f},t):hf({files:f},t);}}
+
+async function uploadFile(file,bucket,path){
+  if(!SB||!file)return null;
+  try{
+    const {error}=await SB.storage.from(bucket).upload(path,file,{upsert:true});
+    if(error)throw error;
+    return SB.storage.from(bucket).getPublicUrl(path).data?.publicUrl||null;
+  }catch(e){console.warn('Upload fail:',e);return null;}
+}
+
+/* ══ REGISTRATION ══ */
+function goStep(n){
+  if(n>curStep){
+    if(curStep===1&&(!g('rn')||!g('rp')||!g('rl')||!g('rx'))){toast('Fill in all required fields.','er');return;}
+    if(curStep===2&&pickedSkills.length===0){toast('Select at least one skill.','er');return;}
+    if(curStep===3&&!UF.photo&&!UF.id){toast('Upload your photo and ID document.','er');return;}
+    if(n===5)buildReview();
+  }
+  document.getElementById('fs'+curStep).classList.remove('on');
+  for(let i=1;i<=5;i++){
+    const nd=document.getElementById('sn'+i);
+    nd.classList.remove('ac','dn');
+    if(i<n)nd.classList.add('dn');
+    if(i===n)nd.classList.add('ac');
+  }
+  curStep=n;
+  document.getElementById('fs'+n).classList.add('on');
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+
+function buildReview(){
+  document.getElementById('rev-box').innerHTML=`
+    <div class="rvg">
+      <div><div class="rvl">Name</div><div class="rvv">${x(g('rn'))}</div></div>
+      <div><div class="rvl">Phone</div><div class="rvv">${x(g('rp'))}</div></div>
+      <div><div class="rvl">Location</div><div class="rvv">${x(g('rl'))}</div></div>
+      <div><div class="rvl">Experience</div><div class="rvv">${x(g('rx'))} years</div></div>
+      <div style="grid-column:1/-1"><div class="rvl">Skills</div><div class="wtags" style="margin-top:5px">${pickedSkills.map(s=>`<span class="tag">${x(s)}</span>`).join('')}</div></div>
+      <div style="grid-column:1/-1"><div class="rvl">Documents</div><div class="rvv" style="font-size:12px;color:var(--td)">
+        ${UF.photo?'✅ Photo':'❌ No photo'} &nbsp;${UF.id?'✅ ID':'❌ No ID'} &nbsp;${UF.cert.length?'✅ '+UF.cert.length+' cert(s)':'No certs'}
+      </div></div>
+    </div>`;
+}
+
+let weCount2=0;
+function addWE(){
+  weCount2++;const n=weCount2;
+  const li=document.getElementById('we-list');
+  const d=document.createElement('div');d.className='we';d.id='we-'+n;
+  d.innerHTML=`
+    <div class="weh"><div class="wet">Example #${n}</div><button class="rmb" onclick="this.closest('.we').remove()">✕</button></div>
+    <div class="fg"><label class="fl">Job Title</label><input class="fi we-t" placeholder="e.g. Bathroom repair"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Description</label><input class="fi we-d" placeholder="Brief description"></div>
+      <div class="fg"><label class="fl">Category</label><select class="fse we-c">${skills.map(s=>`<option value="${x(s.name)}">${s.icon} ${x(s.name)}</option>`).join('')}</select></div>
+    </div>`;
+  li.appendChild(d);
+}
+
+function getWE(){return Array.from(document.querySelectorAll('.we')).map(el=>({title:el.querySelector('.we-t').value,description:el.querySelector('.we-d').value,category:el.querySelector('.we-c').value})).filter(e=>e.title.trim());}
+
+async function submitApp(){
+  const bio=g('rbio');
+  if(!bio){toast('Please write a short bio.','er');return;}
+  if(!document.getElementById('ragree').checked){toast('Please accept the terms.','er');return;}
+  const btn=document.getElementById('sbtn');
+  btn.disabled=true;btn.textContent='Submitting…';
+  try{
+    const payload={name:g('rn'),phone:g('rp'),email:g('re'),location:g('rl'),shop_address:g('rsa'),years_experience:parseInt(g('rx'))||0,bio,status:'pending',is_available:true};
+    if(!DEMO&&SB){
+      const wId=`${payload.name.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}`;
+      if(UF.photo) payload.photo_url=await uploadFile(UF.photo,'worker-photos',`${wId}/photo`);
+      if(UF.id) payload.id_doc_url=await uploadFile(UF.id,'worker-docs',`${wId}/id`);
+      const {data:wk,error}=await SB.from('workers').insert([payload]).select().single();
+      if(error)throw error;
+      if(pickedSkills.length){
+        const rows=pickedSkills.map(s=>{const c=skills.find(x=>x.name===s);return c?{worker_id:wk.id,category_id:c.id}:null;}).filter(Boolean);
+        if(rows.length)await SB.from('worker_skills').insert(rows);
+      }
+      const wh=getWE();
+      if(wh.length)await SB.from('work_history').insert(wh.map(e=>({...e,worker_id:wk.id})));
+    }else await wait(700);
+    document.getElementById('reg-ok').classList.add('on');
+    document.querySelectorAll('.fstep').forEach(s=>s.classList.remove('on'));
+    document.querySelectorAll('.snd').forEach(s=>{s.classList.remove('ac');s.classList.add('dn');});
+    toast('Application submitted! ✓','ok');
+    setTimeout(resetForm,8000);
+  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');btn.disabled=false;btn.textContent='Submit Application ✓';}
+}
+
+function resetForm(){
+  document.getElementById('reg-ok').classList.remove('on');
+  pickedSkills=[];curStep=1;weCount2=0;
+  UF={photo:null,id:null,cert:[],port:[]};
+  document.querySelectorAll('.fi,.fta').forEach(el=>el.value='');
+  document.querySelectorAll('.sko').forEach(el=>el.classList.remove('pk'));
+  document.getElementById('we-list').innerHTML='';
+  ['prev-photo','prev-id','prev-cert','prev-port'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});
+  document.querySelectorAll('.snd').forEach((nd,i)=>{nd.classList.remove('dn','ac');if(i===0)nd.classList.add('ac');});
+  document.getElementById('fs1').classList.add('on');
+  document.getElementById('sbtn').disabled=false;document.getElementById('sbtn').textContent='Submit Application ✓';
+}
+
+/* ══ ADMIN LOGIN ══ */
+function openAdminLogin(){if(adminUser){nav('admin');return;}document.getElementById('loginMod').classList.add('on');setTimeout(()=>document.getElementById('adm-pw').focus(),80);}
+function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';const pw=document.getElementById('adm-pw');if(pw)pw.value='';const ph=document.getElementById('wp-phone-modal');if(ph)ph.value='';}
+
+async function tryLogin(){
+  const em = (document.getElementById('adm-em')?.value || '').trim().toLowerCase();
+  const pw = (document.getElementById('adm-pw')?.value || '').trim();
+  const err = document.getElementById('lerr');
+  if(err) err.style.display = 'none';
+
+  try {
+    let adm = null;
+    
+    // 1. Try Supabase first if available
+    if (!DEMO && SB) {
+      try {
+        const { data, error } = await SB.from('admin_users').select('*').eq('email', em).eq('password', pw).maybeSingle();
+        if (!error && data) adm = data;
+      } catch (e) { console.warn('Supabase auth failed:', e); }
+    }
+
+    // 2. Absolute Fallback (Matches both email and password)
+    if (!adm && (em === 'admin@gamskillhub.gm' || em === 'admin') && pw === 'Admin@2024!') {
+      adm = { name: 'Agency Admin', email: 'admin@gamskillhub.gm', role: 'super_admin' };
+    }
+
+    if (!adm) {
+      if(err) err.style.display = 'block';
+      return;
+    }
+
+    adminUser = adm;
+    // Save session for 24 hours
+    localStorage.setItem('gsh_admin', JSON.stringify({u: adm, exp: Date.now() + 86400000}));
+    
+    const who = document.getElementById('adm-who');
+    if(who) who.textContent = adm.name + ' (' + adm.role + ')';
+    
+    closeLogin();
+    nav('admin');
+    loadAdmin();
+    toast('Welcome, Admin', 'ok');
+  } catch (e) {
+    if(err) err.style.display = 'block';
+    console.error('Login error:', e);
+  }
+}
+function adminOut(){adminUser=null;localStorage.removeItem('gsh_admin');nav('home');}
+
+/* ══ ADMIN DASHBOARD ══ */
+async function loadAdmin(){
+  try{
+    if(!DEMO&&SB){
+      const {data:wd}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').order('created_at',{ascending:false});
+      adminW=(wd||[]).map(w=>({...w,skills:(w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean),work_history:w.work_history||[]}));
+      const {data:od}=await SB.from('orders').select('*,workers(name,phone),users(name,phone)').order('created_at',{ascending:false});
+      allOrders=od||[];
+    }else{await wait(200);adminW=[...DW];allOrders=[...DO];}
+  }catch(e){adminW=[...DW];allOrders=[...DO];}
+  adminW.forEach(w=>{WC[w.id]=w;});
+  document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
+  document.getElementById('ocnt').textContent=allOrders.filter(o=>o.status==='pending').length;
+  renderAdmin();
+}
+
+function aTab(t,el){
+  curAdminTab=t;
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  renderAdmin();
+}
+
+function renderAdmin(){
+  const box=document.getElementById('adm-content');
+  if(curAdminTab==='pending'||curAdminTab==='approved'||curAdminTab==='rejected') renderAWorkers(box);
+  else if(curAdminTab==='orders') renderAOrders(box);
+  else if(curAdminTab==='assign') renderAssign(box);
+  else if(curAdminTab==='skills') renderSkills(box);
+  else if(curAdminTab==='admins') renderAdmins(box);
+}
+
+function renderAWorkers(box){
+  const list=adminW.filter(w=>w.status===curAdminTab);
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="empi">✅</div><h3>All Clear</h3><p>No ${curAdminTab} workers.</p></div>`;return;}
+  box.innerHTML=list.map(w=>`
+    <div class="acard">
+      <div class="aav">${w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.style.display='none'">`:''} ${initials(w.name)}</div>
+      <div class="ainfo">
+        <div class="anm">${x(w.name)}</div>
+        <div class="amet">
+          <span>📞 ${x(w.phone)}</span><span>📍 ${x(w.location||'N/A')}</span>
+          <span>🛠 ${(w.skills||[]).map(x).join(', ')||'None'}</span>
+          <span>${w.years_experience||0}yrs</span>
+          ${w.id_doc_url?`<a href="${x(w.id_doc_url)}" target="_blank" style="color:var(--ok)">🪪 View ID</a>`:'<span style="color:var(--er)">⚠ No ID</span>'}
+          ${w.photo_url?`<a href="${x(w.photo_url)}" target="_blank" style="color:var(--ok)">📷 View Photo</a>`:''}
+          <span class="sta sta-${w.status}">${w.status}</span>
+        </div>
+      </div>
+      <div class="aacts">
+        <button class="aview" onclick="openProfile('${w.id}')">View</button>
+        ${w.status!=='approved'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">✓ Approve</button>`:''}
+        ${w.status!=='rejected'?`<button class="arej" onclick="setStatus('${w.id}','rejected')">✕ Reject</button>`:''}
+        ${w.status==='rejected'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">↩ Restore</button>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function renderAOrders(box){
+  if(!allOrders.length){box.innerHTML=`<div class="empty"><div class="empi">📋</div><h3>No Orders</h3><p>Client orders appear here.</p></div>`;return;}
+  box.innerHTML=allOrders.map(o=>{
+    const wk=o.workers;
+    const acts=[];
+    if(o.status==='pending') acts.push(`<button class="asm ab" onclick="curAdminTab='assign';renderAdmin()">Assign Worker</button>`);
+    if(!['completed','cancelled'].includes(o.status)) acts.push(`<button class="asm ag" onclick="aSetOrder('${o.id}','completed')">✓ Complete</button>`);
+    if(!['cancelled'].includes(o.status)) acts.push(`<button class="asm ar" onclick="aSetOrder('${o.id}','cancelled')">Cancel</button>`);
+    return `<div class="orow">
+      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
+      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📞 ${x(o.client_phone)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span>${wk?`<span>👷 ${x(wk.name||wk)}</span>`:'<span style="color:var(--am)">⏳ No worker</span>'}</div>
+      ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:7px">${x(o.description)}</div>`:''}
+      ${acts.length?`<div class="ora">${acts.join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderAssign(box){
+  const unassigned=allOrders.filter(o=>['pending','assigned'].includes(o.status));
+  const approved=adminW.filter(w=>w.status==='approved');
+  box.innerHTML=`<div class="shtit">MANUALLY ASSIGN ORDERS</div>
+    ${!unassigned.length?`<div class="empty"><div class="empi">✅</div><h3>No Pending Orders</h3><p>All orders assigned.</p></div>`:
+    unassigned.map(o=>`<div class="orow">
+      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status}</span></div>
+      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span></div>
+      ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:9px">${x(o.description)}</div>`:''}
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select class="asel" id="asel-${o.id}">
+          <option value="">Select worker…</option>
+          <optgroup label="— Matching Skill —">${approved.filter(w=>(w.skills||[]).some(s=>s.toLowerCase()===o.skill_needed.toLowerCase())).map(w=>`<option value="${w.id}">${x(w.name)} · ${x(w.location||'')}</option>`).join('')}</optgroup>
+          <optgroup label="— All Approved —">${approved.map(w=>`<option value="${w.id}">${x(w.name)} · ${(w.skills||[]).map(x).join(', ')}</option>`).join('')}</optgroup>
+        </select>
+        <button class="asm ag" onclick="doAssign('${o.id}')">Assign →</button>
+      </div>
+    </div>`).join('')}`;
+}
+
+async function doAssign(oId){
+  const sel=document.getElementById('asel-'+oId);
+  const wId=sel?.value;if(!wId){toast('Select a worker.','er');return;}
+  try{
+    const u={worker_id:wId,status:'assigned',assigned_by_admin:true};
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
+    toast('Order assigned ✓','ok');loadAdmin();
+  }catch(e){toast('Failed.','er');}
+}
+
+async function aSetOrder(oId,status){
+  try{
+    const u={status};if(status==='completed')u.completed_at=new Date().toISOString();
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
+    toast('Updated ✓','ok');loadAdmin();
+  }catch(e){toast('Failed.','er');}
+}
+
+function renderSkills(box){
+  box.innerHTML=`<div class="shtit">MANAGE SKILLS</div>
+    <div class="skgrid">${skills.map(s=>`
+      <div class="ski"><div class="ski-ic">${s.icon}</div><div class="ski-nm">${x(s.name)}</div><button class="ski-dl" onclick="delSkill(${s.id})" title="Remove">✕</button>
+    </div>`).join('')}</div>
+    <hr class="sep">
+    <div class="shtit" style="font-size:16px">ADD NEW SKILL</div>
+    <div class="addbox">
+      <div class="fg"><label class="fl">Icon</label><input class="fi" id="sk-ic" placeholder="🔨" maxlength="4"></div>
+      <div class="fg"><label class="fl">Skill Name *</label><input class="fi" id="sk-nm" placeholder="e.g. Home Nursing"></div>
+      <div class="fg"><label class="fl">Description</label><input class="fi" id="sk-dc" placeholder="Short description"></div>
+      <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addSkill()">Add +</button></div>
+    </div>`;
+}
+
+async function addSkill(){
+  const nm=g('sk-nm'),icon=g('sk-ic')||'🛠️',desc=g('sk-dc');
+  if(!nm){toast('Skill name is required.','er');return;}
+  if(skills.some(s=>s.name.toLowerCase()===nm.toLowerCase())){toast('Skill already exists.','er');return;}
+  try{
+    let ns={name:nm,icon,description:desc,is_active:true};
+    if(!DEMO&&SB){const {data,error}=await SB.from('skill_categories').insert([ns]).select().single();if(error)throw error;ns=data;}
+    else ns.id=Date.now();
+    skills.push(ns);
+    buildPills();buildPicker();fillSkillSelect('ord-skill');
+    toast('"'+nm+'" added ✓','ok');renderAdmin();
+  }catch(e){toast('Failed.','er');}
+}
+
+async function delSkill(id){
+  if(!confirm('Remove this skill?'))return;
+  try{
+    if(!DEMO&&SB){const {error}=await SB.from('skill_categories').delete().eq('id',id);if(error)throw error;}
+    skills=skills.filter(s=>s.id!==id);
+    buildPills();buildPicker();fillSkillSelect('ord-skill');
+    toast('Skill removed.','ok');renderAdmin();
+  }catch(e){toast('Failed.','er');}
+}
+
+async function renderAdmins(box){
+  let admins=[];
+  try{
+    if(!DEMO&&SB){const {data}=await SB.from('admin_users').select('*').order('created_at');admins=data||[];}
+    else admins=[{id:'a1',name:'Agency Admin',email:'admin@gamskillhub.gm',role:'super_admin',created_at:new Date().toISOString()}];
+  }catch(e){admins=[];}
+  box.innerHTML=`<div class="shtit">ADMIN USERS</div>
+    ${admins.map(a=>`<div class="admrow">
+      <div class="admav">${initials(a.name)}</div>
+      <div class="adminfo"><div class="admnm">${x(a.name)} <span class="sta sta-accepted" style="margin-left:5px">${a.role}</span></div><div class="admmt">${x(a.email)} · ${fd(a.created_at)}</div></div>
+      ${a.role!=='super_admin'?`<button class="arej" style="margin-left:auto;font-size:10px;padding:4px 10px" onclick="delAdmin('${a.id}')">Remove</button>`:''}
+    </div>`).join('')}
+    <hr class="sep">
+    <div class="shtit" style="font-size:16px">ADD ADMIN USER</div>
+    <div class="addadmbox">
+      <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="na-nm" placeholder="Full name"></div>
+      <div class="fg"><label class="fl">Email *</label><input class="fi" id="na-em" type="email" placeholder="email@example.com"></div>
+      <div class="fg"><label class="fl">Password *</label><input class="fi" id="na-pw" type="password" placeholder="Strong password"></div>
+      <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addAdmin()">Add Admin +</button></div>
+    </div>`;
+}
+
+async function addAdmin(){
+  const nm=g('na-nm'),em=g('na-em'),pw=g('na-pw');
+  if(!nm||!em||!pw){toast('All fields required.','er');return;}
+  try{
+    if(!DEMO&&SB){const {error}=await SB.from('admin_users').insert([{name:nm,email:em,password:pw,role:'admin'}]);if(error)throw error;}
+    toast('"'+nm+'" added as admin ✓','ok');renderAdmins(document.getElementById('adm-content'));
+  }catch(e){toast('Failed. Email may exist already.','er');}
+}
+
+async function delAdmin(id){
+  if(!confirm('Remove this admin user?'))return;
+  try{
+    if(!DEMO&&SB)await SB.from('admin_users').delete().eq('id',id);
+    toast('Removed.','ok');renderAdmins(document.getElementById('adm-content'));
+  }catch(e){toast('Failed.','er');}
+}
+
+async function setStatus(id,status){
+  try{
+    let pass = null;
+    if(status === 'approved'){
+      // Generate a simple password for the worker
+      pass = Math.random().toString(36).slice(-8);
+    }
+
+    if(!DEMO&&SB){
+      const update = {status};
+      if(pass) update.password = pass;
+      const {error}=await SB.from('workers').update(update).eq('id',id);
+      if(error)throw error;
+    }
+    
+    const w=adminW.find(w=>w.id===id);
+    if(w) w.status=status;
+    
+    document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
+    renderAdmin();
+    fetchWorkers();
+    
+    if(status==='approved'){
+      const msg = 'Worker approved! ✓' + (pass ? ' Temporary Password: ' + pass : '');
+      toast(msg, 'ok');
+      // In a real app, you would send this via SMS/Email API here
+      console.log('NOTIFICATION: Worker ' + w?.name + ' approved. Credentials: ' + w?.phone + ' / ' + pass);
+      if(pass) alert('WORKER APPROVED!\n\nPlease send these credentials to the worker:\nPhone: ' + w?.phone + '\nPassword: ' + pass);
+    } else {
+      toast('Worker rejected', 'er');
+    }
+  }catch(e){toast('Failed.','er');}
+}
+
+/* ══ UTILS ══ */
+function g(id){return document.getElementById(id)?.value?.trim()||'';}
+function initials(n){return(n||'?').split(' ').map(c=>c[0]).join('').toUpperCase().slice(0,2);}
+function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+function fd(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+function x(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+let _t;
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;el.className='on '+type;
+  clearTimeout(_t);_t=setTimeout(()=>el.className='',4200);
+}
+
+function anim(id,target){
+  const el=document.getElementById(id);if(!el)return;
+  let n=0;const iv=setInterval(()=>{n=Math.min(n+1,target);el.textContent=n;if(n>=target)clearInterval(iv);},28);
+}
+
+
+/* ══ BOOK SEARCH (from green section) ══ */
+function bookSearch(){
+  const q = document.getElementById('book-srch').value.trim();
+  if(q){ document.getElementById('srch').value=q; fetchWorkers(q); }
+  nav('home');
+  setTimeout(()=>document.getElementById('wbox').scrollIntoView({behavior:'smooth'}),200);
+}
+function quickBook(skill){
+  curFilter=skill;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.textContent.includes(skill)));
+  renderWorkers();
+  nav('home');
+  setTimeout(()=>document.getElementById('wbox').scrollIntoView({behavior:'smooth'}),200);
+}
+
+/* ══ LOGIN PORTAL ══ */
+let loginMode = 'worker';
+function openLoginPortal(){
+  document.getElementById('loginMod').classList.add('on');
+  if(document.getElementById('ltabs')) document.getElementById('ltabs').style.display = 'none';
+  switchLoginMode('worker');
+  setTimeout(()=>document.getElementById('wp-phone-modal')?.focus(),80);
+}
+let adminClicks = 0;
+function secretAdmin(){
+  adminClicks++;
+  if(adminClicks >= 5){
+    document.getElementById('ltabs').style.display = 'flex';
+    switchLoginMode('admin');
+    adminClicks = 0;
+    toast('Admin mode activated', 'ok');
+  }
+}
+function switchLoginMode(mode){
+  loginMode = mode;
+  document.getElementById('lf-worker').style.display = mode==='worker'?'block':'none';
+  document.getElementById('lf-admin').style.display  = mode==='admin'?'block':'none';
+  document.getElementById('ltab-worker').classList.toggle('on', mode==='worker');
+  document.getElementById('ltab-admin').classList.toggle('on',  mode==='admin');
+  document.getElementById('lerr').style.display='none';
+}
+async function loginWorkerModal(){
+  const ph = document.getElementById('wp-phone-modal').value.trim();
+  const pw = document.getElementById('wp-pw-modal').value.trim();
+  const err = document.getElementById('lerr');
+  if(!ph || !pw){toast('Phone and password required.','er');return;}
+  
+  try {
+    if(!DEMO && SB) {
+      const {data, error} = await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('phone', ph).eq('password', pw).maybeSingle();
+      if(error) throw error;
+      if(!data) { if(err) err.style.display='block'; return; }
+      workerUser = {...data, skills:(data.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean)};
+    } else {
+      workerUser = DW.find(w => w.phone === ph) || DW[0];
+    }
+    closeLogin();
+    nav('wportal');
+    updAvail();
+    loadWpOrders();
+    toast('Welcome back, ' + workerUser.name, 'ok');
+  } catch(e) {
+    if(err) err.style.display='block';
+  }
+}
+
+/* ══ HIDDEN ADMIN SHORTCUT ══ */
+document.addEventListener('keydown',function(e){
+  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){
+    document.getElementById('loginMod').classList.add('on');
+    switchLoginMode('admin');
+    setTimeout(()=>document.getElementById('adm-pw')?.focus(),80);
+  }
+});
+
+
+/* ══ THEME ══ */
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme')||'dark';
+  const next=cur==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('gsh-theme',next);
+}
+(function(){
+  const t=localStorage.getItem('gsh-theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+  document.documentElement.setAttribute('data-theme',t);
+})();
+
+/* ══ BOOT ══ */
+init();
+</script>
+</body>
+</html>
