@@ -4,6 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F59E0B">
+<meta name="description" content="Connect with verified skilled workers across The Gambia. Fast, reliable, and guaranteed service.">
+<link rel="manifest" href="/SKILLHUB/manifest.json">
 <title>GamSkillHub — Gambia's Skilled Worker Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -790,6 +793,31 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
     </div>
   </div>
 </div>
+
+<!-- ═══ CORPORATE DASHBOARD ═══ -->
+<section id="pg-corporate" class="pg">
+  <div class="pwrap">
+    <div class="phd"><h2>CORPORATE<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Manage maintenance contracts, bulk orders, and priority worker assignments.</p></div>
+    <div id="corp-auth">
+      <div class="fg" style="max-width:300px"><label class="fl">Company Email</label><input class="fi" id="corp-email" placeholder="contact@company.com" onkeydown="if(event.key==='Enter')corpLogin()"></div>
+      <div class="fg" style="max-width:300px"><label class="fl">API Key</label><input class="fi" id="corp-key" type="password" placeholder="Your API key" onkeydown="if(event.key==='Enter')corpLogin()"></div>
+      <div class="brow"><button class="btn bp" onclick="corpLogin()">Access Portal →</button></div>
+    </div>
+    <div id="corp-dash" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;color:var(--td)">Company: <span id="corp-name" style="color:var(--am);font-weight:600"></span></div>
+        <button class="nb" onclick="corpLogout()">Log out</button>
+      </div>
+      <div class="ptabs">
+        <button class="pt on" onclick="corpTab('contracts',this)">📋 Contracts</button>
+        <button class="pt" onclick="corpTab('orders',this)">📦 Bulk Orders</button>
+        <button class="pt" onclick="corpTab('workers',this)">👥 Assigned Workers</button>
+        <button class="pt" onclick="corpTab('invoices',this)">💰 Invoices</button>
+      </div>
+      <div id="corp-content" style="min-height:300px;padding:20px;background:var(--card);border-radius:10px;border:1px solid var(--b)"><div class="sp"><div class="spin"></div></div></div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ UNIFIED LOGIN MODAL ═══ -->
 <div class="lov" id="loginMod">
@@ -1893,6 +1921,265 @@ function toggleTheme(){
   const t=localStorage.getItem('gsh-theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
   document.documentElement.setAttribute('data-theme',t);
 })();
+
+/* ══ CORPORATE PORTAL ══ */
+let corpUser = null;
+async function corpLogin() {
+  const email = document.getElementById('corp-email').value.trim();
+  const key = document.getElementById('corp-key').value.trim();
+  
+  if(!email || !key) {
+    toast('Email and API key required', 'er');
+    return;
+  }
+  
+  try {
+    if(!DEMO && SB) {
+      const { data, error } = await SB.from('corporate_clients').select('*').eq('email', email).eq('api_key', key).single();
+      if(error || !data) {
+        toast('Invalid credentials', 'er');
+        return;
+      }
+      corpUser = data;
+    } else {
+      corpUser = { id: 'demo', name: 'Demo Company', email: email };
+    }
+    
+    document.getElementById('corp-auth').style.display = 'none';
+    document.getElementById('corp-dash').style.display = 'block';
+    document.getElementById('corp-name').textContent = corpUser.name || 'Corporate Client';
+    corpTab('contracts', document.querySelector('[onclick*="contracts"]'));
+    toast('Welcome, ' + corpUser.name, 'ok');
+  } catch(e) {
+    console.error('Corporate login error:', e);
+    toast('Login failed: ' + e.message, 'er');
+  }
+}
+
+function corpLogout() {
+  corpUser = null;
+  document.getElementById('corp-auth').style.display = 'block';
+  document.getElementById('corp-dash').style.display = 'none';
+  document.getElementById('corp-email').value = '';
+  document.getElementById('corp-key').value = '';
+  toast('Logged out', 'ok');
+}
+
+async function corpTab(tab, btn) {
+  document.querySelectorAll('.pt').forEach(b => b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  
+  const content = document.getElementById('corp-content');
+  content.innerHTML = '<div class="sp"><div class="spin"></div></div>';
+  
+  try {
+    if(tab === 'contracts') {
+      content.innerHTML = '<div style="padding:20px"><h3 style="margin-bottom:16px">Active Contracts</h3><p style="color:var(--td)">Contract 1: Quarterly Maintenance (Bank XYZ)</p><p style="color:var(--td)">Contract 2: Monthly Facility Services (Real Estate Co)</p></div>';
+    } else if(tab === 'orders') {
+      content.innerHTML = '<div style="padding:20px"><h3 style="margin-bottom:16px">Bulk Orders</h3><p style="color:var(--td)">Create new bulk orders for multiple locations</p><button class="btn bp" onclick="toast(\'Bulk order creation coming soon\',\'ok\')">+ New Bulk Order</button></div>';
+    } else if(tab === 'workers') {
+      content.innerHTML = '<div style="padding:20px"><h3 style="margin-bottom:16px">Assigned Workers</h3><p style="color:var(--td)">Workers assigned to your contracts</p><div style="margin-top:16px"><p>Modou Jallow - Plumbing</p><p>Fatou Ceesay - Painting</p></div></div>';
+    } else if(tab === 'invoices') {
+      content.innerHTML = '<div style="padding:20px"><h3 style="margin-bottom:16px">Invoices & Billing</h3><p style="color:var(--td)">Invoice #001 - GMD 5,000 - Paid</p><p style="color:var(--td)">Invoice #002 - GMD 3,500 - Pending</p></div>';
+    }
+  } catch(e) {
+    content.innerHTML = '<div style="padding:20px;color:var(--er)">Error loading content: ' + e.message + '</div>';
+  }
+}
+
+/* ══ ANALYTICS & DISPUTE CENTER ══ */
+let adminUser = null;
+async function loadAnalytics() {
+  try {
+    if(!DEMO && SB) {
+      const { data: orders, error: ordersErr } = await SB.from('orders').select('*');
+      const { data: workers, error: workersErr } = await SB.from('workers').select('*');
+      const { data: ratings, error: ratingsErr } = await SB.from('ratings').select('*');
+      
+      if(ordersErr || workersErr || ratingsErr) throw new Error('Failed to load analytics');
+      
+      const totalOrders = orders?.length || 0;
+      const totalWorkers = workers?.length || 0;
+      const avgRating = ratings?.length ? (ratings.reduce((s, r) => s + r.rating, 0) / ratings.length).toFixed(1) : 'N/A';
+      const totalRevenue = orders?.reduce((s, o) => s + (o.amount || 0), 0) || 0;
+      
+      return {
+        totalOrders,
+        totalWorkers,
+        avgRating,
+        totalRevenue,
+        topSkills: ['Plumbing', 'Electrical', 'Painting'],
+        topLocations: ['Serrekunda', 'Bakau', 'Brikama']
+      };
+    } else {
+      return {
+        totalOrders: 342,
+        totalWorkers: 87,
+        avgRating: 4.7,
+        totalRevenue: 125000,
+        topSkills: ['Plumbing', 'Electrical', 'Painting'],
+        topLocations: ['Serrekunda', 'Bakau', 'Brikama']
+      };
+    }
+  } catch(e) {
+    console.error('Analytics error:', e);
+    return null;
+  }
+}
+
+async function loadDisputes() {
+  try {
+    if(!DEMO && SB) {
+      const { data: disputes, error } = await SB.from('orders').select('*').eq('escrow_status', 'dispute');
+      if(error) throw error;
+      return disputes || [];
+    } else {
+      return [
+        { id: 1, worker_name: 'Modou', client_name: 'John', issue: 'Work not completed', status: 'pending' },
+        { id: 2, worker_name: 'Fatou', client_name: 'Mary', issue: 'Quality concerns', status: 'in_review' }
+      ];
+    }
+  } catch(e) {
+    console.error('Disputes error:', e);
+    return [];
+  }
+}
+
+async function resolveDispute(disputeId, resolution) {
+  try {
+    if(!DEMO && SB) {
+      const { data, error } = await SB.from('orders').update({ escrow_status: resolution }).eq('id', disputeId).select().single();
+      if(error) throw error;
+      toast('Dispute resolved: ' + resolution, 'ok');
+      return data;
+    } else {
+      toast('Dispute resolved (demo)', 'ok');
+    }
+  } catch(e) {
+    console.error('Dispute resolution error:', e);
+    toast('Failed to resolve dispute: ' + e.message, 'er');
+  }
+}
+
+/* ══ NOTIFICATIONS & PAYMENTS ══ */
+async function sendWorkerNotification(workerId, message, method = 'sms') {
+  try {
+    const notification = {
+      worker_id: workerId,
+      message: message,
+      method: method,
+      sent_at: new Date().toISOString(),
+      status: 'pending'
+    };
+    
+    if(!DEMO && SB) {
+      const { data, error } = await SB.from('notifications').insert([notification]).select().single();
+      if(error) throw error;
+      toast('Notification queued for ' + method.toUpperCase(), 'ok');
+      return data;
+    } else {
+      toast('Notification sent via ' + method.toUpperCase() + ' (demo)', 'ok');
+      return notification;
+    }
+  } catch(e) {
+    console.error('Notification error:', e);
+    toast('Failed to send notification: ' + e.message, 'er');
+  }
+}
+
+async function initiateWavePayment(orderId, amount, recipientPhone) {
+  try {
+    const payment = {
+      order_id: orderId,
+      amount: amount,
+      recipient_phone: recipientPhone,
+      provider: 'wave',
+      status: 'pending',
+      created_at: new Date().toISOString()
+    };
+    
+    if(!DEMO && SB) {
+      const { data, error } = await SB.from('payments').insert([payment]).select().single();
+      if(error) throw error;
+      toast('Payment initiated with Wave', 'ok');
+      return data;
+    } else {
+      toast('Wave payment initiated (demo): GMD ' + amount + ' to ' + recipientPhone, 'ok');
+      return payment;
+    }
+  } catch(e) {
+    console.error('Payment error:', e);
+    toast('Failed to initiate payment: ' + e.message, 'er');
+  }
+}
+
+async function initiateModemPayPayment(orderId, amount, recipientPhone) {
+  try {
+    const payment = {
+      order_id: orderId,
+      amount: amount,
+      recipient_phone: recipientPhone,
+      provider: 'modem_pay',
+      status: 'pending',
+      created_at: new Date().toISOString()
+    };
+    
+    if(!DEMO && SB) {
+      const { data, error } = await SB.from('payments').insert([payment]).select().single();
+      if(error) throw error;
+      toast('Payment initiated with Modem Pay', 'ok');
+      return data;
+    } else {
+      toast('Modem Pay payment initiated (demo): GMD ' + amount + ' to ' + recipientPhone, 'ok');
+      return payment;
+    }
+  } catch(e) {
+    console.error('Payment error:', e);
+    toast('Failed to initiate payment: ' + e.message, 'er');
+  }
+}
+
+async function releaseEscrowPayment(orderId, workerId, amount) {
+  try {
+    if(!DEMO && SB) {
+      const { data: order, error: orderErr } = await SB.from('orders').select('*').eq('id', orderId).single();
+      if(orderErr) throw orderErr;
+      
+      const { data: worker, error: workerErr } = await SB.from('workers').select('phone').eq('id', workerId).single();
+      if(workerErr) throw workerErr;
+      
+      const { data: payment, error: paymentErr } = await SB.from('payments').insert([{
+        order_id: orderId,
+        amount: amount,
+        recipient_phone: worker.phone,
+        provider: 'escrow_release',
+        status: 'completed',
+        created_at: new Date().toISOString()
+      }]).select().single();
+      
+      if(paymentErr) throw paymentErr;
+      
+      await SB.from('orders').update({ escrow_status: 'released', payment_released_at: new Date().toISOString() }).eq('id', orderId);
+      
+      toast('Escrow payment released: GMD ' + amount, 'ok');
+      return payment;
+    } else {
+      toast('Escrow payment released (demo): GMD ' + amount, 'ok');
+    }
+  } catch(e) {
+    console.error('Escrow release error:', e);
+    toast('Failed to release payment: ' + e.message, 'er');
+  }
+}
+
+/* ══ PWA SERVICE WORKER ══ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/SKILLHUB/sw.js')
+      .then(reg => console.log('✓ Service Worker registered'))
+      .catch(err => console.warn('Service Worker registration failed:', err));
+  });
+}
 
 /* ══ BOOT ══ */
 init();
