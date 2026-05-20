@@ -588,7 +588,7 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
         <div style="font-size:13px;color:var(--td)">Welcome, <span id="cl-hi" style="color:var(--tx);font-weight:600"></span></div>
         <button class="nb" onclick="clientOut()">Log out</button>
       </div>
-      <div class="ptabs">
+      <div class="ptabs" id="cl-ptabs">
         <button class="pt on" onclick="clTab('order',this)">📋 New Order</button>
         <button class="pt" onclick="clTab('track',this)">📍 My Bookings <span class="badge" id="cl-cnt">0</span></button>
       </div>
@@ -626,7 +626,7 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
           <button class="nb" onclick="workerOut()">Log out</button>
         </div>
       </div>
-      <div class="ptabs">
+      <div class="ptabs" id="wp-ptabs">
         <button class="pt on" onclick="wpTab('new',this)">🔔 New Orders</button>
         <button class="pt" onclick="wpTab('active',this)">⚡ Active</button>
         <button class="pt" onclick="wpTab('done',this)">✅ Completed</button>
@@ -808,8 +808,8 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
         <div style="font-size:13px;color:var(--td)">Company: <span id="corp-name" style="color:var(--am);font-weight:600"></span></div>
         <button class="nb" onclick="corpLogout()">Log out</button>
       </div>
-      <div class="ptabs">
-        <button class="pt on" onclick="corpTab('contracts',this)">📋 Contracts</button>
+      <div class="ptabs" id="corp-ptabs">
+        <button class="pt" onclick="corpTab('contracts',this)">📋 Contracts</button>
         <button class="pt" onclick="corpTab('orders',this)">📦 Bulk Orders</button>
         <button class="pt" onclick="corpTab('workers',this)">👥 Assigned Workers</button>
         <button class="pt" onclick="corpTab('invoices',this)">💰 Invoices</button>
@@ -1160,7 +1160,7 @@ async function clientLogin(){
 function clientOut(){clientUser=null;document.getElementById('cl-auth').style.display='block';document.getElementById('cl-dash').style.display='none';}
 
 function clTab(t,el){
-  document.querySelectorAll('.pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  document.querySelectorAll('#cl-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
   document.getElementById('cl-order-tab').style.display=t==='order'?'block':'none';
   document.getElementById('cl-track-tab').style.display=t==='track'?'block':'none';
   if(t==='track')loadClientOrders();
@@ -1282,7 +1282,7 @@ async function toggleAvail(){
 }
 
 function wpTab(t,el){
-  curWpTab=t;document.querySelectorAll('.pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  curWpTab=t;document.querySelectorAll('#wp-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
   loadWpOrders();
 }
 
@@ -1966,7 +1966,7 @@ function corpLogout() {
 }
 
 async function corpTab(tab, btn) {
-  document.querySelectorAll('.pt').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('#corp-ptabs .pt').forEach(b => b.classList.remove('on'));
   if(btn) btn.classList.add('on');
   
   const content = document.getElementById('corp-content');
