@@ -1938,17 +1938,7 @@ function renderSkills(box){
     <hr class="sep">
     <div class="shtit" style="font-size:16px">ADD NEW SKILL</div>
     <div class="addbox">
-      <div class="fg"><label class="fl">Icon</label>
-          <select class="fi" id="sk-ic">
-            <option value="🛠️">🛠️ Tools (Default)</option>
-            <option value="💻">💻 Tech / Development</option>
-            <option value="🎨">🎨 Design / Creative</option>
-            <option value="📊">📊 Finance / Analytics</option>
-            <option value="📢">📢 Marketing / Sales</option>
-            <option value="📝">📝 Writing / Content</option>
-            <option value="🤝">🤝 Management / HR</option>
-          </select>
-       </div>
+      <div class="fg"><label class="fl">Icon</label><input class="fi" id="sk-ic" placeholder="" maxlength="4"></div>
       <div class="fg"><label class="fl">Skill Name *</label><input class="fi" id="sk-nm" placeholder="e.g. Home Nursing"></div>
       <div class="fg"><label class="fl">Description</label><input class="fi" id="sk-dc" placeholder="Short description"></div>
       <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addSkill()">Add +</button></div>
