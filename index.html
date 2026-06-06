@@ -1,2111 +1,927 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GamSkillHub — Gambia's Skilled Worker Agency</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--bg:#070708;--sur:#0F0F11;--card:#161618;--ch:#1C1C1F;--b:#222226;--bl:#2A2A2F;--am:#F59E0B;--al:#FCD34D;--ad:rgba(245,158,11,.08);--tx:#EDEDF0;--td:#9999A8;--mt:#555560;--ok:#22C55E;--er:#EF4444;--inf:#3E6EB0;--red:#CE1126;--blue:#3E6EB0;--green:#3A7728;--nav:rgba(7,7,8,.96)}
-[data-theme="light"]{--bg:#F5F5F0;--sur:#FFFFFF;--card:#FFFFFF;--ch:#F0F0EB;--b:#E0E0D8;--bl:#C8C8C0;--am:#E8940A;--al:#F5B429;--ad:rgba(232,148,10,.09);--tx:#1A1A1A;--td:#555558;--mt:#909090;--ok:#16A34A;--er:#DC2626;--nav:rgba(255,255,255,.97)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-h1,h2,h3,.bc{font-family:'Barlow Condensed',sans-serif;font-weight:800;line-height:.93;text-transform:uppercase;letter-spacing:-.01em}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bl);border-radius:10px}
-
-/* NAV */
-nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(7,7,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
-.logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;user-select:none}
-.logo .r{color:var(--red)}.logo .a{color:var(--am)}
-.nl{display:flex;gap:4px;align-items:center}
-.nb{height:31px;padding:0 13px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap}
-.nb:hover{border-color:var(--am);color:var(--am)}
-.nb.ac{background:var(--am);border-color:var(--am);color:#000;font-weight:600}.nb.ac:hover{background:var(--al)}
-.nb.bl{background:rgba(62,110,176,.14);border-color:rgba(62,110,176,.35);color:var(--inf)}.nb.bl:hover{background:var(--inf);color:#fff}
-.flagbar{height:4px;background:linear-gradient(90deg,var(--red) 0 33%,#fff 33% 36%,var(--blue) 36% 64%,#fff 64% 67%,var(--green) 67% 100%)}
-
-/* PAGES */
-.pg{display:none;min-height:100vh;padding-top:54px}.pg.on{display:block}
-
-/* HERO */
-.hero{position:relative;padding:60px 38px 44px;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:40px 40px;opacity:.28;mask-image:radial-gradient(ellipse 80% 80% at 50% 0%,black 40%,transparent 100%)}
-.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:480px;height:480px;background:radial-gradient(circle,rgba(245,158,11,.055) 0%,transparent 65%);pointer-events:none}
-.hi{position:relative;max-width:1160px;margin:0 auto}
-.htag{display:inline-flex;align-items:center;gap:7px;background:var(--ad);border:1px solid rgba(245,158,11,.22);color:var(--am);font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:20px;animation:fid .5s ease both}
-.hero h1{font-size:clamp(50px,8vw,96px);margin-bottom:18px;animation:fid .5s .08s ease both}
-.hero h1 em{font-style:normal;color:var(--am)}
-.hsub{font-size:14px;color:var(--td);max-width:420px;line-height:1.65;margin-bottom:28px;animation:fid .5s .16s ease both;font-weight:300}
-.sw{max-width:540px;background:var(--sur);border:1px solid var(--bl);border-radius:10px;display:flex;gap:4px;padding:4px;margin-bottom:44px;animation:fid .5s .24s ease both;transition:box-shadow .2s}
-.sw:focus-within{box-shadow:0 0 0 2px rgba(245,158,11,.22);border-color:rgba(245,158,11,.38)}
-.sw input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--tx);padding:7px 10px}
-.sw input::placeholder{color:var(--mt)}
-.sbtn{background:var(--am);color:#000;border:none;padding:8px 18px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .18s;white-space:nowrap}
-.sbtn:hover{background:var(--al)}
-.hstats{display:flex;border-top:1px solid var(--b);padding-top:32px;animation:fid .5s .32s ease both;flex-wrap:wrap;gap:16px}
-.hsi{padding-right:32px;border-right:1px solid var(--b)}
-.hsi:last-child{border-right:none;padding-right:0}
-.sv{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:var(--am);line-height:1}
-.sl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-top:4px}
-
-/* BROWSE */
-.brw{max-width:1160px;margin:0 auto;padding:0 38px 80px}
-.bh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
-.bt{font-size:26px}.rc{font-size:12px;color:var(--mt)}
-.fr{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:22px}
-.pill{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:100px;border:1px solid var(--b);background:var(--sur);color:var(--td);font-size:10px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
-.pill:hover{border-color:rgba(245,158,11,.4);color:var(--am)}
-.pill.on{background:var(--am);border-color:var(--am);color:#000;font-weight:600}
-.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px}
-
-/* WORKER CARD */
-.wc{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.wc::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--am);transform:scaleY(0);transform-origin:bottom;transition:transform .22s}
-.wc:hover{background:var(--ch);border-color:var(--bl);transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
-.wc:hover::after{transform:scaleY(1)}
-.ct{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
-.wav{width:46px;height:46px;border-radius:9px;background:var(--ad);border:1px solid rgba(245,158,11,.18);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
-.wav img{width:100%;height:100%;object-fit:cover;border-radius:9px}
-.wi{flex:1;min-width:0}
-.wn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wps{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--am);margin-top:2px}
-.wrat{display:flex;align-items:center;gap:3px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700}
-.wrat .s{color:var(--am);font-size:11px}
-.wm{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.wmi{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--td)}
-.wtags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:11px}
-.tag{padding:2px 7px;border-radius:100px;border:1px solid var(--bl);font-size:9px;font-weight:500;color:var(--mt);text-transform:uppercase;letter-spacing:.4px}
-.dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px}
-.dot-ok{background:var(--ok)}.dot-er{background:var(--er)}
-.wf{display:flex;align-items:center;justify-content:space-between;padding-top:11px;border-top:1px solid var(--b)}
-.cl-link{display:flex;align-items:center;gap:4px;background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);padding:5px 11px;border-radius:6px;font-size:10px;font-weight:600;text-decoration:none;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
-.cl-link:hover{background:var(--am);color:#000}
-.ord-btn{background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf);padding:5px 11px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
-.ord-btn:hover{background:var(--inf);color:#fff}
-
-/* MODALS */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);z-index:1000;padding:18px;overflow-y:auto}
-.ov.on{display:flex;align-items:flex-start;justify-content:center}
-.modal{background:var(--sur);border:1px solid var(--bl);border-radius:14px;width:100%;max-width:680px;margin:auto;overflow:hidden;animation:mi .26s ease both}
-@keyframes mi{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.mhd{padding:22px 22px 0;display:flex;align-items:flex-start;gap:14px}
-.mava{width:72px;height:72px;border-radius:11px;background:var(--ad);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
-.mava img{width:100%;height:100%;object-fit:cover}
-.mtb{flex:1;padding-top:3px}
-.mn{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;line-height:1}
-.msk{color:var(--am);font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
-.mloc{color:var(--td);font-size:12px;margin-top:2px}
-.xb{width:30px;height:30px;border-radius:7px;background:var(--card);border:1px solid var(--b);color:var(--mt);font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .18s}
-.xb:hover{border-color:var(--am);color:var(--am)}
-.mbd{padding:18px 22px 22px}
-.ms{margin-bottom:18px}
-.mst{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mt);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--b)}
-.mbio{font-size:13px;color:var(--td);line-height:1.65}
-.ctns{display:flex;gap:7px;flex-wrap:wrap}
-.ctab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:12px;text-decoration:none;cursor:pointer;border:none;transition:all .18s}
-.cc{background:var(--am);color:#000}.cc:hover{background:var(--al)}
-.cw{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25D366}.cw:hover{background:rgba(37,211,102,.2)}
-.co{background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf)}.co:hover{background:var(--inf);color:#fff}
-.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.pi{background:var(--card);border:1px solid var(--b);border-radius:7px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;overflow:hidden;position:relative}
-.pi img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.pi-ic{font-size:20px;margin-bottom:4px}.pi-lb{font-size:9px;font-weight:600;color:var(--td);text-transform:uppercase;letter-spacing:.4px}
-.stars{display:flex;gap:2px;margin-top:5px}
-.star{font-size:14px;color:var(--am)}.star.e{color:var(--b)}
-.id-row{background:var(--card);border:1px solid var(--bl);border-radius:7px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--td)}
-.id-row a{color:var(--am);text-decoration:none;font-weight:600}
-
-/* FORMS */
-.fwrap{max-width:640px;margin:0 auto;padding:52px 38px 90px}
-.fhd{margin-bottom:36px}
-.fhd h2{font-size:clamp(38px,6vw,64px);margin-bottom:10px}
-.fhd p{font-size:13px;color:var(--td);line-height:1.7;max-width:460px}
-.fg{margin-bottom:15px}
-.fl{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
-.fi,.fta,.fse{width:100%;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:9px 12px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .18s}
-.fi:focus,.fta:focus,.fse:focus{border-color:rgba(245,158,11,.58)}
-.fi::placeholder{color:var(--mt)}
-.fta{resize:vertical;min-height:88px}
-.fse{cursor:pointer}option{background:var(--sur)}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-/* STEPS */
-.steps{display:flex;align-items:center;margin-bottom:36px}
-.snd{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
-.snd:not(:last-child)::after{content:'';position:absolute;top:15px;left:56%;right:-44%;height:1px;background:var(--b);transition:background .3s}
-.snd.dn:not(:last-child)::after{background:var(--am)}
-.sc{width:30px;height:30px;border-radius:50%;border:2px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--mt);background:var(--bg);position:relative;z-index:1;transition:all .25s}
-.snd.ac .sc{border-color:var(--am);color:var(--am)}
-.snd.dn .sc{background:var(--am);border-color:var(--am);color:#000}
-.slb{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mt);transition:color .25s}
-.snd.ac .slb{color:var(--am)}.snd.dn .slb{color:var(--td)}
-.fstep{display:none;animation:fir .28s ease both}.fstep.on{display:block}
-@keyframes fir{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
-
-/* UPLOAD ZONES */
-.upz{background:var(--sur);border:2px dashed var(--bl);border-radius:9px;padding:24px 18px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.upz:hover,.upz.drag{border-color:var(--am);background:var(--ad)}
-.upz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upz-ic{font-size:26px;margin-bottom:8px}
-.upz-lb{font-size:12px;font-weight:500;color:var(--td)}
-.upz-sub{font-size:10px;color:var(--mt);margin-top:3px}
-.up-prev{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
-.uth{width:64px;height:64px;border-radius:7px;object-fit:cover;border:2px solid var(--am)}
-.uthw{position:relative;display:inline-block}
-.urm{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:var(--er);color:#fff;border:none;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-.ufi{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--b);border-radius:6px;padding:7px 10px;font-size:11px;color:var(--td);margin-top:5px}
-.ufi .rm{background:none;border:none;color:var(--er);cursor:pointer;font-size:12px;margin-left:auto}
-
-/* SKILL PICKER */
-.spk{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:6px}
-.sko{background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:11px 7px;text-align:center;cursor:pointer;transition:all .18s;user-select:none}
-.sko:hover{border-color:rgba(245,158,11,.35)}
-.sko.pk{background:var(--ad);border-color:rgba(245,158,11,.5)}
-.sk-ic{font-size:18px;display:block;margin-bottom:4px}
-.sk-nm{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--td)}
-.sko.pk .sk-nm{color:var(--am)}
-
-/* WORK ENTRIES */
-.we{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;margin-bottom:8px}
-.weh{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
-.wet{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-.rmb{background:none;border:none;color:var(--mt);font-size:13px;cursor:pointer;transition:color .18s}.rmb:hover{color:var(--er)}
-.add-we{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:7px;background:var(--sur);border:2px dashed var(--bl);color:var(--td);font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;margin-bottom:16px}
-.add-we:hover{border-color:var(--am);color:var(--am)}
-
-/* REVIEW */
-.rvbox{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:18px;margin-bottom:16px}
-.rvg{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.rvl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-bottom:2px}
-.rvv{font-size:12px;font-weight:500}
-.ckrow{display:flex;gap:9px;align-items:flex-start;background:var(--sur);border:1px solid var(--b);border-radius:7px;padding:11px}
-.ckrow input{margin-top:2px;accent-color:var(--am);width:14px;height:14px;flex-shrink:0;cursor:pointer}
-.ckrow label{font-size:11px;color:var(--td);line-height:1.55;cursor:pointer}
-
-/* BUTTONS */
-.brow{display:flex;gap:8px;margin-top:22px}
-.btn{padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all .18s}
-.bp{background:var(--am);color:#000}.bp:hover{background:var(--al)}.bp:disabled{opacity:.6;cursor:not-allowed}
-.bg{background:var(--sur);border:1px solid var(--b);color:var(--td)}.bg:hover{border-color:var(--am);color:var(--am)}
-.okp{display:none;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.25);border-radius:9px;padding:16px 18px;margin-bottom:18px;color:var(--ok);font-size:13px;font-weight:500;line-height:1.55}
-.okp.on{display:block}
-
-/* PORTAL */
-.pwrap{max-width:880px;margin:0 auto;padding:44px 38px 90px}
-.phd{margin-bottom:32px}
-.phd h2{font-size:clamp(34px,5vw,56px);margin-bottom:8px}
-.phd p{font-size:13px;color:var(--td);line-height:1.65}
-.ptabs{display:flex;gap:3px;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:3px;margin-bottom:20px}
-.pt{flex:1;padding:7px 12px;border-radius:6px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--mt);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px}
-.pt.on{background:var(--card);color:var(--am)}
-.badge{background:var(--am);color:#000;border-radius:100px;padding:1px 6px;font-size:9px;font-weight:700}
-
-/* ORDER CARDS */
-.oc{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:9px;transition:border-color .18s}
-.oc:hover{border-color:var(--bl)}
-.oct{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-.ocs{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;text-transform:uppercase}
-.ocm{display:flex;gap:10px;font-size:11px;color:var(--td);margin-bottom:8px;flex-wrap:wrap}
-.ocd{font-size:12px;color:var(--td);margin-bottom:10px}
-.oca{display:flex;gap:7px;flex-wrap:wrap}
-.sta{padding:2px 9px;border-radius:100px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.sta-pending{background:rgba(245,158,11,.1);color:var(--am)}
-.sta-assigned{background:rgba(62,110,176,.1);color:var(--inf)}
-.sta-accepted{background:rgba(34,197,94,.1);color:var(--ok)}
-.sta-worker_arrived{background:rgba(34,197,94,.18);color:var(--ok)}
-.sta-completed{background:rgba(34,197,94,.07);color:var(--ok);border:1px solid rgba(34,197,94,.18)}
-.sta-cancelled{background:rgba(239,68,68,.1);color:var(--er)}
-.asm{padding:6px 11px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid;transition:all .18s;text-transform:uppercase;letter-spacing:.4px}
-.ag{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--ok)}.ag:hover{background:var(--ok);color:#000}
-.ab{background:rgba(62,110,176,.1);border-color:rgba(62,110,176,.25);color:var(--inf)}.ab:hover{background:var(--inf);color:#fff}
-.aa{background:var(--ad);border-color:rgba(245,158,11,.25);color:var(--am)}.aa:hover{background:var(--am);color:#000}
-.ar{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:var(--er)}.ar:hover{background:var(--er);color:#fff}
-.wk-detail{background:var(--sur);border:1px solid var(--b);border-radius:7px;padding:11px;margin-bottom:10px;font-size:12px;color:var(--td);line-height:1.7}
-.wk-detail a{color:var(--am);font-weight:600;text-decoration:none}
-
-/* RATING */
-.rrow{display:flex;gap:5px;margin:9px 0}
-.rs{font-size:26px;cursor:pointer;color:var(--b);transition:color .15s;user-select:none}
-.rs.on{color:var(--am)}
-
-/* ADMIN */
-.awrap{max-width:1080px;margin:0 auto;padding:44px 38px 90px}
-.atop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
-.atop h2{font-size:40px}
-.tabbar{display:flex;gap:3px;background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:3px;margin-bottom:20px;flex-wrap:wrap}
-.tb{padding:6px 12px;border-radius:6px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--mt);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:4px;white-space:nowrap}
-.tb.on{background:var(--card);color:var(--am)}
-.cbg{background:var(--am);color:#000;border-radius:100px;padding:1px 6px;font-size:9px;font-weight:700}
-.acard{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .18s;flex-wrap:wrap}
-.acard:hover{border-color:var(--bl)}
-.aav{width:38px;height:38px;border-radius:7px;background:var(--ad);border:1px solid rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--am);flex-shrink:0;overflow:hidden}
-.aav img{width:100%;height:100%;object-fit:cover;border-radius:7px}
-.ainfo{flex:1;min-width:180px}
-.anm{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase}
-.amet{font-size:11px;color:var(--td);margin-top:2px;display:flex;gap:9px;flex-wrap:wrap}
-.aacts{display:flex;gap:6px;flex-wrap:wrap}
-.aappr{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--ok);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
-.aappr:hover{background:var(--ok);color:#000}
-.arej{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--er);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
-.arej:hover{background:var(--er);color:#fff}
-.aview{background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s}
-.aview:hover{background:var(--am);color:#000}
-
-/* ORDER ROW */
-.orow{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px 18px;margin-bottom:8px;transition:border-color .18s}
-.orow:hover{border-color:var(--bl)}
-.ort{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:7px}
-.ors{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase}
-.orm{font-size:11px;color:var(--td);margin-bottom:7px;display:flex;gap:10px;flex-wrap:wrap}
-.ora{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-.asel{background:var(--sur);border:1px solid var(--b);border-radius:6px;padding:6px 10px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;cursor:pointer}
-
-/* SKILLS & ADMIN MANAGER */
-.skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-bottom:18px}
-.ski{background:var(--card);border:1px solid var(--b);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:9px}
-.ski-ic{font-size:20px}.ski-nm{font-size:12px;font-weight:600;flex:1}
-.ski-dl{background:none;border:none;color:var(--mt);font-size:13px;cursor:pointer;transition:color .18s}.ski-dl:hover{color:var(--er)}
-.addbox{background:var(--sur);border:1px dashed var(--bl);border-radius:8px;padding:16px;display:grid;grid-template-columns:56px 1fr 1fr auto;gap:9px;align-items:end;margin-top:4px}
-.admrow{background:var(--card);border:1px solid var(--b);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:11px;margin-bottom:7px}
-.admav{width:34px;height:34px;border-radius:7px;background:rgba(62,110,176,.15);border:1px solid rgba(62,110,176,.3);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--inf)}
-.adminfo{flex:1}.admnm{font-size:13px;font-weight:600}.admmt{font-size:10px;color:var(--td)}
-.addadmbox{background:var(--sur);border:1px dashed var(--bl);border-radius:8px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:9px;align-items:end;margin-top:14px}
-
-/* LOGIN */
-.lov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1100;align-items:center;justify-content:center}
-.lov.on{display:flex}
-.lbox{background:var(--sur);border:1px solid var(--bl);border-radius:14px;padding:32px;width:340px;animation:mi .22s ease both}
-.lbox h3{font-size:26px;margin-bottom:5px}
-.lsub{font-size:12px;color:var(--td);margin-bottom:22px;line-height:1.55}
-.lerr{display:none;font-size:11px;color:var(--er);margin-top:8px;font-weight:500}
-
-/* SHARED */
-.sp{display:flex;justify-content:center;padding:56px}
-.spin{width:28px;height:28px;border:3px solid var(--bl);border-top-color:var(--am);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.empty{text-align:center;padding:64px 36px;color:var(--td)}
-.empi{font-size:36px;margin-bottom:12px}
-.empty h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;margin-bottom:6px;color:var(--tx)}
-.empty p{font-size:12px;color:var(--mt)}
-#toast{position:fixed;bottom:20px;right:20px;z-index:2000;background:var(--card);border:1px solid var(--bl);border-radius:9px;padding:11px 15px;font-size:12px;font-weight:500;opacity:0;transform:translateY(8px);transition:all .24s;pointer-events:none;max-width:290px}
-#toast.on{opacity:1;transform:translateY(0)}
-#toast.ok{border-color:rgba(34,197,94,.4);color:var(--ok)}
-#toast.er{border-color:rgba(239,68,68,.4);color:var(--er)}
-.sep{border:none;border-top:1px solid var(--b);margin:18px 0}
-.shtit{font-family:'Barlow Condensed',sans-serif;font-size:20px;margin-bottom:14px}
-@keyframes fid{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:640px){
-  .hero,.brw,.fwrap,.pwrap,.awrap{padding-left:16px;padding-right:16px}
-  .hero{padding-top:32px}.frow,.addbox,.addadmbox{grid-template-columns:1fr}
-  .port-grid{grid-template-columns:repeat(2,1fr)}.hstats{gap:12px}
-  .hsi{border-right:none;border-bottom:1px solid var(--b);padding-bottom:12px}
-  .hsi:last-child{border-bottom:none}
-  nav{padding:0 12px}.nb{display:none}.nb.ac,.nb.bl{display:flex;font-size:10px;padding:0 8px}
-  .tabbar,.ptabs{flex-wrap:wrap}
-}
-
-.theme-btn{height:31px;width:36px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}.theme-btn:hover{border-color:var(--am);color:var(--am)}
-.nb-login{background:#0D9488;border-color:#0D9488;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.nb-login:hover{background:#0f766e}
-nav{background:var(--nav)!important}
-.hero-split{display:flex;align-items:center;gap:48px;max-width:1160px;margin:0 auto;position:relative;z-index:2}
-.hero-left{flex:1;min-width:0}
-.hero-right{flex:0 0 420px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,140px);gap:10px}
-.wsc{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s}.wsc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
-.wsc:nth-child(1){grid-row:span 2}.wsc:nth-child(4){grid-row:span 2}
-.wsc-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82)}
-.wsc-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:12px 10px 10px}
-.wsc-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;color:#fff;line-height:1}
-.wsc-skill{font-size:10px;font-weight:600;color:var(--am);letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
-.wsc-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,.88);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px}
-.split-section{padding:72px 38px;position:relative}
-.split-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-.green-side{background:linear-gradient(160deg,#1a4d2e 0%,#2d7a45 60%,#3a9455 100%)}
-.green-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,#1E3A5F);pointer-events:none}
-.blue-side{background:linear-gradient(160deg,#1E3A5F 0%,#2d5a96 60%,#3E6EB0 100%)}
-.blue-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
-.section-label{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:6px 16px;border-radius:100px;margin-bottom:20px}
-.section-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,5.5vw,70px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:18px}
-.section-sub{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:28px;max-width:400px}
-.hiw-simple{display:flex;flex-direction:column;gap:22px}
-.hiw-s-step{display:flex;gap:14px;align-items:flex-start}
-.hiw-s-num{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
-.hiw-s-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:4px}
-.hiw-s-desc{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
-.book-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:28px;backdrop-filter:blur(6px)}
-.book-card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px}
-.book-card-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:10px}
-.book-card-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:20px;line-height:1.6}
-.book-search-wrap{display:flex;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:5px;margin-bottom:14px}
-.book-search-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:8px 10px}.book-search-input::placeholder{color:rgba(255,255,255,.5)}
-.book-search-btn{background:#FCD34D;color:#1a4d2e;border:none;padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer}.book-search-btn:hover{background:#fff}
-.book-popular{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.book-pop-lbl{font-size:11px;color:rgba(255,255,255,.55)}
-.book-pop-tag{padding:4px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:11px;cursor:pointer}.book-pop-tag:hover{background:rgba(255,255,255,.25)}
-.ws-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.ws-perk{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.88)}
-.ws-perk-ic{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.ws-cta{display:inline-flex;align-items:center;gap:8px;background:#FCD34D;color:#1E3A5F;border:none;padding:13px 28px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}.ws-cta:hover{background:#fff;transform:translateY(-2px)}
-.ws-howto-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#FCD34D;letter-spacing:1px;margin-bottom:18px}
-.ws-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
-.ws-step-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:#FCD34D;flex-shrink:0}
-.ws-step-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:3px}
-.ws-step-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
-.lmode-tabs{display:flex;gap:4px;background:var(--ch);border-radius:8px;padding:3px;margin-bottom:20px}
-.lmode-tab{flex:1;padding:7px;border-radius:6px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;transition:all .18s;text-align:center}
-.lmode-tab.on{background:var(--sur);color:#0D9488}
-.role-card{border:2px solid var(--b);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .18s}
-.role-card.sel{border-color:var(--am);background:var(--ad)}
-.role-card-icon{font-size:24px;margin-bottom:6px}
-.role-card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:var(--td)}
-.role-card.sel .role-card-title{color:var(--am)}
-.role-card-sub{font-size:11px;color:var(--mt);margin-top:3px}
-.vbadge{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#22c55e;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:100px;margin-left:5px;vertical-align:middle}
-.trust-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(58,119,40,.15),rgba(34,197,94,.1));border:1px solid rgba(34,197,94,.4);color:#16a34a;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:100px;vertical-align:middle}
-.escrow-stepper{display:flex;align-items:center;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
-.es-step{display:flex;flex-direction:column;align-items:center;position:relative;flex:1;min-width:70px}
-.es-step:not(:last-child)::after{content:'';position:absolute;top:12px;left:60%;right:-40%;height:2px;background:var(--b)}
-.es-step.done:not(:last-child)::after{background:var(--ok)}
-.es-step.active:not(:last-child)::after{background:var(--am)}
-.es-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--b);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;position:relative;z-index:1;transition:all .3s}
-.es-step.done .es-dot{background:var(--ok);border-color:var(--ok);color:#fff}
-.es-step.active .es-dot{background:var(--am);border-color:var(--am);color:#000;box-shadow:0 0 0 4px rgba(245,158,11,.2)}
-.es-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);margin-top:5px;text-align:center;white-space:nowrap}
-.es-step.done .es-label,.es-step.active .es-label{color:var(--td)}
-/* REVIEWS */
-.rev-card{background:var(--sur);border:1px solid var(--b);border-radius:9px;padding:14px;margin-bottom:10px}
-.rev-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px}
-.rev-author{font-size:13px;font-weight:600;color:var(--tx)}
-.rev-date{font-size:11px;color:var(--mt)}
-.rev-stars{color:var(--am);font-size:13px;letter-spacing:1px}
-.rev-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px}
-.rev-body{font-size:12px;color:var(--td);line-height:1.6}
-.rev-verified{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--ok);font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-top:6px}
-.review-form{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:16px}
-.review-form-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px}
-.star-picker{display:flex;gap:4px;margin-bottom:12px}
-.star-pick{font-size:28px;cursor:pointer;color:var(--b);transition:color .15s;user-select:none}
-.star-pick.on{color:var(--am)}
-.refund-btn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:var(--er);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s;text-transform:uppercase}
-.refund-btn:hover{background:var(--er);color:#fff}
-.reassign-alert{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--er)}
-.cust-card{background:var(--card);border:1px solid var(--b);border-radius:11px;padding:20px;margin-bottom:16px}
-.cust-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;text-transform:uppercase}
-.cust-meta{font-size:12px;color:var(--td);margin-top:2px}
-.cust-stat{display:inline-flex;align-items:center;gap:5px;background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
-[data-theme="light"] .hero::before{background:linear-gradient(135deg,rgba(206,17,38,.12) 0%,rgba(245,245,240,.75) 40%,rgba(245,245,240,.98) 100%)!important}
-@media(max-width:900px){.hero-split{flex-direction:column}.hero-right{flex:none;width:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,120px)}.wsc:nth-child(1),.wsc:nth-child(4){grid-row:span 1}.split-section{padding:48px 18px}.split-inner{grid-template-columns:1fr;gap:36px}}
-
-
-/* ── DUAL PATHWAY ── */
-.pathway-section{padding:0 38px 0;position:relative;z-index:1}
-.pathway-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:48px 0 64px}
-.pathway-card{border-radius:18px;overflow:hidden;position:relative}
-.pathway-card-express{background:linear-gradient(160deg,#1a4d2e 0%,#2d7a45 100%);border:1px solid rgba(255,255,255,.1)}
-.pathway-card-escrow{background:linear-gradient(160deg,#1E3A5F 0%,#3E6EB0 100%);border:1px solid rgba(255,255,255,.1)}
-.pathway-header{padding:28px 28px 20px}
-.pathway-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
-.pathway-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,3.5vw,40px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:10px}
-.pathway-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:0}
-.pathway-steps{padding:0 28px 28px}
-.pathway-step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;position:relative}
-.pathway-step:not(:last-child)::before{content:'';position:absolute;left:15px;top:34px;bottom:-12px;width:2px;background:rgba(255,255,255,.15)}
-.ps-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
-.ps-num.highlight{background:#FCD34D;border-color:#FCD34D;color:#1a1a1a}
-.ps-body{}
-.ps-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:3px}
-.ps-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
-.ps-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(252,211,77,.2);border:1px solid rgba(252,211,77,.4);color:#FCD34D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:4px;letter-spacing:.5px}
-.pathway-cta{margin:0 28px 28px;display:flex;gap:10px;flex-wrap:wrap}
-.pathway-btn-primary{flex:1;background:#FCD34D;color:#1a1a1a;border:none;padding:12px 20px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:center}
-.pathway-btn-primary:hover{background:#fff;transform:translateY(-1px)}
-.pathway-btn-secondary{flex:1;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);padding:12px 20px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:center}
-.pathway-btn-secondary:hover{background:rgba(255,255,255,.22)}
-.pathway-divider{display:flex;align-items:center;justify-content:center;padding:16px 0 0;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45)}
-
-/* ── DISPUTE MODAL ── */
-.dispute-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);z-index:2000;align-items:center;justify-content:center;padding:20px}
-.dispute-modal.on{display:flex}
-.dispute-box{background:var(--sur);border:1px solid var(--bl);border-radius:14px;width:100%;max-width:500px;padding:28px;animation:mi .24s ease both}
-.dispute-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;color:var(--er);margin-bottom:6px}
-.dispute-sub{font-size:13px;color:var(--td);margin-bottom:20px;line-height:1.6}
-.dispute-warn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--td);line-height:1.6;margin-bottom:18px}
-.evidence-zone{background:var(--card);border:2px dashed var(--bl);border-radius:9px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;position:relative;margin-bottom:14px}
-.evidence-zone:hover{border-color:var(--er);background:rgba(239,68,68,.05)}
-.evidence-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.evidence-previews{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;justify-content:center}
-.ev-thumb{width:56px;height:56px;border-radius:6px;object-fit:cover;border:2px solid var(--er)}
-
-/* ── ESCROW RELEASE section in admin ── */
-.release-card{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(22,163,74,.05));border:1px solid rgba(34,197,94,.25);border-radius:9px;padding:14px 18px;margin-bottom:9px}
-.release-card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:var(--ok);margin-bottom:8px}
-
-@media(max-width:768px){
-  .pathway-section{padding:0 16px}
-  .pathway-grid{grid-template-columns:1fr;gap:16px;padding:32px 0 48px}
-}
-
-</style>
-</head>
-<body>
-<div class="flagbar"></div>
-
-<!-- NAV -->
-<nav>
-  <div style="display:flex;align-items:center;gap:12px;padding:4px 0;cursor:pointer" onclick="nav('home')">
-    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABuAG4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7AoooqQCiiigAooooAKKKM0AFFFFABRRRQAUYoooAKKB0ooAKKKKACis7xNeXmneHdRv9OshfXltayTQWxfaJnVSQmQDjOMV8nw/tO67c+CtZ0zWNIhk1W7iljs720byUgWRSPmU5JKZ4IOT3weTrToyqK8TOdWMNz2/x18S/FNjNNB4M+GPiDxEsRIa9kia3t2I6+WCN8g9wAD2zXnWgftP3cGtNp3i/wTJYhH2TG1lfzoT/ALUUgBP0yDXlPwL+NFx8O21lby0uddjv40MSNe8xSoGAJLZ+U7gDjnjvWh8TPEF/4r8EeH/FvjKwsrLxBqF7OtjNbwmI3OnKoO6QHssh2oepXJ9z1+wjDSS07nDWxMlTc4vVdD7K8Ma/o/iXR4dW0O/ivbOX7siHoe6sDyrDuDzWnXwV8OPiI3gfxHa31hqknkvNGt9bwESCWHcN25ehIXOD1z0r7R8HeOvCfi7d/wAI9rMN4VUPs2tG+09wrgEj1x0rhmuV+RWBx6xMfeVn+fodJRRRUnoBSGlpDQAoooHSigAoNFAxkZ6Z5oA+Sv2rdT+JnhnxtPdp4kvLXw5rMJgsobO6ZUCIgEiOnZ/mJLDqGGDxgdV+zL8FtAi8J2PjDxVpsGp6jqEYntLe5TfDbQn7h2HhnYfNk5wCAO5ryX9orw78U4NUuNa8cvd3ek/bZbfT7hp43iRWLFAqIf3eVUdQMkc819OfDXx74eHwL0fxTdXscNnY6dFb3QUgsk0SiMxBf7xIGB33A9K76jcaKUfwOKPL7RufTuP+Lmm/DfTPCUtz4n8L6NeRg7La3FqiSSydQqMoBA9SDgDOfSvHPC15dfEjxBPoviVbGbwzcTRxXiXB8uK2kcbIIrQggxzHAChT90HcCK5LxL4m8TfF34k2+nadERdXTGOytt2Y7G3ByzufYcs3c8DsKrfF6ymt/H2hfCzwFc3N2+jsgHkSBHn1R8tJMzZGHUBRkn5ACOMGuKNCdWqk5WS1PP8AbTxVXnirQX4n014u+D/gfW/BjeHrLw/pWlvFDssbqC1Ae3cDhiVwzj1BJzznmsX4CfCu+8Gz3eq+IpLaXU8tBarbuXjji6FwSB8zenYcdSa6D4D6f4803wObf4iXkt1qxu3aMy3CTOkG1QoLr1Odx5JPPWu/pz0916nqfVqU5xquOqCiiioOkKCaKT60AKKKBRQAUHpRWJ46sP7R8K38CapNpMqRGWG+iuPJNu68q5foFzwc5GCc0Dik2ruyPMv2o/BfiXxlpGkQ2Gu2Om+HbWczaybltgiQDIuGJPzqgDfJxywP0+d/EOo3/ia3t/DPw48O6nceF9JJ+yRxQkm5lPD3dxJwodv9ogKvAxW9qPxX8Z3NpJpWqeLdTaMkB4LvwzDMzYPHP3W5GQfoayr+/wBd1qFW1Ia7qVsOVbW7oWFmv+7Cp5+imu6FPFQjZ07ebaS/PUK+Fy9rmrYlcvaKk2/vUUvm0SeAh4j8EWWo2kXi7w5omq6qALq50+B9U1NU7Qx+X+6iA68NnPfgYg0HwpbaFrtpr2la349tdTtpvPjvX8PRsN+eSyedvYHJyOcgn1rW8MeG9c10fZdLOp3sfRoNBtfslsPZp2G5vx/On/EfwNH4E0+xvNf8MWkX22RkiYajNLMGUAnLK+B16isfaRi7Orr/AHY3X3tq5zTzHLKcP3NCUor7UpW+5RjZfez7D0DULfV9EstUsphc291AkscqRlQ4IznaeV+h5HSr3I6gj6ivgiPX9XulSO61rUZbKNAtsmo6/IqJGPugRwjceO5wT3rr/hjf6teeLtN0vSfFsOkG6mEZubTVrg7PTMNwCsuSAAPUionQqR1vH/wJX+79LnTDFZbNqPtrN/3dF5N3v90T7IopsKssSK7mRgoBcgAsfXA4H4U6shBRRSGgBaKKKACs7xHouleI9FudG1qyivbC5XbLDJnDYORyOQQQCCK434o614gHi3wp4J8O6mujz689zLcal5KyyQwwIGZYlbK72J6kHAFZeg+PrLTPDWqzW3iO+8Wz2F/HBMdYMGkva+YhKqzypGrD5SRwWO4Y4rRU21czlKOsWVH/AGfvDkUmNM8U+LNOts8W8V+GRR6DIzj863PDnwX8B6POLqXT59Yuhz52pzmbn/d4X8waxrf4422oWtk2i+EdU1K5ubC7vHhS6gQQi1k2SguTtYdwy53ZHrUN98WNc8Q6HeWng/wtqFprV9oR1fw+920Mn2uESIrkRhjtcBiVVj82B64o9hLqjmWHwqfNyo9gghhghWCCOOKJBhY0UKqj2A4Fcz8Rvh/4W+IFlZ2fiiyluo7OYzQeVcPEVYjB5U8gjsa8mvfiLLpHh+3vI/H/AIglng1/TYdXt9d0yK1uLG2cuZdyiMZRwvUZxt4PNafjn4oXV14as9b0iPW9FbUNI1i70k+bAY5kggDRzzIVJGeqKDkfxDtVqhJM3dSDVmj0Dw38Mfh/4eQDSvCelow/5aTRefJ/31JuNamq+EfC+q25gv8AQNNlXqrC3VHQjoVZQGUj1Brw8fE7xdY3Xn3GqXd1bx+IdDtZIYbNZZXgn0/zZo0VVyWd+eOewxXS+Hfi3PP8RtU0+7s9UOnXer6dpem211aC1mtGmt5Hd3VwGKkpnnnkY4odCRC9jbl5V9x7Mg2oq7mbAxljkn3NOrxK9+KWv6h8TNJsPDWjX15brJq9jcaYJoYzcy2rRgS+Y/CqNxwM55Awa9P8AeKLLxl4Us/ENhBPbx3G9HgnAEkMiOUdGxxkMpGR1qJU5RV2bRmpOyN6iikNZli0UUUAc7448HaR4ugshqD3lrd6fP8AaLG+spzDcWsmMEo4z1HBBBB9K5tfg/4fy11LrXiOfVjqMWpf2rLeI1yJ44jEp5TZgISuNvp6V6NRVqckrJkuEW7tHA6D8JvC2jXAuLSbVXkFre2paa6DkpdyeZKSduS27oe3vUkPwu0G3h0tbHUNcsZtL0b+xrS4trwJKkG9Hzu2/fyg56YyMc13VFHtJdw5I9jz1PhH4bkna71O/wBb1fUHvrW8kvL+6WSWQ2xYxRkBAvlgsxKgDOeTUc3wb8ISQG1EurR2ai/WC2S6AjtlvU2zJGNuVXuoydpJ+lejUU/az7i5I9jhLf4U+F7e9iu431LzI9RstSXNwMedaQeTF/D93Z1Hc88UviP4W+HNc1XUNWnudWtdRvby1vhc2t0Ee3mto2jjaP5Tj5WIIOc13VFL2kt7j5I9jzSD4MeGrSe3utP1jxNY3ttLdTRXcGo/vg9yVMpLFTuzsHXPU+2O08HeHNL8J+G7TQNGjkSytVYJ5khd3ZmLM7MerMxJJ9616KJTlLRsFBLZBQcUUGoKCiiigAooooAKKKKACiiigAooooAKKKKACg0UUAf/2Q==" style="height:40px;width:40px;object-fit:contain;border-radius:8px" alt="GamSkillHub">
-    <div class="logo"><span class="r">GAM</span><span class="a">SKILL</span>HUB</div>
-  </div>
-  <div class="nl">
-    <button class="theme-btn" onclick="toggleTheme()" title="Toggle Light/Dark">🌓</button>
-    <button class="nb" onclick="nav('home')">Browse</button>
-    <button class="nb nb-login" onclick="openLoginPortal()">LOGIN</button>
-  </div>
-</nav>
-
-<!-- ═══ HOME ═══ -->
-<section id="pg-home" class="pg on">
-  <div class="hero">
-    <div class="hero-img"></div>
-    <div class="hero-split">
-      <div class="hero-left">
-        <div class="htag">🇬🇲 &nbsp; Serving All Regions of The Gambia</div>
-        <h1>THE GAMBIAN<br><em>HOME</em> FOR<br>SKILLED WORKERS.</h1>
-        <p class="hsub">From emergency repairs to creative projects, connect with agency-vetted experts across The Gambia. Fast, Reliable, and Guaranteed.</p>
-        <div class="sw"><input id="srch" type="text" placeholder="Search by name or skill…" onkeydown="if(event.key==='Enter')doSearch()"><button class="sbtn" onclick="doSearch()">Search</button></div>
-        <div class="hstats">
-          <div class="hsi"><div class="sv" id="stat-n">0</div><div class="sl">Verified Workers</div></div>
-          <div class="hsi"><div class="sv" id="stat-o">0</div><div class="sl">Jobs Done</div></div>
-          <div class="hsi"><div class="sv">20+</div><div class="sl">Skill Types</div></div>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=600&fit=crop&q=80" alt="Plumber"><div class="wsc-overlay"><div class="wsc-name">Modou J.</div><div class="wsc-skill">🔧 Plumbing</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&q=80" alt="Electrician"><div class="wsc-overlay"><div class="wsc-name">Omar S.</div><div class="wsc-skill">⚡ Electrical</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80" alt="Painter"><div class="wsc-overlay"><div class="wsc-name">Fatou C.</div><div class="wsc-skill">🎨 Painting</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1588784109889-e9bc9c9d7506?w=400&h=600&fit=crop&q=80" alt="Carpenter"><div class="wsc-overlay"><div class="wsc-name">Lamin T.</div><div class="wsc-skill">🪚 Carpentry</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80" alt="Cleaner"><div class="wsc-overlay"><div class="wsc-name">Aminata D.</div><div class="wsc-skill">🧹 Cleaning</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop&q=80" alt="Welder"><div class="wsc-overlay"><div class="wsc-name">Baba S.</div><div class="wsc-skill">🔩 Welding</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
-      </div>
-    </div>
-  </div>
-  <!-- ═══ CLIENT & HOMEOWNERS: DUAL PATHWAY ═══ -->
-  <div style="background:linear-gradient(180deg,#070708 0%,#0d1f12 40%,#1a4d2e 100%);padding:52px 38px 0;position:relative">
-    <div style="max-width:1160px;margin:0 auto;text-align:center;margin-bottom:36px">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:18px">🏠 FOR CLIENTS &amp; HOMEOWNERS</div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92;margin-bottom:14px">TWO WAYS TO<br><em style="font-style:normal;color:#FCD34D">BOOK A WORKER</em></h2>
-      <p style="font-size:15px;color:rgba(255,255,255,.65);max-width:520px;margin:0 auto;line-height:1.65">Need a quick fix or a high-value project? Choose the booking flow that works for you.</p>
-    </div>
-    <!-- Book search card — always visible -->
-    <div style="max-width:640px;margin:0 auto 0;padding-bottom:0">
-      <div class="book-card" style="margin-bottom:0">
-        <div class="book-card-tag">🔍 FIND A WORKER NOW</div>
-        <div class="book-search-wrap"><input id="book-srch" class="book-search-input" type="text" placeholder="e.g. Plumbing, Electrical, Cleaning…" onkeydown="if(event.key==='Enter')bookSearch()"><button class="book-search-btn" onclick="bookSearch()">SEARCH</button></div>
-        <div class="book-popular"><span class="book-pop-lbl">Popular:</span><span class="book-pop-tag" onclick="quickBook('Plumbing')">🔧 Plumbing</span><span class="book-pop-tag" onclick="quickBook('Electrical')">⚡ Electrical</span><span class="book-pop-tag" onclick="quickBook('Home Cleaning')">🧹 Cleaning</span><span class="book-pop-tag" onclick="quickBook('Carpentry')">🪚 Carpentry</span><span class="book-pop-tag" onclick="quickBook('Barber (Home)')">✂️ Barber</span><span class="book-pop-tag" onclick="quickBook('Auto Mechanic')">🔋 Mechanic</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="pathway-section" style="background:linear-gradient(180deg,#1a4d2e 0%,#1E3A5F 100%)">
-    <div class="pathway-grid">
-
-      <!-- OPTION 1: EXPRESS -->
-      <div class="pathway-card pathway-card-express">
-        <div class="pathway-header">
-          <div class="pathway-badge">🛠️ OPTION 1 — GUEST</div>
-          <div class="pathway-title">EXPRESS BOOKING</div>
-          <p class="pathway-sub">Maximum speed, zero friction. Perfect for quick repairs and everyday jobs. No account required.</p>
-        </div>
-        <div class="pathway-steps">
-          <div class="pathway-step">
-            <div class="ps-num">1</div>
-            <div class="ps-body"><div class="ps-title">Search a Skill</div><div class="ps-desc">Browse or search for the service you need — plumber, electrician, cleaner and more.</div></div>
-          </div>
-          <div class="pathway-step">
-            <div class="ps-num">2</div>
-            <div class="ps-body"><div class="ps-title">Book Instantly</div><div class="ps-desc">Enter your address and describe the job. No password, no sign-up required.</div></div>
-          </div>
-          <div class="pathway-step" style="margin-bottom:0">
-            <div class="ps-num">3</div>
-            <div class="ps-body"><div class="ps-title">A Verified Pro Arrives</div><div class="ps-desc">GamSkillHub dispatches an ID-verified, agency-approved worker to your door at your scheduled time.</div></div>
-          </div>
-        </div>
-        <div class="pathway-cta">
-          <button class="pathway-btn-primary" onclick="bookSearch()">BOOK NOW →</button>
-        </div>
-        <div class="pathway-divider">Best for quick everyday jobs</div>
-        <div style="height:20px"></div>
-      </div>
-
-      <!-- OPTION 2: SECURE ESCROW -->
-      <div class="pathway-card pathway-card-escrow">
-        <div class="pathway-header">
-          <div class="pathway-badge">🔒 OPTION 2 — ACCOUNT</div>
-          <div class="pathway-title">SECURE ESCROW<br>BOOKING</div>
-          <p class="pathway-sub">Maximum trust and protection. Your money is held safely until the job is done to your satisfaction.</p>
-        </div>
-        <div class="pathway-steps">
-          <div class="pathway-step">
-            <div class="ps-num">1</div>
-            <div class="ps-body"><div class="ps-title">Open an Account</div><div class="ps-desc">Quick sign-up with your Gambian phone number and a 4-digit PIN. Takes 60 seconds.</div><div class="ps-tag">✓ Free to sign up</div></div>
-          </div>
-          <div class="pathway-step">
-            <div class="ps-num">2</div>
-            <div class="ps-body"><div class="ps-title">Search &amp; Book</div><div class="ps-desc">Browse verified workers, choose your skill, confirm address and job details.</div></div>
-          </div>
-          <div class="pathway-step">
-            <div class="ps-num highlight">3</div>
-            <div class="ps-body"><div class="ps-title">Pay — Held in Escrow</div><div class="ps-desc">Pay the agreed fee upfront. Funds are securely held by GamSkillHub — the worker receives nothing yet.</div><div class="ps-tag">🔒 Money fully protected</div></div>
-          </div>
-          <div class="pathway-step">
-            <div class="ps-num">4</div>
-            <div class="ps-body"><div class="ps-title">Pro Arrives &amp; Works</div><div class="ps-desc">A verified worker arrives and completes the job.</div></div>
-          </div>
-          <div class="pathway-step">
-            <div class="ps-num highlight">5</div>
-            <div class="ps-body"><div class="ps-title">You Approve — Finish Work</div><div class="ps-desc">Log into your account and click "Finish Work" once you're satisfied. Admin then releases payment to the worker.</div><div class="ps-tag">✅ You control the release</div></div>
-          </div>
-          <div class="pathway-step" style="margin-bottom:0">
-            <div class="ps-num">6</div>
-            <div class="ps-body">
-              <div class="ps-title">Payout Released</div>
-              <div class="ps-desc">Admin confirms and releases funds from escrow to the worker's account. Job complete.</div>
-              <div style="margin-top:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:7px;padding:10px 12px;font-size:11px;color:rgba(255,255,255,.8);line-height:1.6">
-                <strong style="color:#f87171">⚠ If worker fails or work is substandard:</strong><br>
-                Click "Cancel Payment" → State your reason → Upload photo evidence → Admin investigates → Full or partial refund issued if worker is at fault.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pathway-cta">
-          <button class="pathway-btn-primary" onclick="nav('client');switchClientAuth('register')">OPEN ACCOUNT →</button>
-          <button class="pathway-btn-secondary" onclick="nav('client')">LOG IN</button>
-        </div>
-        <div class="pathway-divider">Best for high-value or complex jobs</div>
-        <div style="height:20px"></div>
-      </div>
-
-    </div>
-  </div>
-  <div class="split-section blue-side">
-    <div class="split-inner">
-      <div>
-        <div class="section-label" style="color:rgba(255,255,255,.7)">FOR SKILLED WORKERS</div>
-        <h2 class="section-h2" style="color:#fff">GET LISTED TO<br><em style="color:#FCD34D">GROW YOUR WORK.</em></h2>
-        <p class="section-sub">Join The Gambia's fastest-growing skilled worker network. Reach clients — anywhere in The Gambia.</p>
-        <div class="ws-perks">
-          <div class="ws-perk"><div class="ws-perk-ic">✓</div>Free to register — no upfront cost</div>
-          <div class="ws-perk"><div class="ws-perk-ic">🔐</div>Agency-verified badge on your profile</div>
-          <div class="ws-perk"><div class="ws-perk-ic">📋</div>Receive job orders directly to your portal</div>
-          <div class="ws-perk"><div class="ws-perk-ic">⭐</div>Build your reputation with client reviews</div>
-        </div>
-        <button class="ws-cta" onclick="nav('register')">GET LISTED — IT'S FREE →</button>
-      </div>
-      <div>
-        <div class="ws-howto-title">HOW TO SIGN UP</div>
-        <div class="ws-step"><div class="ws-step-num">1</div><div><div class="ws-step-title">Fill Your Personal Info</div><div class="ws-step-desc">Name, phone, location, years of experience. Takes 2 minutes.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">2</div><div><div class="ws-step-title">Select Your Skills</div><div class="ws-step-desc">Pick all services you offer — plumbing, electrical, cleaning, carpentry and more.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">3</div><div><div class="ws-step-title">Upload Your Documents</div><div class="ws-step-desc">Profile photo + valid ID. Companies also upload Tax Clearance, GPPA and SSHFC docs.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">4</div><div><div class="ws-step-title">Add Portfolio</div><div class="ws-step-desc">Upload photos of past work to build trust with clients.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">5</div><div><div class="ws-step-title">Get Approved &amp; Go Live</div><div class="ws-step-desc">Our team reviews within 24–48 hours. Once approved, clients can find and book you.</div></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="brw">
-    <div class="bh"><h2 class="bt">BROWSE WORKERS</h2><div class="rc" id="rcount"></div></div>
-    <div class="fr" id="fpills"><span class="pill on" onclick="filterBy('all',this)">All Skills</span></div>
-    <div id="wbox"><div class="sp"><div class="spin"></div></div></div>
-  </div>
-</section>
-
-<!-- ═══ CLIENT PORTAL ═══ -->
-<section id="pg-client" class="pg">
-  <div class="pwrap">
-    <div class="phd"><h2>CLIENT<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Place orders, track bookings, rate workers.</p></div>
-    <div id="cl-auth">
-      <div style="background:var(--card);border:1px solid var(--b);border-radius:12px;padding:24px;margin-bottom:20px;max-width:520px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:14px">I AM A…</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
-          <div id="role-client" class="role-card sel" onclick="selectRole('client')"><div class="role-card-icon">🏠</div><div class="role-card-title">CLIENT / HOMEOWNER</div><div class="role-card-sub">I need a skilled worker</div></div>
-          <div id="role-company" class="role-card" onclick="selectRole('company')"><div class="role-card-icon">🏢</div><div class="role-card-title">COMPANY / NGO</div><div class="role-card-sub">We hire for projects</div></div>
-        </div>
-        <input type="hidden" id="cl-role" value="client">
-        <div style="display:flex;gap:3px;background:var(--ch);border-radius:8px;padding:3px;margin-bottom:18px">
-          <button id="cl-tab-login" class="lmode-tab on" onclick="switchClientAuth('login')">LOG IN</button>
-          <button id="cl-tab-register" class="lmode-tab" onclick="switchClientAuth('register')">REGISTER</button>
-        </div>
-        <div id="cl-auth-login">
-          <div class="fg"><label class="fl">Phone Number *</label><input class="fi" id="cl-phone" type="tel" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')clientPinLogin()"></div>
-          <div class="fg"><label class="fl">4-Digit PIN *</label><input class="fi" id="cl-pin" type="password" maxlength="4" placeholder="••••" onkeydown="if(event.key==='Enter')clientPinLogin()"></div>
-          <div class="brow"><button class="btn bp" onclick="clientPinLogin()">Login →</button></div>
-          <div style="margin-top:12px;font-size:12px;color:var(--mt)">No account? <span style="color:var(--am);cursor:pointer;font-weight:600" onclick="switchClientAuth('register')">Register here →</span></div>
-        </div>
-        <div id="cl-auth-register" style="display:none">
-          <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="cl-name" placeholder="Your full name"></div>
-          <div class="fg"><label class="fl">Gambian Phone Number *</label><input class="fi" id="cl-phone-reg" type="tel" placeholder="+220 7XX XXXX"></div>
-          <div class="frow">
-            <div class="fg"><label class="fl">Create 4-Digit PIN *</label><input class="fi" id="cl-pin-new" type="password" maxlength="4" placeholder="••••"></div>
-            <div class="fg"><label class="fl">Confirm PIN *</label><input class="fi" id="cl-pin2" type="password" maxlength="4" placeholder="••••"></div>
-          </div>
-          <div class="brow"><button class="btn bp" onclick="clientPinRegister()">Create Account →</button></div>
-        </div>
-      </div>
-    </div>
-    <div id="cl-dash" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
-        <div style="font-size:13px;color:var(--td)">Welcome, <span id="cl-hi" style="color:var(--tx);font-weight:600"></span></div>
-        <button class="nb" onclick="clientOut()">Log out</button>
-      </div>
-      <div class="ptabs" id="cl-ptabs">
-        <button class="pt on" onclick="clTab('order',this)">📋 Book a Worker</button>
-        <button class="pt" onclick="clTab('track',this)">📍 My Bookings <span class="badge" id="cl-cnt">0</span></button>
-        <button class="pt" onclick="clTab('reviews',this)">⭐ My Reviews</button>
-        <button class="pt" onclick="clTab('account',this)">👤 Account</button>
-      </div>
-      <div id="cl-reviews-tab" style="display:none"></div>
-      <div id="cl-account-tab" style="display:none"></div>
-      <div id="cl-order-tab">
-        <div style="background:var(--card);border:1px solid var(--b);border-radius:11px;padding:22px;margin-bottom:20px">
-          <div class="shtit">PLACE AN ORDER</div>
-          <div class="frow">
-            <div class="fg"><label class="fl">Skill Needed *</label><select class="fse" id="ord-skill"><option value="">Select…</option></select></div>
-            <div class="fg"><label class="fl">Preferred Date/Time</label><input class="fi" id="ord-dt" type="datetime-local"></div>
-          </div>
-          <div class="frow"><div class="fg"><label class="fl">Your Address *</label><input class="fi" id="ord-addr" placeholder="Where should the worker come?"></div><div class="fg"><label class="fl">Your Budget (GMD)</label><input class="fi" id="ord-budget" type="number" placeholder="e.g. 500"></div></div>
-          <div class="fg"><label class="fl">Describe the Job *</label><textarea class="fta" id="ord-desc" placeholder="What needs to be done?"></textarea></div>
-          <div class="brow"><button class="btn bp" onclick="placeOrder()">Submit Order ✓</button></div>
-        </div>
-      </div>
-      <div id="cl-track-tab" style="display:none"><div id="cl-orders"><div class="sp"><div class="spin"></div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ WORKER PORTAL ═══ -->
-<section id="pg-wportal" class="pg">
-  <div class="pwrap">
-    <div class="phd"><h2>WORKER<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Accept orders assigned by the agency and update job status.</p></div>
-    <div id="wp-auth">
-      <div class="fg" style="max-width:300px"><label class="fl">Your Registered Phone</label><input class="fi" id="wp-phone" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')workerLogin()"></div>
-      <div class="brow"><button class="btn bp" onclick="workerLogin()">Login →</button></div>
-    </div>
-    <div id="wp-dash" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
-        <div style="font-size:13px;color:var(--td)">Logged in: <span id="wp-hi" style="color:var(--am);font-weight:600"></span></div>
-        <div style="display:flex;gap:7px;align-items:center">
-          <span id="wp-avlbl" style="font-size:11px;color:var(--td)"></span>
-          <button class="asm ag" id="wp-avbtn" onclick="toggleAvail()">Set Available</button>
-          <button class="nb" onclick="workerOut()">Log out</button>
-        </div>
-      </div>
-      <div class="ptabs" id="wp-ptabs">
-        <button class="pt on" onclick="wpTab('new',this)">🔔 New Orders</button>
-        <button class="pt" onclick="wpTab('active',this)">⚡ Active</button>
-        <button class="pt" onclick="wpTab('done',this)">✅ Completed</button>
-      </div>
-      <div id="wp-content"><div class="sp"><div class="spin"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ REGISTER ═══ -->
-<section id="pg-register" class="pg">
-  <div class="fwrap">
-    <div class="fhd"><h2>JOIN OUR<br><em style="font-style:normal;color:var(--am)">AGENCY</em></h2><p>Register as a verified skilled worker. Upload your ID and certifications. Our team reviews every application.</p></div>
-    <div class="steps">
-      <div class="snd ac" id="sn1"><div class="sc">1</div><div class="slb">Personal</div></div>
-      <div class="snd" id="sn2"><div class="sc">2</div><div class="slb">Skills</div></div>
-      <div class="snd" id="sn3"><div class="sc">3</div><div class="slb">Documents</div></div>
-      <div class="snd" id="sn4"><div class="sc">4</div><div class="slb">Portfolio</div></div>
-      <div class="snd" id="sn5"><div class="sc">5</div><div class="slb">Submit</div></div>
-    </div>
-    <div id="reg-ok" class="okp">✓ &nbsp;Application received! Our team will review and contact you within 24–48 hours.</div>
-    <!-- Step 1 -->
-    <div class="fstep on" id="fs1">
-      <div class="frow">
-        <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="rn" placeholder="Your full name"></div>
-        <div class="fg"><label class="fl">Phone *</label><input class="fi" id="rp" type="tel" placeholder="+220 7XX XXXX"></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label class="fl">Email</label><input class="fi" id="re" type="email" placeholder="you@email.com"></div>
-        <div class="fg"><label class="fl">Area / Location *</label><input class="fi" id="rl" placeholder="e.g. Serrekunda"></div>
-      </div>
-      <div class="fg"><label class="fl">Shop / Work Address</label><input class="fi" id="rsa" placeholder="e.g. Mosque Road, Serrekunda (optional)"></div>
-      <div class="fg" style="max-width:190px"><label class="fl">Years of Experience *</label><input class="fi" id="rx" type="number" min="0" max="60" placeholder="e.g. 5"></div>
-      <div class="brow"><button class="btn bp" onclick="goStep(2)">Next: Skills →</button></div>
-    </div>
-    <!-- Step 2 -->
-    <div class="fstep" id="fs2">
-      <div class="fg"><label class="fl">Your Skills — pick all that apply *</label><div class="spk" id="spicker"></div></div>
-      <div class="brow"><button class="btn bg" onclick="goStep(1)">← Back</button><button class="btn bp" onclick="goStep(3)">Next: Documents →</button></div>
-    </div>
-    <!-- Step 3 -->
-    <div class="fstep" id="fs3">
-      <p style="font-size:12px;color:var(--td);margin-bottom:18px;line-height:1.6">Upload your photo, a valid ID, and any skill certifications. Used for verification only.</p>
-      <div class="fg"><label class="fl">Profile Photo *</label>
-        <div class="upz" id="uz-photo" ondragover="dzo(event,'uz-photo')" ondragleave="dzout('uz-photo')" ondrop="dzd(event,'uz-photo','photo')">
-          <input type="file" accept="image/*" onchange="hf(this,'photo')">
-          <div class="upz-ic">📷</div><div class="upz-lb">Upload a clear photo of yourself</div><div class="upz-sub">JPG or PNG · Max 5MB</div>
-          <div class="up-prev" id="prev-photo"></div>
-        </div>
-      </div>
-      <div class="fg"><label class="fl">ID Document * <span style="color:var(--mt);font-weight:400;letter-spacing:0;text-transform:none">(National ID, Passport, or Driver's License)</span></label>
-        <div class="upz" id="uz-id" ondragover="dzo(event,'uz-id')" ondragleave="dzout('uz-id')" ondrop="dzd(event,'uz-id','id')">
-          <input type="file" accept="image/*,.pdf" onchange="hf(this,'id')">
-          <div class="upz-ic">🪪</div><div class="upz-lb">Upload ID, passport or license</div><div class="upz-sub">JPG, PNG or PDF · Max 10MB</div>
-          <div class="up-prev" id="prev-id"></div>
-        </div>
-      </div>
-      <div class="fg"><label class="fl">Certifications <span style="color:var(--mt);font-weight:400;letter-spacing:0;text-transform:none">(optional)</span></label>
-        <div class="upz" id="uz-cert" ondragover="dzo(event,'uz-cert')" ondragleave="dzout('uz-cert')" ondrop="dzd(event,'uz-cert','cert')">
-          <input type="file" accept="image/*,.pdf" multiple onchange="hfs(this,'cert')">
-          <div class="upz-ic">📜</div><div class="upz-lb">Upload certificates or training docs</div><div class="upz-sub">JPG, PNG or PDF · Multiple OK</div>
-          <div class="up-prev" id="prev-cert"></div>
-        </div>
-      </div>
-      <div class="brow"><button class="btn bg" onclick="goStep(2)">← Back</button><button class="btn bp" onclick="goStep(4)">Next: Portfolio →</button></div>
-    </div>
-    <!-- Step 4 -->
-    <div class="fstep" id="fs4">
-      <p style="font-size:12px;color:var(--td);margin-bottom:16px;line-height:1.6">Add photos and examples of past work. Clients see these to build trust.</p>
-      <div class="fg"><label class="fl">Portfolio Photos</label>
-        <div class="upz" id="uz-port" ondragover="dzo(event,'uz-port')" ondragleave="dzout('uz-port')" ondrop="dzd(event,'uz-port','port')">
-          <input type="file" accept="image/*" multiple onchange="hfs(this,'port')">
-          <div class="upz-ic">🖼️</div><div class="upz-lb">Upload photos of your past work</div><div class="upz-sub">JPG or PNG · Multiple OK</div>
-          <div class="up-prev" id="prev-port"></div>
-        </div>
-      </div>
-      <label class="fl" style="margin-top:10px">Work Examples (text)</label>
-      <div id="we-list"></div>
-      <button class="add-we" onclick="addWE()">＋ Add Work Example</button>
-      <div class="brow"><button class="btn bg" onclick="goStep(3)">← Back</button><button class="btn bp" onclick="goStep(5)">Next: Review →</button></div>
-    </div>
-    <!-- Step 5 -->
-    <div class="fstep" id="fs5">
-      <div class="rvbox" id="rev-box"></div>
-      <div class="fg"><label class="fl">Short Bio *</label><textarea class="fta" id="rbio" placeholder="Tell clients about your experience and work ethic…"></textarea></div>
-      <div class="fg"><div class="ckrow"><input type="checkbox" id="ragree"><label for="ragree">I confirm all information is accurate and agree to GamSkillHub's terms.</label></div></div>
-      <div class="brow"><button class="btn bg" onclick="goStep(4)">← Back</button><button class="btn bp" id="sbtn" onclick="submitApp()">Submit Application ✓</button></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ADMIN ═══ -->
-<section id="pg-admin" class="pg">
-  <div class="awrap">
-    <div class="atop">
-      <div><h2>ADMIN<br><em style="font-style:normal;color:var(--am)">DASHBOARD</em></h2><div style="font-size:12px;color:var(--td);margin-top:5px">GamSkillHub Agency Panel</div></div>
-      <div style="display:flex;gap:7px;align-items:center"><span id="adm-who" style="font-size:11px;color:var(--td)"></span><button class="nb" onclick="adminOut()">Log Out</button></div>
-    </div>
-    <div class="tabbar">
-      <button class="tb on" onclick="aTab('pending',this)">Pending <span class="cbg" id="pcnt">0</span></button>
-      <button class="tb" onclick="aTab('approved',this)">Approved</button>
-      <button class="tb" onclick="aTab('rejected',this)">Rejected</button>
-      <button class="tb" onclick="aTab('orders',this)">📋 Orders <span class="cbg" id="ocnt">0</span></button>
-      <button class="tb" onclick="aTab('assign',this)">🔀 Assign</button>
-      <button class="tb" onclick="aTab('skills',this)">🛠 Skills</button>
-      <button class="tb" onclick="aTab('admins',this)">👥 Admins</button>
-      <button class="tb" onclick="aTab('kyc',this)">🪪 KYC</button>
-      <button class="tb" onclick="aTab('primesub',this)">🏢 Prime-Sub</button>
-      <button class="tb" onclick="aTab('refunds',this)">💰 Refunds <span class="cbg" id="refund-cnt">0</span></button>
-      <button class="tb" onclick="aTab('escrow',this)">🔐 Escrow <span class="cbg" id="escrow-cnt">0</span></button>
-    </div>
-    <div id="adm-content"><div class="sp"><div class="spin"></div></div></div>
-  </div>
-</section>
-
-<!-- ═══ PROFILE MODAL ═══ -->
-<div class="ov" id="profMod" onclick="closeMod(event,'profMod')">
-  <div class="modal">
-    <div class="mhd">
-      <div class="mava" id="mAva"></div>
-      <div class="mtb"><div class="mn" id="mName"></div><div class="msk" id="mSk"></div><div class="mloc" id="mLoc"></div><div id="mStars" class="stars" style="margin-top:5px"></div></div>
-      <button class="xb" onclick="closeMod(null,'profMod')">✕</button>
-    </div>
-    <div class="mbd">
-      <div class="ms"><div class="mst">Contact Worker</div><div class="ctns" id="mCont"></div></div>
-      <div class="ms"><div class="mst">About</div><div class="mbio" id="mBio"></div></div>
-      <div id="mShopSec" class="ms" style="display:none"><div class="mst">Shop / Work Location</div><div class="mbio" id="mShopAddr"></div></div>
-      <div class="ms"><div class="mst">Skills</div><div class="wtags" id="mTags"></div></div>
-      <div id="mIdSec" class="ms" style="display:none"><div class="mst">Verified ID</div><div class="id-row">🪪 &nbsp;ID document on file &nbsp;<a id="mIdLink" href="#" target="_blank">View</a></div></div>
-      <div class="ms"><div class="mst">Portfolio</div><div class="port-grid" id="mPort"></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ ORDER MODAL ═══ -->
-<div class="ov" id="ordMod" onclick="closeMod(event,'ordMod')">
-  <div class="modal" style="max-width:500px">
-    <div class="mhd" style="padding-bottom:14px">
-      <div class="mtb"><div class="mn">PLACE ORDER</div><div class="msk" id="om-who"></div></div>
-      <button class="xb" onclick="closeMod(null,'ordMod')">✕</button>
-    </div>
-    <div class="mbd" style="padding-top:0">
-      <div class="fg"><label class="fl">Service / Skill</label><input class="fi" id="om-sk" readonly></div>
-      <div class="frow">
-        <div class="fg"><label class="fl">Your Name *</label><input class="fi" id="om-nm" placeholder="Full name"></div>
-        <div class="fg"><label class="fl">Your Phone *</label><input class="fi" id="om-ph" type="tel" placeholder="+220 7XX XXXX"></div>
-      </div>
-      <div class="fg"><label class="fl">Your Address *</label><input class="fi" id="om-ad" placeholder="Where to come?"></div>
-      <div class="fg"><label class="fl">Describe the Job *</label><textarea class="fta" id="om-dc" placeholder="What needs to be done?"></textarea></div>
-      <div class="brow"><button class="btn bg" onclick="closeMod(null,'ordMod')">Cancel</button><button class="btn bp" onclick="submitQuickOrder()">Send Request ✓</button></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ RATE MODAL ═══ -->
-<div class="ov" id="rateMod" onclick="closeMod(event,'rateMod')">
-  <div class="modal" style="max-width:440px">
-    <div class="mhd" style="padding-bottom:14px">
-      <div class="mtb"><div class="mn">RATE WORKER</div><div class="msk" id="rate-wn"></div></div>
-      <button class="xb" onclick="closeMod(null,'rateMod')">✕</button>
-    </div>
-    <div class="mbd" style="padding-top:0">
-      <div class="fg"><label class="fl">Star Rating *</label>
-        <div class="rrow"><span class="rs" onclick="setRating(1)">★</span><span class="rs" onclick="setRating(2)">★</span><span class="rs" onclick="setRating(3)">★</span><span class="rs" onclick="setRating(4)">★</span><span class="rs" onclick="setRating(5)">★</span></div>
-      </div>
-      <div class="fg"><label class="fl">Comments</label><textarea class="fta" id="rate-cm" placeholder="Tell us about the experience…" style="min-height:76px"></textarea></div>
-      <div class="brow"><button class="btn bg" onclick="closeMod(null,'rateMod')">Cancel</button><button class="btn bp" onclick="submitRating()">Submit ✓</button></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ UNIFIED LOGIN ═══ -->
-<div class="lov" id="loginMod">
-  <div class="lbox">
-    <h3 style="margin-bottom:6px">WELCOME<br><em style="font-style:normal;color:#0D9488">BACK</em></h3>
-    <div class="lsub">Log in to your GamSkillHub account.</div>
-    <div class="lmode-tabs">
-      <button class="lmode-tab on" id="ltab-worker" onclick="switchLoginMode('worker')">👷 Worker</button>
-      <button class="lmode-tab" id="ltab-admin" onclick="switchLoginMode('admin')">🔐 Admin</button>
-    </div>
-    <div id="lf-worker">
-      <div class="fg"><label class="fl">Registered Phone Number</label><input class="fi" id="wp-phone-modal" type="tel" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')loginWorkerModal()"></div>
-      <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" style="background:#0D9488;border-color:#0D9488" onclick="loginWorkerModal()">Login →</button></div>
-    </div>
-    <div id="lf-admin" style="display:none">
-      <div class="fg"><label class="fl">Email</label><input class="fi" id="adm-em" type="email" placeholder="admin@gamskillhub.gm"></div>
-      <div class="fg"><label class="fl">Password</label><input class="fi" id="adm-pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')tryLogin()"></div>
-      <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="tryLogin()">Login →</button></div>
-    </div>
-    <div class="lerr" id="lerr">❌ Incorrect credentials.</div>
-  </div>
-</div>
-
-<div id="toast"></div>
-
-<script>
-/* ══ CONFIG ══ */
-const CFG = {
-  supabaseUrl: 'https://lhzlqzpkqdppgnesitwo.supabase.co',
-  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoemxxenBrcWRwcGduZXNpdHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NjY0ODEsImV4cCI6MjA5MTE0MjQ4MX0.zEqZv9O5LuC8Ma5mMQSGycwxnwXa4l7aL7dIZ6_Cosg',
-  adminEmail: 'admin@gamskillhub.gm',
-  adminPass:  'admin123',
-  adminName:  'Agency Admin',
-};
-
-/* ══ SKILLS ══ */
-const DEFAULT_SKILLS = [
-  {id:1,name:'Plumbing',icon:'🔧'},{id:2,name:'Electrical',icon:'⚡'},{id:3,name:'Carpentry',icon:'🪚'},
-  {id:4,name:'Masonry',icon:'🧱'},{id:5,name:'Painting',icon:'🎨'},{id:6,name:'Roofing',icon:'🏠'},
-  {id:7,name:'Tiling',icon:'⬜'},{id:8,name:'Welding',icon:'🔩'},{id:9,name:'AC/HVAC',icon:'❄️'},
-  {id:10,name:'Security Systems',icon:'🔐'},{id:11,name:'Landscaping',icon:'🌿'},{id:12,name:'General Labour',icon:'🛠️'},
-  {id:13,name:'Barber (Home)',icon:'✂️'},{id:14,name:'Home Cleaning',icon:'🧹'},{id:15,name:'Pest Control',icon:'🐛'},
-  {id:16,name:'Home Nursing',icon:'💊'},{id:17,name:'Laundry Service',icon:'👕'},{id:18,name:'Auto Mechanic',icon:'🔋'},
-  {id:19,name:'Solar Energy',icon:'☀️'},{id:20,name:'IT/Tech Support',icon:'💻'},
-];
-
-/* ══ DEMO DATA ══ */
-const DW = [
-  {id:'d1',name:'Modou Jallow',phone:'+220 700 1234',bio:'Expert plumber with 10 years experience. Fast, reliable, affordable.',location:'Serrekunda',shop_address:'Mosque Road, Serrekunda',years_experience:10,status:'approved',completed_jobs:87,rating:4.8,rating_count:23,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Plumbing','Roofing'],work_history:[{title:'Bathroom Overhaul',description:'Full replumb + new fixtures'},{title:'Roof Drainage',description:'Gutter repair'}]},
-  {id:'d2',name:'Fatou Ceesay',phone:'+220 770 5678',bio:'Professional painter. Premium paint, clean finishes.',location:'Bakau',shop_address:'',years_experience:6,status:'approved',completed_jobs:54,rating:4.9,rating_count:18,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Painting'],work_history:[{title:'Office Repaint',description:'Full interior, 4 rooms'}]},
-  {id:'d3',name:'Omar Sanyang',phone:'+220 720 9012',bio:'Certified electrician. Solar installations and repairs.',location:'Brikama',shop_address:'Brikama Highway',years_experience:12,status:'approved',completed_jobs:120,rating:5.0,rating_count:31,is_available:false,photo_url:'',id_doc_url:'has_id',skills:['Electrical','AC/HVAC','Solar Energy'],work_history:[{title:'5kW Solar Install',description:'Full panel + inverter'}]},
-  {id:'d4',name:'Lamin Touray',phone:'+220 780 3456',bio:'Skilled carpenter and furniture maker.',location:'Latrikunda',shop_address:'Latrikunda garage area',years_experience:8,status:'approved',completed_jobs:63,rating:4.7,rating_count:14,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Carpentry'],work_history:[{title:'Built-in Wardrobe',description:'Floor-to-ceiling unit'}]},
-  {id:'d5',name:'Aminata Dibba',phone:'+220 750 7890',bio:'Expert mason and tiler, 9 years.',location:'Sukuta',shop_address:'',years_experience:9,status:'approved',completed_jobs:44,rating:4.6,rating_count:9,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Masonry','Tiling'],work_history:[{title:'House Floor Tiling',description:'Full ceramic tile job'}]},
-  {id:'d6',name:'Baba Sowe',phone:'+220 760 2345',bio:'Professional welder. Gates, grills, roofing frames.',location:'Kanifing',shop_address:'Kanifing Industrial Area',years_experience:15,status:'approved',completed_jobs:98,rating:4.9,rating_count:27,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Welding','Roofing'],work_history:[{title:'Steel Gate',description:'Double-panel driveway gate'},{title:'Window Grills',description:'12 security grills'}]},
-  {id:'d7',name:'Mariama Jobe',phone:'+220 730 1122',bio:'Home barber. Professional haircuts at your doorstep.',location:'Fajara',shop_address:'',years_experience:4,status:'approved',completed_jobs:210,rating:4.8,rating_count:44,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Barber (Home)'],work_history:[]},
-  {id:'d8',name:'Ousman Fatty',phone:'+220 775 3344',bio:'Home cleaning specialist. Deep cleaning offices and homes.',location:'Kololi',shop_address:'',years_experience:5,status:'approved',completed_jobs:132,rating:4.7,rating_count:19,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Home Cleaning','Pest Control'],work_history:[]},
-  {id:'p1',name:'Isatou Sillah',phone:'+220 710 1111',bio:'',location:'Banjul',years_experience:3,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Painting','General Labour'],work_history:[]},
-  {id:'p2',name:'Kebba Gaye',phone:'+220 720 2222',bio:'',location:'Fajara',years_experience:7,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Electrical','Security Systems'],work_history:[]},
-];
-const DO = [
-  {id:'o1',client_name:'Alieu Bah',client_phone:'+220 711 0000',skill_needed:'Plumbing',description:'Leaking bathroom pipe needs fixing',client_address:'16 Atlantic Road, Kololi',status:'pending',created_at:new Date(Date.now()-3600000).toISOString(),worker_id:null},
-  {id:'o2',client_name:'Hawa Njie',client_phone:'+220 722 0000',skill_needed:'Home Cleaning',description:'Full house deep clean, 3 bedrooms',client_address:'Kairaba Ave, Fajara',status:'accepted',created_at:new Date(Date.now()-86400000).toISOString(),worker_id:'d8'},
-  {id:'o3',client_name:'Yankuba Touray',client_phone:'+220 733 0000',skill_needed:'Electrical',description:'Install 3 ceiling fans',client_address:'Brusubi near school',status:'completed',created_at:new Date(Date.now()-172800000).toISOString(),worker_id:'d3'},
-];
-
-/* ══ STATE ══ */
-let SB=null, DEMO=true;
-let workers=[], adminW=[], allOrders=[], skills=[...DEFAULT_SKILLS];
-let curFilter='all', curStep=1, pickedSkills=[], weN=0;
-let curAdminTab='pending', adminUser=null;
-let clientUser=null, workerUser=null;
-let curWpTab='new';
-let rateOId=null, rateWId=null, rateScore=0;
-let qWorker=null;
-let UF={photo:null,id:null,cert:[],port:[]};
-const WC={}; // worker cache — avoids JSON in onclick
-
-/* ══ INIT ══ */
-async function init() {
-  try {
-    if(CFG.supabaseUrl!=='YOUR_SUPABASE_URL'){
-      SB=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
-      DEMO=false;
-    }
-  } catch(e){console.warn('Demo mode');}
-  try { await loadSkills(); } catch(e){}
-  buildPills();
-  buildPicker();
-  fillSkillSelect('ord-skill');
-  await fetchWorkers();
-}
-
-/* ══ NAVIGATION ══ */
-function nav(p){
-  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
-  document.getElementById('pg-'+p).classList.add('on');
-  window.scrollTo({top:0});
-  if(p==='admin'&&adminUser) loadAdmin();
-}
-
-/* ══ SKILLS ══ */
-async function loadSkills(){
-  if(DEMO) return;
-  try{
-    const {data}=await SB.from('skill_categories').select('*').eq('is_active',true).order('name');
-    if(data&&data.length) skills=data;
-  }catch(e){}
-}
-
-function buildPills(){
-  const row=document.getElementById('fpills');
-  // remove old dynamic pills, keep first "All Skills"
-  while(row.children.length>1) row.removeChild(row.lastChild);
-  skills.forEach(s=>{
-    const p=document.createElement('span');
-    p.className='pill';
-    p.textContent=s.icon+' '+s.name;
-    p.onclick=()=>filterBy(s.name,p);
-    row.appendChild(p);
-  });
-}
-
-function buildPicker(){
-  const g=document.getElementById('spicker');
-  if(!g) return;
-  g.innerHTML='';
-  skills.forEach(s=>{
-    const d=document.createElement('div');
-    d.className='sko';d.dataset.name=s.name;
-    d.innerHTML=`<span class="sk-ic">${s.icon}</span><div class="sk-nm">${x(s.name)}</div>`;
-    d.onclick=()=>{d.classList.toggle('pk');pickedSkills=Array.from(document.querySelectorAll('.sko.pk')).map(e=>e.dataset.name);};
-    g.appendChild(d);
-  });
-}
-
-function fillSkillSelect(id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  el.innerHTML='<option value="">Select a skill…</option>';
-  skills.forEach(s=>{const o=document.createElement('option');o.value=s.name;o.textContent=s.icon+' '+s.name;el.appendChild(o);});
-}
-
-/* ══ FETCH & RENDER WORKERS ══ */
-async function fetchWorkers(search=''){
-  const box=document.getElementById('wbox');
-  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
-  try{
-    if(!DEMO&&SB){
-      let q=SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('status','approved');
-      if(search) q=q.ilike('name','%'+search+'%');
-      const {data,error}=await q;
-      if(error) throw error;
-      workers=(data||[]).map(w=>({...w,
-        skills:(w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean),
-        work_history:w.work_history||[]
-      }));
-    } else {
-      await wait(280);
-      workers=DW.filter(w=>w.status==='approved'&&(!search||
-        w.name.toLowerCase().includes(search.toLowerCase())||
-        (w.skills||[]).some(s=>s.toLowerCase().includes(search.toLowerCase()))
-      ));
-    }
-  }catch(e){ workers=DW.filter(w=>w.status==='approved'); }
-  renderWorkers();
-  anim('stat-n',workers.length);
-  anim('stat-o',workers.reduce((a,w)=>a+(w.completed_jobs||0),0));
-}
-
-function doSearch(){ fetchWorkers(document.getElementById('srch').value.trim()); }
-
-function filterBy(cat,el){
-  curFilter=cat;
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  renderWorkers();
-}
-
-function renderWorkers(){
-  const list=curFilter==='all'?workers:workers.filter(w=>(w.skills||[]).includes(curFilter));
-  document.getElementById('rcount').textContent=list.length+' worker'+(list.length!==1?'s':'')+' found';
-  const box=document.getElementById('wbox');
-  if(!list.length){
-    box.innerHTML=`<div class="empty"><div class="empi">🔍</div><h3>No Workers Found</h3><p>Try a different skill or search term.</p></div>`;
-    return;
-  }
-  box.innerHTML='';
-  const g=document.createElement('div');g.className='wgrid';
-  list.forEach(w=>{
-    WC[w.id]=w;
-    const ini=initials(w.name);
-    const pri=(w.skills||[])[0]||'Skilled Worker';
-    const av=w.is_available!==false;
-    const c=document.createElement('div');c.className='wc';
-    c.onclick=()=>openProfile(w.id);
-    c.innerHTML=`
-      <div class="ct">
-        <div class="wav">${w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.style.display='none'">`:''}<span style="${w.photo_url?'display:none':''}">` +ini+`</span></div>
-        <div class="wi"><div class="wn">${x(w.name)}</div><div class="wps">${x(pri)}</div></div>
-        <div class="wrat"><span class="s">★</span>${parseFloat(w.rating||5).toFixed(1)}</div>
-      </div>
-      <div class="wm">
-        <span class="wmi">📍 ${x(w.location||'Gambia')}</span>
-        <span class="wmi">🛠 ${w.years_experience||0}yrs</span>
-        <span class="wmi"><span class="dot ${av?'dot-ok':'dot-er'}"></span>${av?'Available':'Busy'}</span>
-      </div>
-      <div class="wtags">${(w.skills||[]).slice(0,3).map(s=>`<span class="tag">${x(s)}</span>`).join('')}</div>
-      <div class="wf">
-        <span style="font-size:10px;color:var(--mt)"><span style="color:var(--td);font-weight:600">${w.completed_jobs||0}</span> jobs · <span style="color:var(--td);font-weight:600">${w.rating_count||0}</span> reviews</span>
-        <div style="display:flex;gap:4px">
-          <a class="cl-link" href="tel:${x(w.phone)}" onclick="event.stopPropagation()">📞 Call</a>
-          <button class="ord-btn" onclick="event.stopPropagation();openOrdModal('${w.id}')">📋 Order</button>
-        </div>
-      </div>`;
-    g.appendChild(c);
-  });
-  box.appendChild(g);
-}
-
-/* ══ PROFILE MODAL ══ */
-function openProfile(id){
-  const w=WC[id]; if(!w) return;
-  const ini=initials(w.name);
-  const ava=document.getElementById('mAva');
-  ava.innerHTML=w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.textContent='${ini}'">`:ini;
-  document.getElementById('mName').textContent=w.name;
-  document.getElementById('mSk').textContent=(w.skills||[]).join(' · ')||'Skilled Worker';
-  document.getElementById('mLoc').textContent='📍 '+(w.location||'The Gambia')+(w.shop_address?' · '+w.shop_address:'');
-  document.getElementById('mBio').textContent=w.bio||'No bio provided.';
-  const rv=Math.round(parseFloat(w.rating||5));
-  document.getElementById('mStars').innerHTML=[1,2,3,4,5].map(i=>`<span class="star${i<=rv?'':' e'}">★</span>`).join('');
-  const ss=document.getElementById('mShopSec');
-  if(w.shop_address){document.getElementById('mShopAddr').textContent='📍 '+w.shop_address;ss.style.display='block';}else ss.style.display='none';
-  document.getElementById('mCont').innerHTML=`
-    <a class="ctab cc" href="tel:${x(w.phone)}">📞 ${x(w.phone)}</a>
-    <a class="ctab cw" href="https://wa.me/${w.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
-    <button class="ctab co" onclick="closeMod(null,'profMod');openOrdModal('${w.id}')">📋 Place Order</button>`;
-  const ids=document.getElementById('mIdSec');
-  if(w.id_doc_url){document.getElementById('mIdLink').href=w.id_doc_url==='has_id'?'#':w.id_doc_url;ids.style.display='block';}else ids.style.display='none';
-  document.getElementById('mTags').innerHTML=(w.skills||[]).map(s=>`<span class="tag">${x(s)}</span>`).join('')||'<span style="color:var(--mt)">None listed</span>';
-  const ph=document.getElementById('mPort');
-  const wh=w.work_history||[];
-  const pi=(w.portfolio_urls||[]).filter(Boolean);
-  if(!wh.length&&!pi.length){ph.innerHTML='<p style="color:var(--mt);font-size:12px;grid-column:1/-1">No portfolio items yet.</p>';}
-  else{
-    const sk=skills.find(c=>(w.skills||[]).includes(c.name));
-    ph.innerHTML=pi.map(u=>`<div class="pi"><img src="${x(u)}" onerror="this.style.display='none'"></div>`).join('')+
-      wh.map(i=>`<div class="pi"><div class="pi-ic">${sk?.icon||'🔨'}</div><div class="pi-lb">${x(i.title)}</div></div>`).join('');
-  }
-  openMod('profMod');
-  loadWorkerReviews(w.id);
-}
-
-/* ══ ORDER MODAL ══ */
-function openOrdModal(id){
-  const w=WC[id]; if(!w) return;
-  qWorker=w;
-  document.getElementById('om-who').textContent=w.name;
-  document.getElementById('om-sk').value=(w.skills||[])[0]||'';
-  if(clientUser){document.getElementById('om-nm').value=clientUser.name||'';document.getElementById('om-ph').value=clientUser.phone||'';}
-  openMod('ordMod');
-}
-
-async function submitQuickOrder(){
-  const nm=g('om-nm'),ph=g('om-ph'),ad=g('om-ad'),dc=g('om-dc');
-  if(!nm||!ph||!ad){toast('Fill in required fields.','er');return;}
-  try{
-    const p={worker_id:qWorker?.id||null,skill_needed:document.getElementById('om-sk').value||'General',
-      description:dc,client_address:ad,client_name:nm,client_phone:ph,
-      status:qWorker?'assigned':'pending',user_id:clientUser?.id||null};
-    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
-    else await wait(380);
-    closeMod(null,'ordMod');
-    toast('Order placed! We\'ll confirm shortly. ✓','ok');
-    ['om-nm','om-ph','om-ad','om-dc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
-}
-
-/* ══ MODAL HELPERS ══ */
-function openMod(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
-function closeMod(e,id){
-  if(e&&e.target!==document.getElementById(id))return;
-  document.getElementById(id).classList.remove('on');
-  document.body.style.overflow='';
-}
-
-/* ══ CLIENT PORTAL ══ */
-async function clientLogin(){
-  const nm=g('cl-name'),ph=g('cl-phone');
-  if(!nm||!ph){toast('Name and phone required.','er');return;}
-  try{
-    if(!DEMO&&SB){
-      let {data:ex}=await SB.from('users').select('*').eq('phone',ph).maybeSingle();
-      if(!ex){const {data,error}=await SB.from('users').insert([{name:nm,phone:ph,email:g('cl-email')}]).select().single();if(error)throw error;clientUser=data;}
-      else clientUser=ex;
-    }else{await wait(280);clientUser={id:'demo-cl',name:nm,phone:ph};}
-    document.getElementById('cl-hi').textContent=clientUser.name;
-    document.getElementById('cl-auth').style.display='none';
-    document.getElementById('cl-dash').style.display='block';
-    fillSkillSelect('ord-skill');
-    loadClientOrders();
-  }catch(e){toast('Login failed.','er');}
-}
-function clientOut(){clientUser=null;document.getElementById('cl-auth').style.display='block';document.getElementById('cl-dash').style.display='none';}
-
-// clTab defined in injected JS above
-
-async function placeOrder(){
-  if(!clientUser){toast('Please log in first.','er');return;}
-  const sk=g('ord-skill'),ad=g('ord-addr'),dc=g('ord-desc');
-  if(!sk||!ad){toast('Skill and address are required.','er');return;}
-  try{
-    const p={user_id:clientUser.id,skill_needed:sk,description:dc,client_address:ad,
-      client_name:clientUser.name,client_phone:clientUser.phone,status:'pending',
-      scheduled_at:document.getElementById('ord-dt').value||null};
-    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
-    else await wait(380);
-    toast('Order placed! ✓','ok');
-    ['ord-skill','ord-addr','ord-desc','ord-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-    clTab('track',document.querySelectorAll('.pt')[1]);
-  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
-}
-
-async function loadClientOrders(){
-  const box=document.getElementById('cl-orders');
-  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
-  let orders=[];
-  try{
-    if(!DEMO&&SB&&clientUser){
-      const {data}=await SB.from('orders').select('*,workers(name,phone,photo_url,location,shop_address)').eq('user_id',clientUser.id).order('created_at',{ascending:false});
-      orders=data||[];
-    }else{
-      await wait(250);
-      orders=DO.slice(0,2).map(o=>({...o,workers:o.worker_id?DW.find(w=>w.id===o.worker_id):null}));
-    }
-  }catch(e){orders=[];}
-  document.getElementById('cl-cnt').textContent=orders.length;
-  if(!orders.length){box.innerHTML='<div class="empty"><div class="empi">📋</div><h3>No Bookings Yet</h3><p>Place your first order to get started.</p></div>';return;}
-  box.innerHTML=orders.map(o=>{
-    const wk=o.workers;
-    const acts=[];
-    if(o.status==='accepted') acts.push(`<button class="asm ag" onclick="orderAction('${o.id}','worker_arrived','')">✓ Worker Arrived</button>`);
-    if(o.status==='worker_arrived'||o.status==='completed_by_worker'||o.status==='work_started'){
-      if(o.booking_flow==='escrow'){
-        acts.push(`<button class="asm ag" onclick="clientFinishWork('${o.id}')">✅ Finish Work — Release Payment</button>`);
-        acts.push(`<button class="refund-btn" onclick="openDisputeMod('${o.id}')">⚠ Cancel Payment</button>`);
-      } else {
-        acts.push(`<button class="asm ag" onclick="orderAction('${o.id}','verify_release','')">✅ Verify &amp; Release</button>`);
-        acts.push(`<button class="asm ar" onclick="openDisputeMod('${o.id}')">⚠ Dispute</button>`);
-      }
-    }
-    if(o.status==='completed') acts.push(`<button class="asm ab" onclick="openRateMod('${o.id}','${o.worker_id||''}','${x(wk?.name||'')}')">⭐ Rate Worker</button>`);
-    if(['pending','assigned','requested'].includes(o.status)) acts.push(`<button class="asm ar" onclick="orderAction('${o.id}','cancel','')">Cancel</button>`);
-    if(['disputed','cancelled'].includes(o.status)) acts.push(`<button class="refund-btn" onclick="requestRefund('${o.id}')">💰 Request Refund</button>`);
-    if(o.status==='funds_released') acts.push(`<button class="asm ab" onclick="openReviewForm('${o.id}','${o.worker_id||''}','${x(wk?.name||'')}')" >⭐ Write Review</button>`);
-    return `<div class="oc" data-flow="${o.booking_flow||'express'}">
-      ${o.booking_flow==='escrow'?'<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf);font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:10px;letter-spacing:.5px">🔒 ESCROW BOOKING</div>':''}
-      <div class="oct"><div class="ocs">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
-      <div class="ocm"><span>📅 ${fd(o.created_at)}</span><span>📍 ${x(o.client_address)}</span>${wk?`<span>👷 ${x(wk.name)}</span>`:'<span>⏳ Awaiting worker</span>'}</div>
-      ${o.description?`<div class="ocd">${x(o.description)}</div>`:''}
-      ${wk&&o.status!=='pending'?`<div class="wk-detail">👷 <strong>${x(wk.name)}</strong> · <a href="tel:${x(wk.phone)}">📞 ${x(wk.phone)}</a>${wk.location?' · 📍 '+x(wk.location):''}${wk.shop_address?' · Shop: '+x(wk.shop_address):''}</div>`:''}
-      ${acts.length?`<div class="oca">${acts.join('')}</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-async function updOrder(id,status){
-  try{
-    const u={status};
-    if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
-    if(status==='completed')u.completed_at=new Date().toISOString();
-    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',id);if(error)throw error;}
-    else{const o=DO.find(x=>x.id===id);if(o)Object.assign(o,u);}
-    toast('Updated ✓','ok');
-    loadClientOrders();
-    if(adminUser)loadAdmin();
-  }catch(e){toast('Failed.','er');}
-}
-
-/* ══ RATING ══ */
-function openRateMod(oId,wId,wName){
-  rateOId=oId;rateWId=wId;rateScore=0;
-  document.getElementById('rate-wn').textContent=wName;
-  document.getElementById('rate-cm').value='';
-  setRating(0);openMod('rateMod');
-}
-function setRating(n){rateScore=n;document.querySelectorAll('.rs').forEach((s,i)=>s.classList.toggle('on',i<n));}
-async function submitRating(){
-  if(!rateScore){toast('Select a star rating.','er');return;}
-  try{
-    const p={order_id:rateOId,worker_id:rateWId,user_id:clientUser?.id||null,score:rateScore,comment:g('rate-cm')};
-    if(!DEMO&&SB){const {error}=await SB.from('ratings').insert([p]);if(error)throw error;}
-    else await wait(280);
-    closeMod(null,'rateMod');toast('Rating submitted ✓','ok');
-    loadClientOrders();fetchWorkers();
-  }catch(e){toast('Already rated or failed.','er');}
-}
-
-/* ══ WORKER PORTAL ══ */
-async function workerLogin(){
-  const ph=g('wp-phone');if(!ph){toast('Enter your registered phone.','er');return;}
-  try{
-    if(!DEMO&&SB){
-      const {data,error}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('phone',ph).eq('status','approved').maybeSingle();
-      if(error||!data){toast('Not found or not approved yet.','er');return;}
-      workerUser={...data,skills:(data.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean)};
-    }else{
-      await wait(280);
-      workerUser=DW.find(w=>w.phone===ph&&w.status==='approved');
-      if(!workerUser){toast('Not found or not approved yet.','er');return;}
-    }
-    WC[workerUser.id]=workerUser;
-    document.getElementById('wp-hi').textContent=workerUser.name;
-    document.getElementById('wp-auth').style.display='none';
-    document.getElementById('wp-dash').style.display='block';
-    updAvail();loadWpOrders();
-  }catch(e){toast('Login failed.','er');}
-}
-function workerOut(){workerUser=null;document.getElementById('wp-auth').style.display='block';document.getElementById('wp-dash').style.display='none';}
-function updAvail(){
-  const av=workerUser?.is_available!==false;
-  document.getElementById('wp-avlbl').textContent=av?'🟢 Available':'🔴 Busy';
-  document.getElementById('wp-avbtn').textContent=av?'Set Busy':'Set Available';
-}
-async function toggleAvail(){
-  const nv=!(workerUser?.is_available!==false);
-  try{
-    if(!DEMO&&SB)await SB.from('workers').update({is_available:nv}).eq('id',workerUser.id);
-    workerUser.is_available=nv;updAvail();
-    toast(nv?'You are now Available ✓':'Set as Busy','ok');
-  }catch(e){toast('Failed.','er');}
-}
-
-// wpTab defined in injected JS above
-
-async function loadWpOrders(){
-  if(!workerUser)return;
-  const box=document.getElementById('wp-content');
-  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
-  let orders=[];
-  try{
-    const smap={new:['pending','assigned'],active:['accepted','worker_arrived'],done:['completed']};
-    const stats=smap[curWpTab]||['pending'];
-    if(!DEMO&&SB){
-      let q=SB.from('orders').select('*').in('status',stats);
-      if(curWpTab!=='new')q=q.eq('worker_id',workerUser.id);
-      const {data}=await q.order('created_at',{ascending:false});
-      orders=data||[];
-    }else{
-      await wait(220);
-      orders=DO.filter(o=>stats.includes(o.status)&&(curWpTab==='new'||(o.worker_id===workerUser.id)));
-    }
-  }catch(e){orders=[];}
-  if(!orders.length){
-    box.innerHTML=`<div class="empty"><div class="empi">${curWpTab==='new'?'📭':'✅'}</div><h3>${curWpTab==='new'?'No New Orders':'No Jobs Here'}</h3><p>${curWpTab==='new'?'Check back for new assignments.':'Jobs appear here.'}</p></div>`;
-    return;
-  }
-  box.innerHTML=orders.map(o=>{
-    const acts=[];
-    if(curWpTab==='new') acts.push(`<button class="asm ag" onclick="wAccept('${o.id}')">✓ Accept</button><button class="asm aa" onclick="submitCounterOffer('${o.id}')">💬 Counter-Offer</button>`);
-    if(o.status==='accepted') acts.push(`<button class="asm aa" onclick="orderAction('${o.id}','start_work','')">🔨 Start Work</button>`);
-    if(o.status==='work_started') acts.push(`<button class="asm ab" onclick="orderAction('${o.id}','signal_complete','')">✅ Signal Completion</button>`);
-    return `<div style="background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:9px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:7px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase">${x(o.skill_needed)}</div>
-        <span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span>
-      </div>
-      <div style="font-size:12px;color:var(--td);line-height:1.7;margin-bottom:11px">
-        📍 ${x(o.client_address)}<br>
-        👤 ${x(o.client_name)} · <a href="tel:${x(o.client_phone)}" style="color:var(--am)">📞 ${x(o.client_phone)}</a><br>
-        ${o.description?`📝 ${x(o.description)}<br>`:''}
-        📅 ${fd(o.created_at)}
-      </div>
-      ${acts.length?`<div style="display:flex;gap:6px;flex-wrap:wrap">${acts.join('')}</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-async function wAccept(oId){
-  try{
-    const u={status:'accepted',worker_id:workerUser.id,accepted_at:new Date().toISOString()};
-    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
-    else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
-    toast('Job accepted! ✓','ok');loadWpOrders();
-  }catch(e){toast('Failed.','er');}
-}
-async function wUpdStatus(oId,status){
-  const u={status};
-  if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
-  if(status==='completed')u.completed_at=new Date().toISOString();
-  try{
-    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
-    else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
-    toast('Status updated ✓','ok');loadWpOrders();
-  }catch(e){toast('Failed.','er');}
-}
-
-/* ══ FILE UPLOADS ══ */
-function hf(inp,t){
-  const f=inp.files[0];if(!f)return;
-  UF[t]=f;
-  const prev=document.getElementById('prev-'+t);
-  if(f.type.startsWith('image/')){
-    const r=new FileReader();r.onload=e=>{prev.innerHTML=`<div class="uthw"><img class="uth" src="${e.target.result}"><button class="urm" onclick="clf('${t}')">✕</button></div>`;};r.readAsDataURL(f);
-  }else{prev.innerHTML=`<div class="ufi">📄 ${x(f.name)}<button class="rm" onclick="clf('${t}')">✕</button></div>`;}
-}
-function hfs(inp,t){
-  const files=Array.from(inp.files);if(!files.length)return;
-  if(t==='cert')UF.cert.push(...files);
-  if(t==='port')UF.port.push(...files);
-  const prev=document.getElementById('prev-'+t);
-  files.forEach(f=>{
-    if(f.type.startsWith('image/')){const r=new FileReader();r.onload=e=>{prev.innerHTML+=`<div class="uthw"><img class="uth" src="${e.target.result}"></div>`;};r.readAsDataURL(f);}
-    else{prev.innerHTML+=`<div class="ufi">📄 ${x(f.name)}</div>`;}
-  });
-}
-function clf(t){UF[t]=t==='cert'||t==='port'?[]:null;document.getElementById('prev-'+t).innerHTML='';}
-function dzo(e,id){e.preventDefault();document.getElementById(id).classList.add('drag');}
-function dzout(id){document.getElementById(id).classList.remove('drag');}
-function dzd(e,id,t){e.preventDefault();dzout(id);const f=e.dataTransfer.files;if(f.length){t==='cert'||t==='port'?hfs({files:f},t):hf({files:f},t);}}
-
-async function uploadFile(file,bucket,path){
-  if(!SB||!file)return null;
-  try{
-    const {error}=await SB.storage.from(bucket).upload(path,file,{upsert:true});
-    if(error)throw error;
-    return SB.storage.from(bucket).getPublicUrl(path).data?.publicUrl||null;
-  }catch(e){console.warn('Upload fail:',e);return null;}
-}
-
-/* ══ REGISTRATION ══ */
-function goStep(n){
-  if(n>curStep){
-    if(curStep===1&&(!g('rn')||!g('rp')||!g('rl')||!g('rx'))){toast('Fill in all required fields.','er');return;}
-    if(curStep===2&&pickedSkills.length===0){toast('Select at least one skill.','er');return;}
-    if(curStep===3&&!UF.photo&&!UF.id){toast('Upload your photo and ID document.','er');return;}
-    if(n===5)buildReview();
-  }
-  document.getElementById('fs'+curStep).classList.remove('on');
-  for(let i=1;i<=5;i++){
-    const nd=document.getElementById('sn'+i);
-    nd.classList.remove('ac','dn');
-    if(i<n)nd.classList.add('dn');
-    if(i===n)nd.classList.add('ac');
-  }
-  curStep=n;
-  document.getElementById('fs'+n).classList.add('on');
-  window.scrollTo({top:120,behavior:'smooth'});
-}
-
-function buildReview(){
-  document.getElementById('rev-box').innerHTML=`
-    <div class="rvg">
-      <div><div class="rvl">Name</div><div class="rvv">${x(g('rn'))}</div></div>
-      <div><div class="rvl">Phone</div><div class="rvv">${x(g('rp'))}</div></div>
-      <div><div class="rvl">Location</div><div class="rvv">${x(g('rl'))}</div></div>
-      <div><div class="rvl">Experience</div><div class="rvv">${x(g('rx'))} years</div></div>
-      <div style="grid-column:1/-1"><div class="rvl">Skills</div><div class="wtags" style="margin-top:5px">${pickedSkills.map(s=>`<span class="tag">${x(s)}</span>`).join('')}</div></div>
-      <div style="grid-column:1/-1"><div class="rvl">Documents</div><div class="rvv" style="font-size:12px;color:var(--td)">
-        ${UF.photo?'✅ Photo':'❌ No photo'} &nbsp;${UF.id?'✅ ID':'❌ No ID'} &nbsp;${UF.cert.length?'✅ '+UF.cert.length+' cert(s)':'No certs'}
-      </div></div>
-    </div>`;
-}
-
-let weCount2=0;
-function addWE(){
-  weCount2++;const n=weCount2;
-  const li=document.getElementById('we-list');
-  const d=document.createElement('div');d.className='we';d.id='we-'+n;
-  d.innerHTML=`
-    <div class="weh"><div class="wet">Example #${n}</div><button class="rmb" onclick="this.closest('.we').remove()">✕</button></div>
-    <div class="fg"><label class="fl">Job Title</label><input class="fi we-t" placeholder="e.g. Bathroom repair"></div>
-    <div class="frow">
-      <div class="fg"><label class="fl">Description</label><input class="fi we-d" placeholder="Brief description"></div>
-      <div class="fg"><label class="fl">Category</label><select class="fse we-c">${skills.map(s=>`<option value="${x(s.name)}">${s.icon} ${x(s.name)}</option>`).join('')}</select></div>
-    </div>`;
-  li.appendChild(d);
-}
-
-function getWE(){return Array.from(document.querySelectorAll('.we')).map(el=>({title:el.querySelector('.we-t').value,description:el.querySelector('.we-d').value,category:el.querySelector('.we-c').value})).filter(e=>e.title.trim());}
-
-async function submitApp(){
-  const bio=g('rbio');
-  if(!bio){toast('Please write a short bio.','er');return;}
-  if(!document.getElementById('ragree').checked){toast('Please accept the terms.','er');return;}
-  const btn=document.getElementById('sbtn');
-  btn.disabled=true;btn.textContent='Submitting…';
-  try{
-    const payload={name:g('rn'),phone:g('rp'),email:g('re'),location:g('rl'),shop_address:g('rsa'),years_experience:parseInt(g('rx'))||0,bio,status:'pending',is_available:true};
-    if(!DEMO&&SB){
-      const wId=`${payload.name.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}`;
-      if(UF.photo) payload.photo_url=await uploadFile(UF.photo,'worker-photos',`${wId}/photo`);
-      if(UF.id) payload.id_doc_url=await uploadFile(UF.id,'worker-docs',`${wId}/id`);
-      const {data:wk,error}=await SB.from('workers').insert([payload]).select().single();
-      if(error)throw error;
-      if(pickedSkills.length){
-        const rows=pickedSkills.map(s=>{const c=skills.find(x=>x.name===s);return c?{worker_id:wk.id,category_id:c.id}:null;}).filter(Boolean);
-        if(rows.length)await SB.from('worker_skills').insert(rows);
-      }
-      const wh=getWE();
-      if(wh.length)await SB.from('work_history').insert(wh.map(e=>({...e,worker_id:wk.id})));
-    }else await wait(700);
-    document.getElementById('reg-ok').classList.add('on');
-    document.querySelectorAll('.fstep').forEach(s=>s.classList.remove('on'));
-    document.querySelectorAll('.snd').forEach(s=>{s.classList.remove('ac');s.classList.add('dn');});
-    toast('Application submitted! ✓','ok');
-    setTimeout(resetForm,8000);
-  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');btn.disabled=false;btn.textContent='Submit Application ✓';}
-}
-
-function resetForm(){
-  document.getElementById('reg-ok').classList.remove('on');
-  pickedSkills=[];curStep=1;weCount2=0;
-  UF={photo:null,id:null,cert:[],port:[]};
-  document.querySelectorAll('.fi,.fta').forEach(el=>el.value='');
-  document.querySelectorAll('.sko').forEach(el=>el.classList.remove('pk'));
-  document.getElementById('we-list').innerHTML='';
-  ['prev-photo','prev-id','prev-cert','prev-port'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});
-  document.querySelectorAll('.snd').forEach((nd,i)=>{nd.classList.remove('dn','ac');if(i===0)nd.classList.add('ac');});
-  document.getElementById('fs1').classList.add('on');
-  document.getElementById('sbtn').disabled=false;document.getElementById('sbtn').textContent='Submit Application ✓';
-}
-
-/* ══ ADMIN LOGIN ══ */
-function openAdminLogin(){if(adminUser){nav('admin');return;}document.getElementById('loginMod').classList.add('on');setTimeout(()=>document.getElementById('adm-pw').focus(),80);}
-function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';document.getElementById('adm-pw').value='';}
-
-async function tryLogin(){
-  const em=g('adm-em'),pw=g('adm-pw');
-  try{
-    let adm=null;
-    if(!DEMO&&SB){const {data}=await SB.from('admin_users').select('*').eq('email',em).eq('password',pw).maybeSingle();adm=data;}
-    else if(pw==='Admin@2024!'){adm={name:'Agency Admin',email:'admin@gamskillhub.gm',role:'super_admin'};}
-    if(!adm){document.getElementById('lerr').style.display='block';return;}
-    adminUser=adm;
-    document.getElementById('adm-who').textContent=adm.name+' ('+adm.role+')';
-    closeLogin();nav('admin');loadAdmin();
-  }catch(e){document.getElementById('lerr').style.display='block';}
-}
-function adminOut(){adminUser=null;nav('home');}
-
-/* ══ ADMIN DASHBOARD ══ */
-async function loadAdmin(){
-  try{
-    if(!DEMO&&SB){
-      const {data:wd}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').order('created_at',{ascending:false});
-      adminW=(wd||[]).map(w=>({...w,skills:(w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean),work_history:w.work_history||[]}));
-      const {data:od}=await SB.from('orders').select('*,workers(name,phone),users(name,phone)').order('created_at',{ascending:false});
-      allOrders=od||[];
-    }else{await wait(200);adminW=[...DW];allOrders=[...DO];}
-  }catch(e){adminW=[...DW];allOrders=[...DO];}
-  adminW.forEach(w=>{WC[w.id]=w;});
-  document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
-  document.getElementById('ocnt').textContent=allOrders.filter(o=>o.status==='pending').length;
-  renderAdmin();
-}
-
-// aTab defined in injected JS above
-
-function renderAdmin(){
-  const box=document.getElementById('adm-content');
-  if(curAdminTab==='pending'||curAdminTab==='approved'||curAdminTab==='rejected') renderAWorkers(box);
-  else if(curAdminTab==='orders'){renderAOrders(box);const alerts=renderReassignAlerts();if(alerts){const d=document.createElement('div');d.innerHTML=alerts;box.insertBefore(d,box.firstChild);}}
-  else if(curAdminTab==='assign') renderAssign(box);
-  else if(curAdminTab==='skills') renderSkills(box);
-  else if(curAdminTab==='admins') renderAdmins(box);
-  else if(curAdminTab==='kyc') renderKYC(box);
-  else if(curAdminTab==='primesub') renderPrimeSub(box);
-  else if(curAdminTab==='refunds') renderAdminRefunds(box);
-  else if(curAdminTab==='escrow') renderAdminEscrow(box);
-}
-
-function renderAWorkers(box){
-  const list=adminW.filter(w=>w.status===curAdminTab);
-  if(!list.length){box.innerHTML=`<div class="empty"><div class="empi">✅</div><h3>All Clear</h3><p>No ${curAdminTab} workers.</p></div>`;return;}
-  box.innerHTML=list.map(w=>`
-    <div class="acard">
-      <div class="aav">${w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.style.display='none'">`:''} ${initials(w.name)}</div>
-      <div class="ainfo">
-        <div class="anm">${x(w.name)}</div>
-        <div class="amet">
-          <span>📞 ${x(w.phone)}</span><span>📍 ${x(w.location||'N/A')}</span>
-          <span>🛠 ${(w.skills||[]).map(x).join(', ')||'None'}</span>
-          <span>${w.years_experience||0}yrs</span>
-          ${w.id_doc_url?'<span style="color:var(--ok)">🪪 ID on file</span>':'<span style="color:var(--er)">⚠ No ID</span>'}
-          ${w.photo_url?'<span style="color:var(--ok)">📷 Photo</span>':''}
-          <span class="sta sta-${w.status}">${w.status}</span>
-        </div>
-      </div>
-      <div class="aacts">
-        <button class="aview" onclick="openProfile('${w.id}')">View</button>
-        ${w.status!=='approved'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">✓ Approve</button>`:''}
-        ${w.status!=='rejected'?`<button class="arej" onclick="setStatus('${w.id}','rejected')">✕ Reject</button>`:''}
-        ${w.status==='rejected'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">↩ Restore</button>`:''}
-      </div>
-    </div>`).join('');
-}
-
-function renderAOrders(box){
-  if(!allOrders.length){box.innerHTML=`<div class="empty"><div class="empi">📋</div><h3>No Orders</h3><p>Client orders appear here.</p></div>`;return;}
-  box.innerHTML=allOrders.map(o=>{
-    const wk=o.workers;
-    const acts=[];
-    if(!['completed','cancelled'].includes(o.status)) acts.push(`<button class="asm ag" onclick="aSetOrder('${o.id}','completed')">✓ Complete</button>`);
-    if(!['cancelled'].includes(o.status)) acts.push(`<button class="asm ar" onclick="aSetOrder('${o.id}','cancelled')">Cancel</button>`);
-    return `<div class="orow">
-      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
-      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📞 ${x(o.client_phone)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span>${wk?`<span>👷 ${x(wk.name||wk)}</span>`:'<span style="color:var(--am)">⏳ No worker</span>'}</div>
-      ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:7px">${x(o.description)}</div>`:''}
-      ${acts.length?`<div class="ora">${acts.join('')}</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-function renderAssign(box){
-  const unassigned=allOrders.filter(o=>['pending','assigned'].includes(o.status));
-  const approved=adminW.filter(w=>w.status==='approved');
-  box.innerHTML=`<div class="shtit">MANUALLY ASSIGN ORDERS</div>
-    ${!unassigned.length?`<div class="empty"><div class="empi">✅</div><h3>No Pending Orders</h3><p>All orders assigned.</p></div>`:
-    unassigned.map(o=>`<div class="orow">
-      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status}</span></div>
-      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span></div>
-      ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:9px">${x(o.description)}</div>`:''}
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <select class="asel" id="asel-${o.id}">
-          <option value="">Select worker…</option>
-          <optgroup label="— Matching Skill —">${approved.filter(w=>(w.skills||[]).some(s=>s.toLowerCase()===o.skill_needed.toLowerCase())).map(w=>`<option value="${w.id}">${x(w.name)} · ${x(w.location||'')}</option>`).join('')}</optgroup>
-          <optgroup label="— All Approved —">${approved.map(w=>`<option value="${w.id}">${x(w.name)} · ${(w.skills||[]).map(x).join(', ')}</option>`).join('')}</optgroup>
-        </select>
-        <button class="asm ag" onclick="doAssign('${o.id}')">Assign →</button>
-      </div>
-    </div>`).join('')}`;
-}
-
-async function doAssign(oId){
-  const sel=document.getElementById('asel-'+oId);
-  const wId=sel?.value;if(!wId){toast('Select a worker.','er');return;}
-  try{
-    const u={worker_id:wId,status:'assigned',assigned_by_admin:true};
-    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
-    else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
-    toast('Order assigned ✓','ok');loadAdmin();
-  }catch(e){toast('Failed.','er');}
-}
-
-async function aSetOrder(oId,status){
-  try{
-    const u={status};if(status==='completed')u.completed_at=new Date().toISOString();
-    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
-    else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
-    toast('Updated ✓','ok');loadAdmin();
-  }catch(e){toast('Failed.','er');}
-}
-
-function renderSkills(box){
-  box.innerHTML=`<div class="shtit">MANAGE SKILLS</div>
-    <div class="skgrid">${skills.map(s=>`
-      <div class="ski"><div class="ski-ic">${s.icon}</div><div class="ski-nm">${x(s.name)}</div><button class="ski-dl" onclick="delSkill(${s.id})" title="Remove">✕</button>
-    </div>`).join('')}</div>
-    <hr class="sep">
-    <div class="shtit" style="font-size:16px">ADD NEW SKILL</div>
-    <div class="addbox">
-      <div class="fg"><label class="fl">Icon</label><input class="fi" id="sk-ic" placeholder="🔨" maxlength="4"></div>
-      <div class="fg"><label class="fl">Skill Name *</label><input class="fi" id="sk-nm" placeholder="e.g. Home Nursing"></div>
-      <div class="fg"><label class="fl">Description</label><input class="fi" id="sk-dc" placeholder="Short description"></div>
-      <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addSkill()">Add +</button></div>
-    </div>`;
-}
-
-async function addSkill(){
-  const nm=g('sk-nm'),icon=g('sk-ic')||'🛠️',desc=g('sk-dc');
-  if(!nm){toast('Skill name is required.','er');return;}
-  if(skills.some(s=>s.name.toLowerCase()===nm.toLowerCase())){toast('Skill already exists.','er');return;}
-  try{
-    let ns={name:nm,icon,description:desc,is_active:true};
-    if(!DEMO&&SB){const {data,error}=await SB.from('skill_categories').insert([ns]).select().single();if(error)throw error;ns=data;}
-    else ns.id=Date.now();
-    skills.push(ns);
-    buildPills();buildPicker();fillSkillSelect('ord-skill');
-    toast('"'+nm+'" added ✓','ok');renderAdmin();
-  }catch(e){toast('Failed.','er');}
-}
-
-async function delSkill(id){
-  if(!confirm('Remove this skill?'))return;
-  try{
-    if(!DEMO&&SB){const {error}=await SB.from('skill_categories').delete().eq('id',id);if(error)throw error;}
-    skills=skills.filter(s=>s.id!==id);
-    buildPills();buildPicker();fillSkillSelect('ord-skill');
-    toast('Skill removed.','ok');renderAdmin();
-  }catch(e){toast('Failed.','er');}
-}
-
-async function renderAdmins(box){
-  let admins=[];
-  try{
-    if(!DEMO&&SB){const {data}=await SB.from('admin_users').select('*').order('created_at');admins=data||[];}
-    else admins=[{id:'a1',name:'Agency Admin',email:'admin@gamskillhub.gm',role:'super_admin',created_at:new Date().toISOString()}];
-  }catch(e){admins=[];}
-  box.innerHTML=`<div class="shtit">ADMIN USERS</div>
-    ${admins.map(a=>`<div class="admrow">
-      <div class="admav">${initials(a.name)}</div>
-      <div class="adminfo"><div class="admnm">${x(a.name)} <span class="sta sta-accepted" style="margin-left:5px">${a.role}</span></div><div class="admmt">${x(a.email)} · ${fd(a.created_at)}</div></div>
-      ${a.role!=='super_admin'?`<button class="arej" style="margin-left:auto;font-size:10px;padding:4px 10px" onclick="delAdmin('${a.id}')">Remove</button>`:''}
-    </div>`).join('')}
-    <hr class="sep">
-    <div class="shtit" style="font-size:16px">ADD ADMIN USER</div>
-    <div class="addadmbox">
-      <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="na-nm" placeholder="Full name"></div>
-      <div class="fg"><label class="fl">Email *</label><input class="fi" id="na-em" type="email" placeholder="email@example.com"></div>
-      <div class="fg"><label class="fl">Password *</label><input class="fi" id="na-pw" type="password" placeholder="Strong password"></div>
-      <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addAdmin()">Add Admin +</button></div>
-    </div>`;
-}
-
-async function addAdmin(){
-  const nm=g('na-nm'),em=g('na-em'),pw=g('na-pw');
-  if(!nm||!em||!pw){toast('All fields required.','er');return;}
-  try{
-    if(!DEMO&&SB){const {error}=await SB.from('admin_users').insert([{name:nm,email:em,password:pw,role:'admin'}]);if(error)throw error;}
-    toast('"'+nm+'" added as admin ✓','ok');renderAdmins(document.getElementById('adm-content'));
-  }catch(e){toast('Failed. Email may exist already.','er');}
-}
-
-async function delAdmin(id){
-  if(!confirm('Remove this admin user?'))return;
-  try{
-    if(!DEMO&&SB)await SB.from('admin_users').delete().eq('id',id);
-    toast('Removed.','ok');renderAdmins(document.getElementById('adm-content'));
-  }catch(e){toast('Failed.','er');}
-}
-
-async function setStatus(id,status){
-  try{
-    if(!DEMO&&SB){const {error}=await SB.from('workers').update({status}).eq('id',id);if(error)throw error;}
-    const w=adminW.find(w=>w.id===id);if(w)w.status=status;
-    document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
-    renderAdmin();fetchWorkers();
-    toast('Worker '+(status==='approved'?'approved ✓':'rejected'),status==='approved'?'ok':'er');
-  }catch(e){toast('Failed.','er');}
-}
-
-/* ══ UTILS ══ */
-function g(id){return document.getElementById(id)?.value?.trim()||'';}
-function initials(n){return(n||'?').split(' ').map(c=>c[0]).join('').toUpperCase().slice(0,2);}
-function wait(ms){return new Promise(r=>setTimeout(r,ms));}
-function fd(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
-function x(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-
-let _t;
-function toast(msg,type='ok'){
-  const el=document.getElementById('toast');
-  el.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;el.className='on '+type;
-  clearTimeout(_t);_t=setTimeout(()=>el.className='',4200);
-}
-
-function anim(id,target){
-  const el=document.getElementById(id);if(!el)return;
-  let n=0;const iv=setInterval(()=>{n=Math.min(n+1,target);el.textContent=n;if(n>=target)clearInterval(iv);},28);
-}
-
-
-/* ══ THEME ══ */
-function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme')||'dark';const next=cur==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',next);localStorage.setItem('gsh-theme',next);}
-(function(){const t=localStorage.getItem('gsh-theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);})();
-
-/* ══ ROLE SELECTOR ══ */
-function selectRole(role){document.getElementById('cl-role').value=role;['client','company'].forEach(r=>{const el=document.getElementById('role-'+r);if(el)el.className='role-card'+(r===role?' sel':'');});}
-
-/* ══ CLIENT AUTH SWITCH ══ */
-function switchClientAuth(mode){
-  const le=document.getElementById('cl-auth-login');const re=document.getElementById('cl-auth-register');
-  if(le)le.style.display=mode==='login'?'block':'none';
-  if(re)re.style.display=mode==='register'?'block':'none';
-  const t1=document.getElementById('cl-tab-login');const t2=document.getElementById('cl-tab-register');
-  if(t1)t1.classList.toggle('on',mode==='login');if(t2)t2.classList.toggle('on',mode==='register');
-}
-
-/* ══ CLIENT TAB ══ */
-function clTab(t,el){
-  document.querySelectorAll('#cl-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
-  document.getElementById('cl-order-tab').style.display=t==='order'?'block':'none';
-  document.getElementById('cl-track-tab').style.display=t==='track'?'block':'none';
-  document.getElementById('cl-reviews-tab').style.display=t==='reviews'?'block':'none';
-  document.getElementById('cl-account-tab').style.display=t==='account'?'block':'none';
-  if(t==='track')loadClientOrders();
-  if(t==='reviews')loadCustomerReviews();
-  if(t==='account')renderCustomerAccount();
-}
-
-/* ══ WORKER TAB ══ */
-function wpTab(t,el){curWpTab=t;document.querySelectorAll('#wp-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');loadWpOrders();}
-
-/* ══ ADMIN TAB ══ */
-function aTab(t,el){curAdminTab=t;document.querySelectorAll('#pg-admin .tb').forEach(b=>b.classList.remove('on'));if(el)el.classList.add('on');renderAdmin();}
-
-/* ══ PIN LOGIN ══ */
-async function clientPinLogin(){
-  const phone=(document.getElementById('cl-phone')?.value||'').replace(/\s+/g,'');
-  const pin=(document.getElementById('cl-pin')?.value||'').trim();
-  if(!phone||pin.length<4){toast('Enter phone + 4-digit PIN.','er');return;}
-  try{
-    if(!DEMO&&SB){const{data,error}=await SB.rpc('verify_client_pin',{p_phone:phone,p_pin:pin});if(error)throw error;if(data&&data.error){toast('❌ '+data.error,'er');return;}clientUser=data;}
-    else{await wait(300);clientUser={id:'demo-'+Date.now(),name:'Client',phone,role:'client'};}
-    document.getElementById('cl-hi').textContent=clientUser.name||clientUser.phone;
-    document.getElementById('cl-auth').style.display='none';document.getElementById('cl-dash').style.display='block';
-    fillSkillSelect('ord-skill');loadClientOrders();toast('Welcome back! ✓','ok');
-  }catch(e){toast('Login failed: '+(e.message||e),'er');}
-}
-
-/* ══ PIN REGISTER ══ */
-async function clientPinRegister(){
-  const name=(document.getElementById('cl-name')?.value||'').trim();
-  const phone=(document.getElementById('cl-phone-reg')?.value||document.getElementById('cl-phone')?.value||'').replace(/\s+/g,'');
-  const pin=(document.getElementById('cl-pin-new')?.value||document.getElementById('cl-pin')?.value||'').trim();
-  const pin2=(document.getElementById('cl-pin2')?.value||'').trim();
-  const role=document.getElementById('cl-role')?.value||'client';
-  if(!name||!phone){toast('Name and phone required.','er');return;}
-  if(pin.length<4){toast('PIN must be 4 digits.','er');return;}
-  if(pin!==pin2){toast('PINs do not match.','er');return;}
-  try{
-    if(!DEMO&&SB){
-      const{data:ex}=await SB.from('users').select('id,name,phone,role').eq('phone',phone).maybeSingle();
-      if(ex){clientUser=ex;}
-      else{const{data,error}=await SB.from('users').insert([{name,phone,pin_hash:pin,pin,role,account_type:role}]).select().single();if(error)throw error;clientUser=data;}
-    }else{await wait(300);clientUser={id:'demo-'+Date.now(),name,phone,role};}
-    document.getElementById('cl-hi').textContent=clientUser.name;
-    document.getElementById('cl-auth').style.display='none';document.getElementById('cl-dash').style.display='block';
-    fillSkillSelect('ord-skill');loadClientOrders();toast('Account created! ✓','ok');
-  }catch(e){toast('Registration failed: '+(e.message||e),'er');}
-}
-
-/* ══ LOGIN PORTAL ══ */
-function openLoginPortal(){document.getElementById('loginMod').classList.add('on');switchLoginMode('worker');setTimeout(()=>document.getElementById('wp-phone-modal')?.focus(),80);}
-function switchLoginMode(mode){
-  const lfw=document.getElementById('lf-worker');const lfa=document.getElementById('lf-admin');
-  const tw=document.getElementById('ltab-worker');const ta=document.getElementById('ltab-admin');const le=document.getElementById('lerr');
-  if(lfw)lfw.style.display=mode==='worker'?'block':'none';if(lfa)lfa.style.display=mode==='admin'?'block':'none';
-  if(tw)tw.classList.toggle('on',mode==='worker');if(ta)ta.classList.toggle('on',mode==='admin');
-  if(le)le.style.display='none';
-}
-function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';const pw=document.getElementById('adm-pw');if(pw)pw.value='';const ph=document.getElementById('wp-phone-modal');if(ph)ph.value='';}
-async function loginWorkerModal(){const ph=document.getElementById('wp-phone-modal')?.value?.trim();if(!ph){toast('Enter your registered phone.','er');return;}document.getElementById('wp-phone').value=ph;closeLogin();nav('wportal');await workerLogin();}
-
-/* ══ BOOK SEARCH ══ */
-function bookSearch(){const q=document.getElementById('book-srch')?.value?.trim();if(q){document.getElementById('srch').value=q;fetchWorkers(q);}nav('home');setTimeout(()=>document.getElementById('wbox')?.scrollIntoView({behavior:'smooth'}),200);}
-function quickBook(skill){curFilter=skill;document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.textContent.includes(skill)));renderWorkers();nav('home');setTimeout(()=>document.getElementById('wbox')?.scrollIntoView({behavior:'smooth'}),200);}
-
-/* ══ EDGE BASE ══ */
-const EDGE_BASE=CFG.supabaseUrl+'/functions/v1';
-
-/* ══ ESCROW ACTION ══ */
-async function orderAction(orderId,action,phone){
-  try{
-    if(!DEMO&&SB){
-      const{error}=await SB.rpc('transition_order',{p_order_id:orderId,p_action:action,p_actor_id:clientUser?.id||workerUser?.id||null});
-      if(error)throw error;
-      if(phone)fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId,event_type:action,phone})}).catch(()=>{});
-    }else{const o=DO.find(x=>x.id===orderId);if(o)o.status={accept:'accepted',start_work:'work_started',signal_complete:'completed_by_worker',verify_release:'funds_released',dispute:'disputed',cancel:'cancelled'}[action]||o.status;}
-    const msgs={accept:'Job accepted!',start_work:'Work started!',signal_complete:'Completion signalled.',verify_release:'Payment released! ✓',dispute:'Dispute raised.',cancel:'Order cancelled.'};
-    toast(msgs[action]||'Updated ✓',action==='dispute'?'er':'ok');
-    loadClientOrders();if(adminUser)loadAdmin();if(workerUser)loadWpOrders();
-    if(action==='verify_release'&&!DEMO&&SB){fetch(EDGE_BASE+'/generate-invoice',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId})}).then(r=>r.json()).then(d=>{if(d.invoice_html)openInvoiceModal(d.invoice_html,d.invoice_number);}).catch(()=>{});}
-  }catch(e){toast('Failed: '+(e.message||e),'er');}
-}
-
-/* ══ COUNTER OFFER ══ */
-async function submitCounterOffer(orderId){const amount=prompt('Enter your counter-offer amount (GMD):');if(!amount||isNaN(amount))return;try{if(!DEMO&&SB){await SB.from('orders').update({counter_offer:parseFloat(amount),status:'negotiating'}).eq('id',orderId);}toast('Counter-offer sent: GMD '+amount+' ✓','ok');loadWpOrders();loadClientOrders();}catch(e){toast('Failed.','er');}}
-
-/* ══ INVOICE ══ */
-function openInvoiceModal(ihtml,num){let m=document.getElementById('invoiceMod');if(!m){m=document.createElement('div');m.id='invoiceMod';m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';m.innerHTML='<div style="background:#fff;border-radius:14px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto" id="invoiceInner"></div>';m.onclick=e=>{if(e.target===m)m.style.display='none';};document.body.appendChild(m);}document.getElementById('invoiceInner').innerHTML=ihtml+'<div style="padding:16px;text-align:center"><button onclick="window.print()" style="background:#3A7728;color:#fff;border:none;padding:10px 24px;border-radius:7px;font-weight:700;cursor:pointer;margin-right:8px">🖨 Print</button><button onclick="document.getElementById('invoiceMod').style.display='none'" style="background:#f0f0f0;border:none;padding:10px 20px;border-radius:7px;cursor:pointer">Close</button></div>';m.style.display='flex';toast('Invoice ready ✓','ok');}
-
-/* ══ IMAGE COMPRESSION ══ */
-function compressImage(file,maxW,quality){return new Promise(resolve=>{const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');const ratio=Math.min(maxW/img.width,maxW/img.height,1);canvas.width=img.width*ratio;canvas.height=img.height*ratio;canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);canvas.toBlob(b=>resolve(b),'image/jpeg',quality||0.75);};img.src=e.target.result;};reader.readAsDataURL(file);});}
-
-/* ══ KYC ══ */
-function kycBadge(w){if(w.gppa_verified)return '<span class="trust-badge">✓ Verified by GamSkill</span>';if(w.kyc_status==='pending_review')return '<span style="background:rgba(245,158,11,.15);color:#d97706;padding:2px 9px;border-radius:100px;font-size:10px;font-weight:700">KYC PENDING</span>';return '';}
-async function adminApproveKYC(wId){try{if(!DEMO&&SB){await SB.from('workers').update({gppa_verified:true,kyc_status:'approved'}).eq('id',wId);const w=adminW.find(x=>x.id===wId);if(w?.phone){fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({event_type:'kyc_approved',phone:w.company_phone||w.phone})}).catch(()=>{}); }}toast('KYC approved ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
-function renderKYC(box){const pending=adminW.filter(w=>w.kyc_status==='pending_review'||(!w.gppa_verified&&w.status==='approved'));if(!pending.length){box.innerHTML='<div class="empty"><div class="empi">✅</div><h3>All Clear</h3></div>';return;}box.innerHTML='<div class="shtit">KYC REVIEW</div>'+pending.map(w=>`<div class="acard"><div class="aav">${initials(w.name)}</div><div class="ainfo"><div class="anm">${x(w.name)} ${kycBadge(w)}</div><div class="amet"><span>📞 ${x(w.company_phone||w.phone)}</span><span>${w.worker_type||'individual'}</span>${w.id_doc_url?`<a href="${w.id_doc_url}" target="_blank" style="color:var(--am)">🪪 ID</a>`:''}</div></div><div class="aacts"><button class="aappr" onclick="adminApproveKYC('${w.id}')">✓ Approve</button><button class="arej" onclick="setStatus('${w.id}','rejected')">✕ Reject</button></div></div>`).join('');}
-
-/* ══ PRIME-SUB ══ */
-async function renderPrimeSub(box){const approved=adminW.filter(w=>w.status==='approved'&&w.worker_type==='company'&&w.gppa_verified);const pending=allOrders.filter(o=>['pending','requested'].includes(o.status));box.innerHTML='<div class="shtit">PRIME-SUB CONTRACTING</div>'+((!approved.length)?'<div class="empty"><div class="empi">🏢</div><h3>No Verified Companies</h3></div>':pending.map(o=>`<div class="orow"><div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status}</span></div><div class="orm"><span>👤 ${x(o.client_name)}</span><span>📍 ${x(o.client_address)}</span></div><div style="display:flex;gap:8px;margin-top:9px"><select class="asel" id="prime-${o.id}"><option value="">Assign company…</option>${approved.map(w=>`<option value="${w.id}">${x(w.name)}</option>`).join('')}</select><button class="asm ag" onclick="assignPrime('${o.id}')">Assign →</button></div></div>`).join('')||'<div class="empty"><div class="empi">✅</div><h3>All Assigned</h3></div>');}
-async function assignPrime(oId){const sel=document.getElementById('prime-'+oId);const wId=sel?.value;if(!wId){toast('Select a company.','er');return;}try{if(!DEMO&&SB){const{error}=await SB.from('orders').update({worker_id:wId,status:'assigned',assigned_by_admin:true}).eq('id',oId);if(error)throw error;}toast('Prime contract assigned ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
-
-/* ══ REFUNDS ══ */
-async function requestRefund(orderId){const reason=prompt('Why are you requesting a refund?');if(!reason?.trim())return;try{if(!DEMO&&SB){const{data,error}=await SB.rpc('process_refund',{p_order_id:orderId,p_customer_id:clientUser?.id||null,p_reason:reason});if(error)throw error;if(data?.error){toast('❌ '+data.error,'er');return;}fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId,event_type:'refund_requested'})}).catch(()=>{});}else{await wait(300);}toast('Refund requested. Admin will process within 24hrs ✓','ok');loadClientOrders();}catch(e){toast('Failed: '+(e.message||e),'er');}}
-
-async function renderAdminRefunds(box){box.innerHTML='<div class="sp"><div class="spin"></div></div>';try{let refunds=[];if(!DEMO&&SB){const{data}=await SB.from('refunds').select('*,orders(skill_needed,client_name),users(name,phone)').order('requested_at',{ascending:false});refunds=data||[];}const cnt=refunds.filter(r=>r.status==='requested').length;const el=document.getElementById('refund-cnt');if(el)el.textContent=cnt;if(!refunds.length){box.innerHTML='<div class="empty"><div class="empi">💰</div><h3>No Refunds</h3></div>';return;}box.innerHTML='<div class="shtit">REFUND REQUESTS</div>'+refunds.map(r=>`<div class="orow"><div class="ort"><div class="ors">Refund — ${x(r.orders?.skill_needed||'Order')}</div><span class="sta sta-${r.status==='requested'?'pending':'completed'}">${r.status.toUpperCase()}</span></div><div class="orm"><span>👤 ${x(r.users?.name||'Client')}</span><span>📞 ${x(r.users?.phone||'')}</span><span>💰 GMD ${r.amount||0}</span><span>📅 ${fd(r.requested_at)}</span></div><div class="ocd">${x(r.reason||'')}</div>${r.status==='requested'?`<div class="ora"><button class="asm ag" onclick="processRefund('${r.id}','approved')">✓ Approve</button><button class="asm ar" onclick="processRefund('${r.id}','rejected')">✕ Reject</button></div>`:''}</div>`).join('');}catch(e){box.innerHTML='<div class="empty"><div class="empi">⚠️</div></div>';}}
-async function processRefund(id,status){try{if(!DEMO&&SB){await SB.from('refunds').update({status,processed_at:new Date().toISOString()}).eq('id',id);}toast(status==='approved'?'Refund approved ✓':'Refund rejected','ok');renderAdminRefunds(document.getElementById('adm-content'));}catch(e){toast('Failed.','er');}}
-
-/* ══ REVIEWS ══ */
-let reviewState={orderId:null,workerId:null,workerName:'',score:0};
-function openReviewForm(orderId,workerId,workerName){reviewState={orderId,workerId,workerName,score:0};document.querySelectorAll('.review-form').forEach(f=>f.remove());const form=document.createElement('div');form.className='review-form';form.id='active-review-form';form.innerHTML=`<div class="review-form-title">⭐ Review — ${x(workerName)}</div><div class="fg"><label class="fl">Star Rating *</label><div class="star-picker">${[1,2,3,4,5].map(i=>`<span class="star-pick" onclick="pickStar(${i})">★</span>`).join('')}</div></div><div class="fg"><label class="fl">Title</label><input class="fi" id="rev-title" placeholder="e.g. Excellent work!"></div><div class="fg"><label class="fl">Your Review *</label><textarea class="fta" id="rev-body" placeholder="Describe the quality of work, punctuality, and professionalism…" style="min-height:80px"></textarea></div><div class="brow"><button class="btn bg" onclick="document.getElementById('active-review-form').remove()">Cancel</button><button class="btn bp" onclick="submitCustomerReview()">Submit Review ✓</button></div>`;const box=document.getElementById('cl-track-tab');if(box)box.insertBefore(form,box.firstChild);form.scrollIntoView({behavior:'smooth'});}
-function pickStar(n){reviewState.score=n;document.querySelectorAll('.star-pick').forEach((s,i)=>s.classList.toggle('on',i<n));}
-async function submitCustomerReview(){if(!reviewState.score){toast('Select a star rating.','er');return;}const body=document.getElementById('rev-body')?.value?.trim();if(!body){toast('Write your review first.','er');return;}const title=document.getElementById('rev-title')?.value?.trim();try{if(!DEMO&&SB){const{error}=await SB.from('reviews').insert([{order_id:reviewState.orderId,worker_id:reviewState.workerId,customer_id:clientUser?.id||null,score:reviewState.score,title:title||null,body,is_verified:true}]);if(error)throw error;}else await wait(300);document.getElementById('active-review-form')?.remove();toast('Review submitted! Thank you ✓','ok');loadClientOrders();}catch(e){toast('Failed: '+(e.message||e),'er');}}
-async function loadCustomerReviews(){const box=document.getElementById('cl-reviews-tab');if(!box)return;box.innerHTML='<div class="sp"><div class="spin"></div></div>';try{let reviews=[];if(!DEMO&&SB&&clientUser){const{data}=await SB.from('reviews').select('*,workers(name)').eq('customer_id',clientUser.id).order('created_at',{ascending:false});reviews=data||[];}if(!reviews.length){box.innerHTML='<div class="empty"><div class="empi">⭐</div><h3>No Reviews Yet</h3><p>Complete a job and share your experience.</p></div>';return;}box.innerHTML='<div class="shtit">YOUR REVIEWS</div>'+reviews.map(r=>`<div class="rev-card"><div class="rev-header"><div><div class="rev-author">${x(r.workers?.name||'Worker')}</div><div class="rev-date">${fd(r.created_at)}</div></div><div class="rev-stars">${'★'.repeat(r.score)}${'☆'.repeat(5-r.score)}</div></div>${r.title?`<div class="rev-title">${x(r.title)}</div>`:''}<div class="rev-body">${x(r.body)}</div><div class="rev-verified">✓ Verified Purchase</div></div>`).join('');}catch(e){box.innerHTML='<div class="empty"><div class="empi">⚠️</div></div>';}}
-async function loadWorkerReviews(workerId){if(!workerId||DEMO)return;try{const{data}=await SB.from('reviews').select('score,title,body,created_at,users(name)').eq('worker_id',workerId).eq('is_visible',true).order('created_at',{ascending:false}).limit(5);if(!data?.length)return;const box=document.getElementById('mPort');if(!box)return;box.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1;margin-top:12px"><div class="mst">CLIENT REVIEWS</div>'+data.map(r=>`<div class="rev-card"><div class="rev-header"><div class="rev-author">${x(r.users?.name||'Client')}</div><div class="rev-stars">${'★'.repeat(r.score)}${'☆'.repeat(5-r.score)}</div></div>${r.title?`<div class="rev-title">${x(r.title)}</div>`:''}<div class="rev-body">${x(r.body)}</div><div class="rev-verified">✓ Verified Booking</div></div>`).join('')+'</div>');}catch(e){}}
-
-/* ══ CUSTOMER ACCOUNT ══ */
-function renderCustomerAccount(){const box=document.getElementById('cl-account-tab');if(!box||!clientUser)return;box.innerHTML=`<div class="cust-card"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px"><div><div class="cust-name">${x(clientUser.name||'My Account')}</div><div class="cust-meta">📞 ${x(clientUser.phone||'')} · Role: ${clientUser.role||'client'}</div></div><span class="cust-stat">🛒 ${clientUser.total_orders||0} Orders</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn bg" style="font-size:12px" onclick="changePin()">🔑 Change PIN</button><button class="btn bg" style="font-size:12px;color:var(--er)" onclick="clientOut()">Log Out</button></div></div><div class="shtit" style="margin-top:20px">PRIVACY & SECURITY</div><div style="background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;font-size:12px;color:var(--td);line-height:1.7">🔒 Your personal info is never shared with workers directly.<br>📞 All contact is routed through GamSkillHub agency.<br>💳 Payments held in escrow — released only when you verify completion.</div>`;}
-async function changePin(){const newPin=prompt('Enter your new 4-digit PIN:');if(!newPin||newPin.length!==4||isNaN(newPin)){toast('PIN must be exactly 4 digits.','er');return;}try{if(!DEMO&&SB&&clientUser){await SB.from('users').update({pin_hash:newPin,pin:newPin}).eq('id',clientUser.id);}toast('PIN updated ✓','ok');}catch(e){toast('Failed.','er');}}
-
-/* ══ REASSIGN ALERTS ══ */
-function renderReassignAlerts(){const needs=allOrders.filter(o=>o.status==='pending'&&o.reassign_count>0);if(!needs.length)return '';return '<div style="margin-bottom:16px"><div class="shtit" style="color:var(--er)">⚠ AUTO-REASSIGN NEEDED</div>'+needs.map(o=>`<div class="reassign-alert"><span>🔄</span><div><strong>${x(o.skill_needed)}</strong> — Worker didn't accept in 1hr (reassigned ${o.reassign_count}x)<br><span style="color:var(--td)">Client: ${x(o.client_name)}</span></div><select class="asel" id="rsel-${o.id}" style="margin-left:auto">${adminW.filter(w=>w.status==='approved').map(w=>`<option value="${w.id}">${x(w.name)}</option>`).join('')}</select><button class="asm ag" onclick="doReassign('${o.id}')">Assign →</button></div>`).join('')+'</div>';}
-async function doReassign(oId){const sel=document.getElementById('rsel-'+oId);const wId=sel?.value;if(!wId){toast('Select a worker.','er');return;}try{if(!DEMO&&SB){await SB.from('orders').update({worker_id:wId,status:'assigned',assigned_by_admin:true,last_assigned_at:new Date().toISOString(),auto_reassign_at:new Date(Date.now()+3600000).toISOString()}).eq('id',oId);}toast('Reassigned ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
-
-/* ══ WORKER MODAL CONTACTS — use company phone ══ */
-function getWorkerContact(w){return w.company_phone||w.phone;}
-
-/* ══ SECRET ADMIN ══ */
-document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key==='A'){document.getElementById('loginMod').classList.add('on');switchLoginMode('admin');setTimeout(()=>document.getElementById('adm-pw')?.focus(),80);}});
-
-
-/* ══ DISPUTE MODAL ══ */
-let disputeOrderId = null;
-let evidenceFiles = [];
-
-function openDisputeMod(orderId) {
-  disputeOrderId = orderId;
-  evidenceFiles = [];
-  document.getElementById('dispute-reason-type').value = '';
-  document.getElementById('dispute-details').value = '';
-  document.getElementById('ev-previews').innerHTML = '';
-  document.getElementById('disputeMod').classList.add('on'); /* escrow_frozen on submit */
-}
-function closeDisputeMod() {
-  document.getElementById('disputeMod').classList.remove('on');
-  disputeOrderId = null;
-}
-function disputeReasonChanged() {
-  const val = document.getElementById('dispute-reason-type').value;
-  const detail = document.getElementById('dispute-details');
-  if (val === 'worker_no_show') detail.placeholder = 'e.g. Worker was scheduled for 10am on June 3rd but never arrived and stopped responding…';
-  else if (val === 'poor_quality') detail.placeholder = 'e.g. The electrical work was incomplete — two sockets were left unfinished and the worker left without notice…';
-  else detail.placeholder = 'Please describe the issue in detail…';
-}
-function handleEvidenceFiles(inp) {
-  const files = Array.from(inp.files);
-  evidenceFiles.push(...files);
-  const prev = document.getElementById('ev-previews');
-  files.forEach(f => {
-    const r = new FileReader();
-    r.onload = e => {
-      const img = document.createElement('img');
-      img.className = 'ev-thumb';
-      img.src = e.target.result;
-      prev.appendChild(img);
-    };
-    r.readAsDataURL(f);
-  });
-}
-async function submitDispute() {
-  const reasonType = document.getElementById('dispute-reason-type').value;
-  const details = document.getElementById('dispute-details').value.trim();
-  if (!reasonType) { toast('Please select a reason.','er'); return; }
-  if (!details || details.length < 20) { toast('Please describe the issue (at least 20 characters).','er'); return; }
-  const fullReason = reasonType + ': ' + details;
-
-  // Upload evidence images first if any
-  let evidenceUrls = [];
-  try {
-    if (!DEMO && SB && evidenceFiles.length > 0) {
-      for (const file of evidenceFiles) {
-        const compressed = await compressImage(file, 1200, 0.78);
-        const fname = `disputes/${disputeOrderId}/${Date.now()}-${file.name}`;
-        const { data: upData, error: upErr } = await SB.storage.from('worker-docs').upload(fname, compressed, { upsert: true });
-        if (!upErr) {
-          const { data: urlData } = SB.storage.from('worker-docs').getPublicUrl(fname);
-          if (urlData?.publicUrl) evidenceUrls.push(urlData.publicUrl);
-        }
-      }
-    }
-
-    if (!DEMO && SB) {
-      const { data, error } = await SB.rpc('raise_dispute_with_evidence', {
-        p_order_id:     disputeOrderId,
-        p_client_id:    clientUser?.id || null,
-        p_reason:       fullReason,
-        p_evidence_urls: evidenceUrls
-      });
-      if (error) throw error;
-      if (data?.error) { toast('❌ ' + data.error, 'er'); return; }
-      // WhatsApp admin
-      fetch(EDGE_BASE + '/notify-whatsapp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
-        body: JSON.stringify({ order_id: disputeOrderId, event_type: 'dispute_urgent' })
-      }).catch(() => {});
-    } else {
-      const o = DO.find(x => x.id === disputeOrderId);
-      if (o) { o.status = 'disputed'; }
-    }
-    closeDisputeMod();
-    toast('Dispute raised. Escrow frozen. Admin has been notified. ✓', 'ok');
-    loadClientOrders();
-  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
-}
-
-/* ══ CLIENT: FINISH WORK ══ */
-async function clientFinishWork(orderId) {
-  if (!confirm('Confirm that the work has been completed to your satisfaction?\n\nClicking OK will notify the admin to release payment to the worker.')) return;
-  try {
-    if (!DEMO && SB) {
-      const { data, error } = await SB.rpc('client_finish_job', {
-        p_order_id:  orderId,
-        p_client_id: clientUser?.id || null
-      });
-      if (error) throw error;
-      if (data?.error) { toast('❌ ' + data.error, 'er'); return; }
-      fetch(EDGE_BASE + '/notify-whatsapp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
-        body: JSON.stringify({ order_id: orderId, event_type: 'release_funds' })
-      }).catch(() => {});
-    } else {
-      const o = DO.find(x => x.id === orderId);
-      if (o) o.status = 'client_verified';
-    }
-    toast('Job marked complete! Admin will release payment shortly. ✓', 'ok');
-    loadClientOrders();
-    if (adminUser) loadAdmin();
-  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
-}
-
-/* ══ ADMIN: RELEASE ESCROW ══ */
-async function adminReleaseEscrow(orderId) {
-  if (!confirm('Release escrow funds to the worker?')) return;
-  try {
-    if (!DEMO && SB) {
-      const { data, error } = await SB.rpc('admin_release_escrow', {
-        p_order_id: orderId,
-        p_admin_id: null
-      });
-      if (error) throw error;
-      // Generate invoice
-      fetch(EDGE_BASE + '/generate-invoice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
-        body: JSON.stringify({ order_id: orderId })
-      }).then(r => r.json()).then(d => {
-        if (d.invoice_html) openInvoiceModal(d.invoice_html, d.invoice_number);
-      }).catch(() => {});
-    } else {
-      const o = allOrders.find(x => x.id === orderId);
-      if (o) { o.status = 'funds_released'; o.payment_status = 'released'; }
-    }
-    toast('Escrow released to worker ✓ Invoice generated.', 'ok');
-    loadAdmin();
-  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
-}
-
-
-/* ══ ADMIN ESCROW RELEASE TAB ══ */
-async function renderAdminEscrow(box) {
-  box.innerHTML = '<div class="sp"><div class="spin"></div></div>';
-  try {
-    let pending = [];
-    if (!DEMO && SB) {
-      const { data } = await SB.from('orders')
-        .select('*, users(name,phone), workers(name,phone,company_phone)')
-        .eq('status', 'client_verified')
-        .order('client_verified_at', { ascending: false });
-      pending = data || [];
-    } else {
-      pending = allOrders.filter(o => o.status === 'client_verified');
-    }
-    const cnt = pending.length;
-    const el = document.getElementById('escrow-cnt');
-    if (el) el.textContent = cnt;
-
-    if (!pending.length) {
-      box.innerHTML = '<div class="empty"><div class="empi">🔐</div><h3>No Pending Releases</h3><p>Orders awaiting escrow release will appear here.</p></div>';
-      return;
-    }
-    box.innerHTML = '<div class="shtit">ESCROW PENDING RELEASE</div>' +
-      '<p style="font-size:13px;color:var(--td);margin-bottom:18px">Client has confirmed job completion. Review and release funds to the worker.</p>' +
-      pending.map(o => `
-        <div class="release-card">
-          <div class="release-card-title">✅ ${x(o.skill_needed)} — Client Verified</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;color:var(--td);margin-bottom:12px">
-            <div>👤 Client: <strong>${x(o.client_name||o.users?.name||'N/A')}</strong></div>
-            <div>👷 Worker: <strong>${x(o.workers?.name||'N/A')}</strong></div>
-            <div>📍 ${x(o.client_address)}</div>
-            <div>💰 Escrow: <strong>GMD ${o.escrow_amount||o.agreed_amount||o.budget_amount||'TBD'}</strong></div>
-            <div>📅 Verified: ${fd(o.client_verified_at)}</div>
-            <div>📞 ${x(o.workers?.company_phone||o.workers?.phone||'')}</div>
-          </div>
-          ${o.description ? `<div style="font-size:12px;color:var(--td);margin-bottom:12px;padding:10px;background:var(--card);border-radius:7px">${x(o.description)}</div>` : ''}
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="asm ag" style="padding:8px 20px;font-size:12px" onclick="adminReleaseEscrow('${o.id}')">💸 Release Funds to Worker</button>
-            <button class="asm ar" onclick="openDisputeMod('${o.id}')">⚠ Flag Issue</button>
-          </div>
-        </div>`).join('');
-  } catch(e) { box.innerHTML = '<div class="empty"><div class="empi">⚠️</div><h3>Failed to load</h3></div>'; }
-}
-
-/* ══ BOOT ══ */
-init();
-</script>
-
-<!-- ═══ DISPUTE MODAL ═══ -->
-<div class="dispute-modal" id="disputeMod">
-  <div class="dispute-box">
-    <div class="dispute-title">⚠ Cancel Payment</div>
-    <p class="dispute-sub">Your escrow funds are protected. Raising a dispute will freeze the payment immediately while admin investigates.</p>
-    <div class="dispute-warn">
-      📋 <strong>What happens next:</strong> Escrow is frozen instantly. Admin reviews your case within 24hrs. If the worker is found at fault, you receive a full or partial refund.
-    </div>
-    <div class="fg"><label class="fl">Reason for dispute *</label>
-      <select class="fse" id="dispute-reason-type" onchange="disputeReasonChanged()">
-        <option value="">Select a reason…</option>
-        <option value="worker_no_show">Worker never showed up</option>
-        <option value="work_abandoned">Worker abandoned the job</option>
-        <option value="poor_quality">Work quality is unacceptable</option>
-        <option value="wrong_service">Wrong service was performed</option>
-        <option value="overcharged">Charged more than agreed</option>
-        <option value="other">Other reason</option>
-      </select>
-    </div>
-    <div class="fg"><label class="fl">Describe what happened *</label>
-      <textarea class="fta" id="dispute-details" placeholder="Please describe the issue in detail. Be specific about dates, times, and what went wrong…" style="min-height:88px"></textarea>
-    </div>
-    <div class="fg"><label class="fl">Photo Evidence <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--mt)">(optional but recommended)</span></label>
-      <div class="evidence-zone" id="ev-zone">
-        <input type="file" accept="image/*" multiple onchange="handleEvidenceFiles(this)">
-        <div style="font-size:22px;margin-bottom:6px">📸</div>
-        <div style="font-size:13px;font-weight:500;color:var(--td)">Upload photos of the issue</div>
-        <div style="font-size:11px;color:var(--mt);margin-top:3px">JPG or PNG · Multiple OK</div>
-        <div class="evidence-previews" id="ev-previews"></div>
-      </div>
-    </div>
-    <div class="brow">
-      <button class="btn bg" onclick="closeDisputeMod()">Cancel</button>
-      <button class="btn bp" style="background:var(--er);border-color:var(--er)" onclick="submitDispute()">🚨 Freeze &amp; Dispute</button>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+<!DOCTYPE html><html id="root" lang="nb" class="bg-beige-200 antialiased __variable_8d3a0c __variable_02c135"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/><link rel="preload" as="image" imageSrcSet="/_next/image?url=%2Fassets%2Fimages%2Fcommon%2Fpage-sections%2Ftoolspng.png&amp;w=770&amp;q=75 1x, /_next/image?url=%2Fassets%2Fimages%2Fcommon%2Fpage-sections%2Ftoolspng.png&amp;w=1920&amp;q=75 2x"/><link rel="stylesheet" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/css/4794c5e655f75673.css" data-precedence="next"/><link rel="stylesheet" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/css/46cbca54249869c7.css" data-precedence="next"/><link rel="stylesheet" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/css/dbf317c5a42383e0.css" data-precedence="next"/><link rel="stylesheet" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/css/ec018b1a74aecf6b.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/webpack-f21f8a17087b3ea6.js"/><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/876c4e23-92901c64f533774a.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/d8610b9e-8faa9bde79e75518.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/64679-5766a92cca399aa5.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/main-app-3e3e4c4eae158665.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/20031-13d15b61450acbf6.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/48948-d513005a02ba7e12.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/global-error-7bb1419382da7b4c.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/layout-1d85976278a68919.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/21973-0a1333cc8c09d273.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/30395-61dce643a9b5ccd9.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/18627-074633210ca2dfb6.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/(site)/xl/layout-d7f7a1add4d7072d.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/2901-f793a468b14ea7f6.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/34598-68828ff3e390fcd7.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/53394-e815e6ce0babf02a.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/42227-11bd0ae81e16bed1.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/15651-de37713207d9f684.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/61494-a92b1b416a781c73.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/76639-cf6c360a94cf68bb.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/41746-b64cc9c09be0612e.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/93787-ea137a324c480a3a.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/9476-3d5c4c4b08c24c70.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/4250-98898bd0f2c8b4c2.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/81915-ff019c711d8ec147.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/45522-9f6b3f62a7c93d44.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/17592-ee5eb84b7ccaca50.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/25923-98cdc8d0fe4f9781.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/47124-88b2bdae2df4f684.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/20026-732d907fa139b191.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/9072-2a5af84e8e4e0ca5.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/8567-a73ce801ef3bcd46.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/(site)/layout-4288940fbcd52bf2.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/73461-4b9c7ae61d638981.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/not-found-942c3abb4ae7c558.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/92776-c50d114d4695c04f.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/88853-f853088f894c8e9a.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/15413-4297e2d31e85e81d.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/46218-3ea15466376c7d32.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/81094-3f5cb366235ef76f.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/62830-0b9ba0186adc9a3b.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/17209-56738c9d2c6d9135.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/30344-1d27bdff0cb0b700.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/52715-8bc47f213d7dffe6.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/34657-71f172e5cb095e7a.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/61215-f4b8dffd7ff50be6.js" async=""></script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/(site)/xl/business/page-c4ef78507e479c01.js" async=""></script><link rel="preload" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/32170.cbc128b40076e4d5.js" as="script" fetchPriority="low"/><link rel="preload" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/98057.373413c93d0ddb25.js" as="script" fetchPriority="low"/><meta name="next-size-adjust" content=""/><link rel="preconnect" href="https://5fl9rxqb1i-dsn.algolia.net"/><link rel="preconnect" href="https://app.unleash-hosted.com"/><title>Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud</title><meta name="description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><link rel="canonical" href="https://mittanbud.no/xl/bedrift"/><link rel="alternate" hrefLang="nb-NO" href="https://mittanbud.no/xl/bedrift"/><meta property="og:title" content="Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud"/><meta property="og:description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><meta property="og:url" content="https://mittanbud.no/xl/bedrift"/><meta property="og:image" content="http://localhost:8080/assets/images/common/seo/seo-fallback.jpg"/><meta property="og:image:secure_url" content="/assets/images/common/seo/seo-fallback.jpg"/><meta property="og:image:type" content="image/jpeg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud"/><meta name="twitter:description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><meta name="twitter:image" content="http://localhost:8080/assets/images/common/seo/seo-fallback.jpg"/><meta name="twitter:image:secure_url" content="/assets/images/common/seo/seo-fallback.jpg"/><meta name="twitter:image:type" content="image/jpeg"/><meta name="twitter:image:width" content="1200"/><meta name="twitter:image:height" content="630"/><link rel="icon" href="/icon.ico?d6b79d480dc3cc29" type="image/x-icon" sizes="32x32"/><script id="gtm-init">
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag(\'consent\', \'default\', {
+            ad_storage: \'denied\',
+            analytics_storage: \'denied\',
+            ad_user_data: \'denied\',
+            ad_personalization: \'denied\',
+          });
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
+          new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/app/(site)/xl/business/page-c4ef78507e479c01.js" async=""></script><link rel="preload" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/32170.cbc128b40076e4d5.js" as="script" fetchPriority="low"/><link rel="preload" href="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/98057.373413c93d0ddb25.js" as="script" fetchPriority="low"/><meta name="next-size-adjust" content=""/><link rel="preconnect" href="https://5fl9rxqb1i-dsn.algolia.net"/><link rel="preconnect" href="https://app.unleash-hosted.com"/><title>Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud</title><meta name="description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><link rel="canonical" href="https://mittanbud.no/xl/bedrift"/><link rel="alternate" hrefLang="nb-NO" href="https://mittanbud.no/xl/bedrift"/><meta property="og:title" content="Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud"/><meta property="og:description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><meta property="og:url" content="https://mittanbud.no/xl/bedrift"/><meta property="og:image" content="http://localhost:8080/assets/images/common/seo/seo-fallback.jpg"/><meta property="og:image:secure_url" content="/assets/images/common/seo/seo-fallback.jpg"/><meta property="og:image:type" content="image/jpeg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Mittanbud - Den enkleste måten å få fagfolk på | Mittanbud"/><meta name="twitter:description" content="Har du en jobb du vil ha utført? Legg ut jobben på Mittanbud og bli kontaktet av fagfolk med riktig kompetanse."/><meta name="twitter:image" content="http://localhost:8080/assets/images/common/seo/seo-fallback.jpg"/><meta name="twitter:image:secure_url" content="/assets/images/common/seo/seo-fallback.jpg"/><meta name="twitter:image:type" content="image/jpeg"/><meta name="twitter:image:width" content="1200"/><meta name="twitter:image:height" content="630"/><link rel="icon" href="/icon.ico?d6b79d480dc3cc29" type="image/x-icon" sizes="32x32"/><script id="gtm-init">
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag(\'consent\', \'default\', {
+            ad_storage: \'denied\',
+            analytics_storage: \'denied\',
+            ad_user_data: \'denied\',
+            ad_personalization: \'denied\',
+          });
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
+          new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
+          \'https://webdata.mittanbud.no/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,\'script\',\'dataLayer\',\'GTM-NWTXTZCS\');
+        </script><script src="https://cdn.mittanbud.no/mittanbud/public/pro/1.396.2/0f1b0828337b0c6570748344e0d9ce4aa5f86b97-20260605114218/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script><script>(window[Symbol.for("ApolloSSRDataTransport")] ??= []).push({"rehydrate":{"_R_a9r9flb_":{"data":undefined,"loading":true,"networkStatus":1,"called":true}},"events":[]})</script></head><body class="flex min-h-screen flex-col justify-start bg-base-white"><div hidden=""><!--$--><!--/$--></div><noscript><iframe title="Google Tag Manager" src="https://webdata.mittanbud.no/ns.html?id=GTM-NWTXTZCS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!--$--><!--/$--><noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=425249813911825&amp;ev=PageView&amp;noscript=1"/></noscript><noscript><img height="1" width="1" style="display:none" alt="" src="https://px.ads.linkedin.com/collect/?pid=3048113&amp;fmt=gif"/></noscript><!--$--><!--/$--><!--$--><!--/$--><header class="sticky top-0 z-20 w-full border-transparent border-b bg-base-white px-4 py-2"><div class="mx-auto grid w-full max-w-[2560px] grid-cols-[1fr_max-content] items-center"><div class="mx-auto grid w-full max-w-[2560px] grid-cols-[1fr_max-content] items-center"><a class="w-max" data-testid="header-logo" href="/"><svg height="42" viewBox="0 0 240 53" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.0021 5.50194L0.00268555 23.5013L5.00264 28.5013L23.002 10.5019L18.0021 5.50194Z" fill="#101F41"></path><path d="M16.0027 21.5013C17.329 22.827 19.1275 23.5716 21.0027 23.5716C22.8779 23.5716 24.6764 22.827 26.0027 21.5013L32.0027 15.5013L45.0027 28.5013L50.0027 23.5013L32.0027 5.50134L16.0027 21.5013Z" fill="#3960BF"></path><path d="M28.0027 23.5013C26.1461 25.3577 23.6282 26.4006 21.0027 26.4006C18.3772 26.4006 15.8593 25.3577 14.0027 23.5013L7.00269 30.5013L25.0027 48.5013L28.0027 45.5013L21.0027 38.5013L23.0027 36.5013L30.0027 43.5013L33.0027 40.5013L26.0027 33.5013L28.0027 31.5013L35.0027 38.5013L38.0027 35.5013L31.0027 28.5013L33.0027 26.5013L40.0027 33.5013L43.0027 30.5013L32.0027 19.5013L28.0027 23.5013Z" fill="#101F41"></path><path d="M66 37.9784H71.1308V24.4613L78.6325 32.1399L86.1341 24.4613V37.9784H91.265V12.4304L78.6325 25.3106L66 12.4304V37.9784Z" fill="#101F41"></path><path d="M98.8045 17.3843C100.538 17.3843 101.918 16.0043 101.918 14.3058C101.918 12.6073 100.538 11.2273 98.8045 11.2273C97.1414 11.2273 95.726 12.6073 95.726 14.3058C95.726 16.0043 97.1414 17.3843 98.8045 17.3843ZM96.3983 37.9784H101.246V20.2859H96.3983V37.9784Z" fill="#101F41"></path><path d="M108.06 37.9784H112.907V24.5321H118.251V20.2859H112.907V13.5273L108.06 16.3581V20.2859H104.132V24.5321H108.06V37.9784Z" fill="#101F41"></path><path d="M123.23 37.9784H128.077V24.5321H133.421V20.2859H128.077V13.5273L123.23 16.3581V20.2859H119.302V24.5321H123.23V37.9784Z" fill="#101F41"></path><path d="M140.895 37.9784H145.742V24.5321H151.086V20.2859H145.742V13.5273L140.895 16.3581V20.2859H136.967V24.5321H140.895V37.9784Z" fill="#101F41"></path><path d="M158.559 37.9784H163.406V24.5321H168.75V20.2859H163.406V13.5273L158.559 16.3581V20.2859H154.631V24.5321H158.559V37.9784Z" fill="#101F41"></path><path d="M176.223 37.9784H181.07V24.5321H186.414V20.2859H181.07V13.5273L176.223 16.3581V20.2859H172.295V24.5321H176.223V37.9784Z" fill="#101F41"></path><path d="M193.887 37.9784H198.734V24.5321H204.078V20.2859H198.734V13.5273L193.887 16.3581V20.2859H189.959V24.5321H193.887V37.9784Z" fill="#101F41"></path><path d="M211.551 37.9784H216.398V24.5321H221.742V20.2859H216.398V13.5273L211.551 16.3581V20.2859H207.623V24.5321H211.551V37.9784Z" fill="#101F41"></path><path d="M229.215 37.9784H234.062V24.5321H239.406V20.2859H234.062V13.5273L229.215 16.3581V20.2859H225.287V24.5321H229.215V37.9784Z" fill="#101F41"></path></svg></a><div class="ml-auto flex items-center gap-x-4"><a class="text-sm font-semibold text-gray-900 hover:text-gray-700" href="/xl/bedrift/registrering">Bli bedrift</a><a class="text-sm font-semibold text-gray-900 hover:text-gray-700" href="/logg-inn">Logg inn</a></div></div></div></header><main class="flex-1"><div class="relative overflow-hidden bg-gray-50 py-24 sm:py-32"><div class="relative isolate"><div class="mx-auto max-w-7xl px-6 lg:px-8"><div class="mx-auto max-w-2xl lg:mx-0"><h1 class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Få flere jobber med Mittanbud</h1><p class="mt-6 text-lg leading-8 text-gray-600">Få tilgang til tusenvis av jobber i ditt område. Mittanbud hjelper deg med å finne nye kunder og øke omsetningen din.</p><div class="mt-10 flex items-center gap-x-6"><a class="rounded-md bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600" href="/xl/bedrift/registrering">Bli bedrift</a><a class="text-sm font-semibold leading-6 text-gray-900" href="/xl/bedrift/priser">Se priser <span aria-hidden="true">→</span></a></div></div><div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:max-w-none lg:grid-cols-2 lg:gap-4 lg:items-start"><div class="lg:contents"><div class="w-full col-span-2 flex-auto lg:p-12"><div class="-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden"><img alt="" loading="lazy" width="770" height="770" decoding="async" data-nimg="1" class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" style="color:transparent" src="/_next/image?url=%2Fassets%2Fimages%2Fcommon%2Fpage-sections%2Ftoolspng.png&amp;w=1920&amp;q=75"/></div></div></div></div></div></div></div><div class="mx-auto max-w-7xl px-6 lg:px-8"><div class="mx-auto max-w-2xl lg:text-center"><h2 class="text-base font-semibold leading-7 text-orange-600">Få jobber</h2><p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Enklere å finne nye kunder</p><p class="mt-6 text-lg leading-8 text-gray-600">Mittanbud er Norges største anbudstjeneste for håndverkere og tjenesteleverandører. Vi hjelper deg med å finne nye kunder og øke omsetningen din.</p></div><div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl"><dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16"><div class="relative pl-16"><dt class="text-base font-semibold leading-7 text-gray-900"><div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600"><svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"></path></svg></div>Last opp prosjektbeskrivelse</dt><dd class="mt-2 text-base leading-7 text-gray-600">Kunden beskriver jobben som skal utføres, og du får tilgang til detaljerte prosjektbeskrivelser.</dd></div><div class="relative pl-16"><dt class="text-base font-semibold leading-7 text-gray-900"><div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600"><svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.794 2.101c.74.184 1.497-.192 1.885-.741.852-1.249.572-2.97-.96-3.785a18.022 18.022 0 00-5.86-2.676c-3.145-.319-6.37-.265-9.28-.068a.909.909 0 00-.863.811c-.244 1.636-.284 3.31-.12 5.062zM15.75 9a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>Send tilbud</dt><dd class="mt-2 text-base leading-7 text-gray-600">Du sender et uforpliktende tilbud til kunden. Kunden velger selv hvilket tilbud de ønsker å takke ja til.</dd></div><div class="relative pl-16"><dt class="text-base font-semibold leading-7 text-gray-900"><div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600"><svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.181m0 01.53-1.53A12.066 12.066 0 0112 21.75c3.61 0 6.68-2.52 7.75-6.032M4.248 14.901a12.066 12.066 0 01-2.98-7.75 12.066 12.066 0 011.53-1.53L6.985 4.35m7.357 7.357l3.182-3.182m0 01.53-1.53A12.066 12.066 0 0121.75 12c0 3.61-2.52 6.68-6.032 7.75M9.257 15.348h-4.992v.001m0 0h4.992m-4.993 0l3.181-3.181m0 01.53 1.53A12.066 12.066 0 0112 2.25c-3.61 0-6.68 2.52-7.75 6.032M19.752 9.348a12.066 12.066 0 012.98 7.75 12.066 12.066 0 01-1.53 1.53L17.015 19.65m-4.357-7.357l-3.182 3.182"></path></svg></div>Få jobben</dt><dd class="mt-2 text-base leading-7 text-gray-600">Kunden aksepterer ditt tilbud, og du kan starte jobben. Enkelt og effektivt!</dd></div><div class="relative pl-16"><dt class="text-base font-semibold leading-7 text-gray-900"><div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600"><svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-9-6v12m-1.5-2.25h3M12 18.75H3m18 0h-9"></path></svg></div>Bygg omdømme</dt><dd class="mt-2 text-base leading-7 text-gray-600">Etter utført jobb kan kunden gi deg en vurdering. Dette bygger ditt omdømme og gir deg flere jobber i fremtiden.</dd></div></dl></div></div><div class="relative isolate mt-32 px-6 pt-24 sm:mt-56 sm:pt-32 lg:px-8"><div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true"><div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path:polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div></div><div class="mx-auto max-w-2xl text-center"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Ofte stilte spørsmål</h2><p class="mt-6 text-lg leading-8 text-gray-600">Har du spørsmål om Mittanbud? Her finner du svar på de vanligste spørsmålene.</p></div><div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:max-w-4xl"><dl class="space-y-16"><div class="pt-6"><dt class="text-base font-semibold leading-7 text-gray-900">Hvordan fungerer Mittanbud?</dt><dd class="mt-2 text-base leading-7 text-gray-600">Mittanbud er en anbudstjeneste som kobler kunder med håndverkere og tjenesteleverandører. Kunder legger ut jobber, og du sender tilbud. Kunden velger selv hvilket tilbud de ønsker å takke ja til.</dd></div><div class="pt-6"><dt class="text-base font-semibold leading-7 text-gray-900">Hva koster det å bruke Mittanbud?</dt><dd class="mt-2 text-base leading-7 text-gray-600">Det er gratis å registrere seg og motta jobber. Du betaler kun en liten provisjon når du får en jobb gjennom Mittanbud.</dd></div><div class="pt-6"><dt class="text-base font-semibold leading-7 text-gray-900">Hvilke typer jobber kan jeg finne på Mittanbud?</dt><dd class="mt-2 text-base leading-7 text-gray-600">Du kan finne jobber innenfor en rekke kategorier, inkludert håndverkertjenester, rengjøring, flytting, hagearbeid og mye mer.</dd></div><div class="pt-6"><dt class="text-base font-semibold leading-7 text-gray-900">Hvordan får jeg flere jobber?</dt><dd class="mt-2 text-base leading-7 text-gray-600">For å få flere jobber anbefaler vi å ha en komplett profil med gode referanser og bilder av tidligere utførte jobber. Rask respons på jobber og konkurransedyktige priser er også viktig.</dd></div></dl></div></div></main><footer class="mx-auto mt-32 max-w-7xl overflow-hidden px-6 pb-20 sm:mt-40 sm:pb-24 lg:px-8"><nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer"><div class="pb-6"><a class="text-sm leading-6 text-gray-600 hover:text-gray-900" href="#">Blogg</a></div><div class="pb-6"><a class="text-sm leading-6 text-gray-600 hover:text-gray-900" href="#">Jobb</a></div><div class="pb-6"><a class="text-sm leading-6 text-gray-600 hover:text-gray-900" href="#">Personvern</a></div><div class="pb-6"><a class="text-sm leading-6 text-gray-600 hover:text-gray-900" href="#">Vilkår</a></div></nav><p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; 2023 Mittanbud. Alle rettigheter reservert.</p></footer></body></html>
