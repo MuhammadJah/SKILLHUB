@@ -1,20 +1,15 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>GamSkillHub — Gambia's Skilled Worker Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#070708;--sur:#0F0F11;--card:#161618;--ch:#1C1C1F;--b:#222226;--bl:#2A2A2F;--am:#F59E0B;--al:#FCD34D;--ad:rgba(245,158,11,.08);--tx:#EDEDF0;--td:#9999A8;--mt:#555560;--ok:#22C55E;--er:#EF4444;--inf:#3E6EB0;--red:#CE1126;--blue:#3E6EB0;--green:#3A7728;--nav:rgba(7,7,8,.96)}
-[data-theme="light"]{--bg:#F5F5F0;--sur:#FFFFFF;--card:#FFFFFF;--ch:#F0F0EB;--b:#E0E0D8;--bl:#C8C8C0;--am:#E8940A;--al:#F5B429;--ad:rgba(232,148,10,.09);--tx:#1A1A1A;--td:#555558;--mt:#909090;--ok:#16A34A;--er:#DC2626;--inf:#2563EB;--red:#CE1126;--blue:#3E6EB0;--green:#3A7728;--nav:rgba(255,255,255,.97)}
+[data-theme="light"]{--bg:#F5F5F0;--sur:#FFFFFF;--card:#FFFFFF;--ch:#F0F0EB;--b:#E0E0D8;--bl:#C8C8C0;--am:#E8940A;--al:#F5B429;--ad:rgba(232,148,10,.09);--tx:#1A1A1A;--td:#555558;--mt:#909090;--ok:#16A34A;--er:#DC2626;--nav:rgba(255,255,255,.97)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -22,7 +17,7 @@ h1,h2,h3,.bc{font-family:'Barlow Condensed',sans-serif;font-weight:800;line-heig
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bl);border-radius:10px}
 
 /* NAV */
-nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:var(--nav);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
+nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(7,7,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;user-select:none}
 .logo .r{color:var(--red)}.logo .a{color:var(--am)}
 .nl{display:flex;gap:4px;align-items:center}
@@ -312,172 +307,144 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   .tabbar,.ptabs{flex-wrap:wrap}
 }
 
-/* ─── SPLIT SECTIONS ─── */
+.theme-btn{height:31px;width:36px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}.theme-btn:hover{border-color:var(--am);color:var(--am)}
+.nb-login{background:#0D9488;border-color:#0D9488;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.nb-login:hover{background:#0f766e}
+nav{background:var(--nav)!important}
+.hero-split{display:flex;align-items:center;gap:48px;max-width:1160px;margin:0 auto;position:relative;z-index:2}
+.hero-left{flex:1;min-width:0}
+.hero-right{flex:0 0 420px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,140px);gap:10px}
+.wsc{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s}.wsc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.wsc:nth-child(1){grid-row:span 2}.wsc:nth-child(4){grid-row:span 2}
+.wsc-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82)}
+.wsc-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:12px 10px 10px}
+.wsc-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;color:#fff;line-height:1}
+.wsc-skill{font-size:10px;font-weight:600;color:var(--am);letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
+.wsc-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,.88);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px}
 .split-section{padding:72px 38px;position:relative}
 .split-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-.split-col{}
-
-/* Green homeowner side */
 .green-side{background:linear-gradient(160deg,#1a4d2e 0%,#2d7a45 60%,#3a9455 100%)}
-/* fade bottom of green into blue */
 .green-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,#1E3A5F);pointer-events:none}
-
-/* Blue worker side */
 .blue-side{background:linear-gradient(160deg,#1E3A5F 0%,#2d5a96 60%,#3E6EB0 100%)}
-/* fade bottom of blue into page bg */
 .blue-side::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
-
 .section-label{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:6px 16px;border-radius:100px;margin-bottom:20px}
-.section-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,5.5vw,70px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:18px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.section-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,5.5vw,70px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:18px}
 .section-sub{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:28px;max-width:400px}
-
-/* ─── HOW IT WORKS (simple) ─── */
 .hiw-simple{display:flex;flex-direction:column;gap:22px}
 .hiw-s-step{display:flex;gap:14px;align-items:flex-start}
 .hiw-s-num{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
 .hiw-s-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:4px}
 .hiw-s-desc{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
-
-/* ─── BOOK CARD ─── */
 .book-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:28px;backdrop-filter:blur(6px)}
 .book-card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px}
 .book-card-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:10px}
 .book-card-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:20px;line-height:1.6}
 .book-search-wrap{display:flex;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:5px;margin-bottom:14px}
-.book-search-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:8px 10px}
-.book-search-input::placeholder{color:rgba(255,255,255,.5)}
-.book-search-btn{background:#FCD34D;color:#1a4d2e;border:none;padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .18s;white-space:nowrap}
-.book-search-btn:hover{background:#fff}
+.book-search-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:8px 10px}.book-search-input::placeholder{color:rgba(255,255,255,.5)}
+.book-search-btn{background:#FCD34D;color:#1a4d2e;border:none;padding:9px 20px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer}.book-search-btn:hover{background:#fff}
 .book-popular{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.book-pop-lbl{font-size:11px;color:rgba(255,255,255,.55);font-weight:500}
-.book-pop-tag{padding:4px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:11px;font-weight:500;cursor:pointer;transition:all .18s}
-.book-pop-tag:hover{background:rgba(255,255,255,.25);color:#fff}
-
-/* ─── WORKER SIDE (reuse ws- classes) ─── */
+.book-pop-lbl{font-size:11px;color:rgba(255,255,255,.55)}
+.book-pop-tag{padding:4px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:11px;cursor:pointer}.book-pop-tag:hover{background:rgba(255,255,255,.25)}
 .ws-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .ws-perk{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.88)}
 .ws-perk-ic{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.ws-cta{display:inline-flex;align-items:center;gap:8px;background:#FCD34D;color:#1E3A5F;border:none;padding:13px 28px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(0,0,0,.2)}
-.ws-cta:hover{background:#fff;transform:translateY(-2px)}
+.ws-cta{display:inline-flex;align-items:center;gap:8px;background:#FCD34D;color:#1E3A5F;border:none;padding:13px 28px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}.ws-cta:hover{background:#fff;transform:translateY(-2px)}
 .ws-howto-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:#FCD34D;letter-spacing:1px;margin-bottom:18px}
 .ws-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
 .ws-step-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:#FCD34D;flex-shrink:0}
 .ws-step-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:3px}
 .ws-step-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
-
-/* ─── UNIFIED LOGIN MODAL ─── */
 .lmode-tabs{display:flex;gap:4px;background:var(--ch);border-radius:8px;padding:3px;margin-bottom:20px}
 .lmode-tab{flex:1;padding:7px;border-radius:6px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;transition:all .18s;text-align:center}
 .lmode-tab.on{background:var(--sur);color:#0D9488}
+.role-card{border:2px solid var(--b);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .18s}
+.role-card.sel{border-color:var(--am);background:var(--ad)}
+.role-card-icon{font-size:24px;margin-bottom:6px}
+.role-card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:var(--td)}
+.role-card.sel .role-card-title{color:var(--am)}
+.role-card-sub{font-size:11px;color:var(--mt);margin-top:3px}
+.vbadge{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#22c55e;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:100px;margin-left:5px;vertical-align:middle}
+.trust-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(58,119,40,.15),rgba(34,197,94,.1));border:1px solid rgba(34,197,94,.4);color:#16a34a;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:100px;vertical-align:middle}
+.escrow-stepper{display:flex;align-items:center;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
+.es-step{display:flex;flex-direction:column;align-items:center;position:relative;flex:1;min-width:70px}
+.es-step:not(:last-child)::after{content:'';position:absolute;top:12px;left:60%;right:-40%;height:2px;background:var(--b)}
+.es-step.done:not(:last-child)::after{background:var(--ok)}
+.es-step.active:not(:last-child)::after{background:var(--am)}
+.es-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--b);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;position:relative;z-index:1;transition:all .3s}
+.es-step.done .es-dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.es-step.active .es-dot{background:var(--am);border-color:var(--am);color:#000;box-shadow:0 0 0 4px rgba(245,158,11,.2)}
+.es-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);margin-top:5px;text-align:center;white-space:nowrap}
+.es-step.done .es-label,.es-step.active .es-label{color:var(--td)}
+/* REVIEWS */
+.rev-card{background:var(--sur);border:1px solid var(--b);border-radius:9px;padding:14px;margin-bottom:10px}
+.rev-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.rev-author{font-size:13px;font-weight:600;color:var(--tx)}
+.rev-date{font-size:11px;color:var(--mt)}
+.rev-stars{color:var(--am);font-size:13px;letter-spacing:1px}
+.rev-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.rev-body{font-size:12px;color:var(--td);line-height:1.6}
+.rev-verified{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--ok);font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-top:6px}
+.review-form{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:16px}
+.review-form-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px}
+.star-picker{display:flex;gap:4px;margin-bottom:12px}
+.star-pick{font-size:28px;cursor:pointer;color:var(--b);transition:color .15s;user-select:none}
+.star-pick.on{color:var(--am)}
+.refund-btn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:var(--er);padding:5px 12px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s;text-transform:uppercase}
+.refund-btn:hover{background:var(--er);color:#fff}
+.reassign-alert{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--er)}
+.cust-card{background:var(--card);border:1px solid var(--b);border-radius:11px;padding:20px;margin-bottom:16px}
+.cust-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;text-transform:uppercase}
+.cust-meta{font-size:12px;color:var(--td);margin-top:2px}
+.cust-stat{display:inline-flex;align-items:center;gap:5px;background:var(--ad);border:1px solid rgba(245,158,11,.2);color:var(--am);font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
+[data-theme="light"] .hero::before{background:linear-gradient(135deg,rgba(206,17,38,.12) 0%,rgba(245,245,240,.75) 40%,rgba(245,245,240,.98) 100%)!important}
+@media(max-width:900px){.hero-split{flex-direction:column}.hero-right{flex:none;width:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,120px)}.wsc:nth-child(1),.wsc:nth-child(4){grid-row:span 1}.split-section{padding:48px 18px}.split-inner{grid-template-columns:1fr;gap:36px}}
+
+
+/* ── DUAL PATHWAY ── */
+.pathway-section{padding:0 38px 0;position:relative;z-index:1}
+.pathway-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:48px 0 64px}
+.pathway-card{border-radius:18px;overflow:hidden;position:relative}
+.pathway-card-express{background:linear-gradient(160deg,#1a4d2e 0%,#2d7a45 100%);border:1px solid rgba(255,255,255,.1)}
+.pathway-card-escrow{background:linear-gradient(160deg,#1E3A5F 0%,#3E6EB0 100%);border:1px solid rgba(255,255,255,.1)}
+.pathway-header{padding:28px 28px 20px}
+.pathway-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
+.pathway-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,3.5vw,40px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:10px}
+.pathway-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:0}
+.pathway-steps{padding:0 28px 28px}
+.pathway-step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;position:relative}
+.pathway-step:not(:last-child)::before{content:'';position:absolute;left:15px;top:34px;bottom:-12px;width:2px;background:rgba(255,255,255,.15)}
+.ps-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
+.ps-num.highlight{background:#FCD34D;border-color:#FCD34D;color:#1a1a1a}
+.ps-body{}
+.ps-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:3px}
+.ps-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
+.ps-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(252,211,77,.2);border:1px solid rgba(252,211,77,.4);color:#FCD34D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:4px;letter-spacing:.5px}
+.pathway-cta{margin:0 28px 28px;display:flex;gap:10px;flex-wrap:wrap}
+.pathway-btn-primary{flex:1;background:#FCD34D;color:#1a1a1a;border:none;padding:12px 20px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:center}
+.pathway-btn-primary:hover{background:#fff;transform:translateY(-1px)}
+.pathway-btn-secondary{flex:1;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);padding:12px 20px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:center}
+.pathway-btn-secondary:hover{background:rgba(255,255,255,.22)}
+.pathway-divider{display:flex;align-items:center;justify-content:center;padding:16px 0 0;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45)}
+
+/* ── DISPUTE MODAL ── */
+.dispute-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);z-index:2000;align-items:center;justify-content:center;padding:20px}
+.dispute-modal.on{display:flex}
+.dispute-box{background:var(--sur);border:1px solid var(--bl);border-radius:14px;width:100%;max-width:500px;padding:28px;animation:mi .24s ease both}
+.dispute-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;color:var(--er);margin-bottom:6px}
+.dispute-sub{font-size:13px;color:var(--td);margin-bottom:20px;line-height:1.6}
+.dispute-warn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--td);line-height:1.6;margin-bottom:18px}
+.evidence-zone{background:var(--card);border:2px dashed var(--bl);border-radius:9px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;position:relative;margin-bottom:14px}
+.evidence-zone:hover{border-color:var(--er);background:rgba(239,68,68,.05)}
+.evidence-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.evidence-previews{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;justify-content:center}
+.ev-thumb{width:56px;height:56px;border-radius:6px;object-fit:cover;border:2px solid var(--er)}
+
+/* ── ESCROW RELEASE section in admin ── */
+.release-card{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(22,163,74,.05));border:1px solid rgba(34,197,94,.25);border-radius:9px;padding:14px 18px;margin-bottom:9px}
+.release-card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;color:var(--ok);margin-bottom:8px}
 
 @media(max-width:768px){
-  .split-section{padding:48px 18px}
-  .split-inner{grid-template-columns:1fr;gap:36px}
-  .green-side::after,.blue-side::after{height:40px}
-}
-
-
-/* HERO SPLIT */
-.hero-split{display:flex;align-items:center;gap:48px;max-width:1160px;margin:0 auto;position:relative;z-index:2}
-.hero-left{flex:1;min-width:0}
-.hero-right{flex:0 0 420px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,140px);gap:10px}
-.wsc{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.wsc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
-.wsc:nth-child(1){grid-row:span 2}
-.wsc:nth-child(4){grid-row:span 2}
-.wsc-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82)}
-.wsc-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:12px 10px 10px}
-.wsc-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;color:#fff;line-height:1}
-.wsc-skill{font-size:10px;font-weight:600;color:var(--am);letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
-.wsc-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,.88);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;letter-spacing:.5px}
-@media(max-width:900px){
-  .hero-split{flex-direction:column}
-  .hero-right{flex:none;width:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,120px)}
-  .wsc:nth-child(1),.wsc:nth-child(4){grid-row:span 1}
-}
-/* THEME TOGGLE BTN */
-.theme-btn{height:31px;width:36px;border-radius:7px;border:1px solid var(--b);background:none;color:var(--td);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}
-.theme-btn:hover{border-color:var(--am);color:var(--am)}
-
-
-[data-theme="light"] .hero::before{background:linear-gradient(135deg,rgba(206,17,38,.12) 0%,rgba(245,245,240,.75) 40%,rgba(245,245,240,.98) 100%)!important}
-[data-theme="light"] .wsc-img{filter:brightness(.88)}
-
-/* ══ PAYMENT SYSTEM ══ */
-.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.pay-opt{background:var(--sur);border:2px solid var(--b);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
-.pay-opt:hover{border-color:var(--bl);transform:translateY(-1px)}
-.pay-opt.sel{border-color:var(--am);background:var(--ad)}
-.pay-opt-ic{font-size:26px;margin-bottom:6px;display:block}
-.pay-opt-nm{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx)}
-.pay-opt-desc{font-size:9px;color:var(--mt);margin-top:3px}
-.pay-opt.sel .pay-opt-nm{color:var(--am)}
-.pay-opt .sel-badge{display:none;position:absolute;top:6px;right:6px;background:var(--am);color:#000;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;align-items:center;justify-content:center}
-.pay-opt.sel .sel-badge{display:flex}
-.pay-summary{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;margin-bottom:16px}
-.pay-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;color:var(--td)}
-.pay-row.total{border-top:1px solid var(--b);padding-top:10px;margin-top:6px;font-weight:700;color:var(--tx);font-size:14px}
-.pay-row .pm-am{color:var(--am);font-weight:600}
-.pay-row .pm-lb{flex:1}
-.pay-srv-fee{font-size:10px;color:var(--mt);margin-top:6px;font-style:italic}
-.pay-wave-box{background:linear-gradient(135deg,#1DC3E3 0%,#0ABAB5 100%);border-radius:10px;padding:18px;color:#fff;text-align:center;margin-bottom:14px;display:none}
-.pay-wave-box.on{display:block}
-.pay-wave-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:4px}
-.pay-wave-sub{font-size:12px;opacity:.85;margin-bottom:12px}
-.pay-wave-phone{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;text-align:center;outline:none;margin-bottom:10px;width:100%}
-.pay-wave-phone::placeholder{color:rgba(255,255,255,.5)}
-.pay-wave-ussd{background:rgba(0,0,0,.2);border-radius:7px;padding:10px;font-size:14px;font-weight:600;letter-spacing:1px;margin-bottom:10px}
-.pay-wave-status{font-size:12px;opacity:.9;min-height:20px}
-.pay-bank-box{border:1px solid var(--bl);border-radius:10px;padding:16px;margin-bottom:14px;display:none;background:var(--sur)}
-.pay-bank-box.on{display:block}
-.pay-bank-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;color:var(--td);border-bottom:1px solid var(--b)}
-.pay-bank-row:last-child{border-bottom:none}
-.pay-bank-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mt);width:90px;flex-shrink:0}
-.pay-bank-val{color:var(--tx);font-weight:500}
-.pay-cash-box{border:1px dashed var(--bl);border-radius:10px;padding:16px;margin-bottom:14px;text-align:center;display:none}
-.pay-cash-box.on{display:block}
-.pay-cash-ic{font-size:28px;margin-bottom:6px}
-.pay-cash-note{font-size:12px;color:var(--td);line-height:1.6}
-.pay-escrow-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:100px;padding:4px 10px;font-size:10px;font-weight:600;color:var(--ok);margin-bottom:14px}
-.pay-status-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.pay-st-pending{background:rgba(245,158,11,.1);color:var(--am)}
-.pay-st-escrow{background:rgba(62,110,176,.1);color:var(--inf)}
-.pay-st-paid{background:rgba(34,197,94,.1);color:var(--ok)}
-.pay-st-released{background:rgba(34,197,94,.15);color:var(--ok);border:1px solid rgba(34,197,94,.25)}
-.pay-st-refunded{background:rgba(239,68,68,.1);color:var(--er)}
-.pay-st-unpaid{background:rgba(239,68,68,.08);color:var(--er)}
-/* Worker Earnings */
-.earn-card{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:16px;margin-bottom:10px}
-.earn-bal{text-align:center;margin-bottom:16px}
-.earn-bal-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--mt)}
-.earn-bal-amt{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:var(--am);line-height:1.1;margin-top:4px}
-.earn-bal-curr{font-size:16px;color:var(--td);font-weight:400}
-.earn-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.earn-stat{background:var(--sur);border:1px solid var(--b);border-radius:8px;padding:10px;text-align:center}
-.earn-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--tx)}
-.earn-stat-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);margin-top:2px}
-.earn-tx{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--b);font-size:12px}
-.earn-tx:last-child{border-bottom:none}
-.earn-tx-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.earn-tx-icon.in{background:rgba(34,197,94,.1);color:var(--ok)}
-.earn-tx-icon.out{background:rgba(239,68,68,.08);color:var(--er)}
-.earn-tx-info{flex:1;min-width:0}
-.earn-tx-desc{font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.earn-tx-date{font-size:10px;color:var(--mt);margin-top:1px}
-.earn-tx-amt{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;flex-shrink:0}
-.earn-tx-amt.pos{color:var(--ok)}.earn-tx-amt.neg{color:var(--er)}
-/* Admin Payment Stats */
-.pay-admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.pay-admin-stat{background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;text-align:center}
-.pay-admin-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--am)}
-.pay-admin-stat-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-top:4px}
-/* Admin worker detail grid */
-.acard[style*="flex-direction:column"]{display:flex}
-@media(max-width:640px){
-  .pay-methods{grid-template-columns:1fr}
-  .pay-admin-stats{grid-template-columns:repeat(2,1fr)}
-  .earn-stats{grid-template-columns:1fr 1fr 1fr}
-  .acard[style*="flex-direction:column"]>div:nth-child(2){grid-template-columns:1fr !important}
+  .pathway-section{padding:0 16px}
+  .pathway-grid{grid-template-columns:1fr;gap:16px;padding:32px 0 48px}
 }
 
 </style>
@@ -494,131 +461,139 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   <div class="nl">
     <button class="theme-btn" onclick="toggleTheme()" title="Toggle Light/Dark">🌓</button>
     <button class="nb" onclick="nav('home')">Browse</button>
-    <button class="nb" onclick="openLoginPortal()" style="background:#0D9488;border-color:#0D9488;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase">LOGIN</button>
+    <button class="nb nb-login" onclick="openLoginPortal()">LOGIN</button>
   </div>
 </nav>
 
 <!-- ═══ HOME ═══ -->
 <section id="pg-home" class="pg on">
   <div class="hero">
+    <div class="hero-img"></div>
     <div class="hero-split">
-      <!-- LEFT: text -->
       <div class="hero-left">
         <div class="htag">🇬🇲 &nbsp; Serving All Regions of The Gambia</div>
         <h1>THE GAMBIAN<br><em>HOME</em> FOR<br>SKILLED WORKERS.</h1>
         <p class="hsub">From emergency repairs to creative projects, connect with agency-vetted experts across The Gambia. Fast, Reliable, and Guaranteed.</p>
-        <div class="sw">
-          <input id="srch" type="text" placeholder="Search by name or skill…" onkeydown="if(event.key==='Enter')doSearch()">
-          <button class="sbtn" onclick="doSearch()">Search</button>
-        </div>
+        <div class="sw"><input id="srch" type="text" placeholder="Search by name or skill…" onkeydown="if(event.key==='Enter')doSearch()"><button class="sbtn" onclick="doSearch()">Search</button></div>
         <div class="hstats">
           <div class="hsi"><div class="sv" id="stat-n">0</div><div class="sl">Verified Workers</div></div>
           <div class="hsi"><div class="sv" id="stat-o">0</div><div class="sl">Jobs Done</div></div>
           <div class="hsi"><div class="sv">20+</div><div class="sl">Skill Types</div></div>
         </div>
       </div>
-      <!-- RIGHT: worker photo grid -->
       <div class="hero-right">
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=600&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=600&fit=crop'" alt="Plumber">
-          <div class="wsc-overlay"><div class="wsc-name">Modou J.</div><div class="wsc-skill">🔧 Plumbing</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Electrician">
-          <div class="wsc-overlay"><div class="wsc-name">Omar S.</div><div class="wsc-skill">⚡ Electrical</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Painter">
-          <div class="wsc-overlay"><div class="wsc-name">Fatou C.</div><div class="wsc-skill">🎨 Painting</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1588784109889-e9bc9c9d7506?w=400&h=600&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=600&fit=crop'" alt="Carpenter">
-          <div class="wsc-overlay"><div class="wsc-name">Lamin T.</div><div class="wsc-skill">🪚 Carpentry</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Cleaner">
-          <div class="wsc-overlay"><div class="wsc-name">Aminata D.</div><div class="wsc-skill">🧹 Cleaning</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
-        <div class="wsc">
-          <img class="wsc-img" src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'" alt="Welder">
-          <div class="wsc-overlay"><div class="wsc-name">Baba S.</div><div class="wsc-skill">🔩 Welding</div></div>
-          <div class="wsc-badge">✓ VERIFIED</div>
-        </div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=600&fit=crop&q=80" alt="Plumber"><div class="wsc-overlay"><div class="wsc-name">Modou J.</div><div class="wsc-skill">🔧 Plumbing</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&q=80" alt="Electrician"><div class="wsc-overlay"><div class="wsc-name">Omar S.</div><div class="wsc-skill">⚡ Electrical</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80" alt="Painter"><div class="wsc-overlay"><div class="wsc-name">Fatou C.</div><div class="wsc-skill">🎨 Painting</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1588784109889-e9bc9c9d7506?w=400&h=600&fit=crop&q=80" alt="Carpenter"><div class="wsc-overlay"><div class="wsc-name">Lamin T.</div><div class="wsc-skill">🪚 Carpentry</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80" alt="Cleaner"><div class="wsc-overlay"><div class="wsc-name">Aminata D.</div><div class="wsc-skill">🧹 Cleaning</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
+        <div class="wsc"><img class="wsc-img" src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop&q=80" alt="Welder"><div class="wsc-overlay"><div class="wsc-name">Baba S.</div><div class="wsc-skill">🔩 Welding</div></div><div class="wsc-badge">✓ VERIFIED</div></div>
       </div>
     </div>
   </div>
+  <!-- ═══ CLIENT & HOMEOWNERS: DUAL PATHWAY ═══ -->
+  <div style="background:linear-gradient(180deg,#070708 0%,#0d1f12 40%,#1a4d2e 100%);padding:52px 38px 0;position:relative">
+    <div style="max-width:1160px;margin:0 auto;text-align:center;margin-bottom:36px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:18px">🏠 FOR CLIENTS &amp; HOMEOWNERS</div>
+      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92;margin-bottom:14px">TWO WAYS TO<br><em style="font-style:normal;color:#FCD34D">BOOK A WORKER</em></h2>
+      <p style="font-size:15px;color:rgba(255,255,255,.65);max-width:520px;margin:0 auto;line-height:1.65">Need a quick fix or a high-value project? Choose the booking flow that works for you.</p>
+    </div>
+    <!-- Book search card — always visible -->
+    <div style="max-width:640px;margin:0 auto 0;padding-bottom:0">
+      <div class="book-card" style="margin-bottom:0">
+        <div class="book-card-tag">🔍 FIND A WORKER NOW</div>
+        <div class="book-search-wrap"><input id="book-srch" class="book-search-input" type="text" placeholder="e.g. Plumbing, Electrical, Cleaning…" onkeydown="if(event.key==='Enter')bookSearch()"><button class="book-search-btn" onclick="bookSearch()">SEARCH</button></div>
+        <div class="book-popular"><span class="book-pop-lbl">Popular:</span><span class="book-pop-tag" onclick="quickBook('Plumbing')">🔧 Plumbing</span><span class="book-pop-tag" onclick="quickBook('Electrical')">⚡ Electrical</span><span class="book-pop-tag" onclick="quickBook('Home Cleaning')">🧹 Cleaning</span><span class="book-pop-tag" onclick="quickBook('Carpentry')">🪚 Carpentry</span><span class="book-pop-tag" onclick="quickBook('Barber (Home)')">✂️ Barber</span><span class="book-pop-tag" onclick="quickBook('Auto Mechanic')">🔋 Mechanic</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pathway-section" style="background:linear-gradient(180deg,#1a4d2e 0%,#1E3A5F 100%)">
+    <div class="pathway-grid">
 
-  <!-- ═══ HOMEOWNER + HOW IT WORKS (GREEN) ═══ -->
-  <div class="split-section green-side">
-    <div class="split-inner">
-
-      <!-- LEFT: How It Works (simple) -->
-      <div class="split-col hiw-col">
-        <div class="section-label">FOR CLIENTS &amp; HOMEOWNERS</div>
-        <h2 class="section-h2">HOW IT<br><em style="color:#FCD34D">WORKS</em></h2>
-        <div class="hiw-simple">
-          <div class="hiw-s-step">
-            <div class="hiw-s-num">1</div>
-            <div>
-              <div class="hiw-s-title">Search a Skill</div>
-              <div class="hiw-s-desc">Type what you need — plumber, electrician, cleaner — and browse verified workers near you.</div>
-            </div>
+      <!-- OPTION 1: EXPRESS -->
+      <div class="pathway-card pathway-card-express">
+        <div class="pathway-header">
+          <div class="pathway-badge">🛠️ OPTION 1 — GUEST</div>
+          <div class="pathway-title">EXPRESS BOOKING</div>
+          <p class="pathway-sub">Maximum speed, zero friction. Perfect for quick repairs and everyday jobs. No account required.</p>
+        </div>
+        <div class="pathway-steps">
+          <div class="pathway-step">
+            <div class="ps-num">1</div>
+            <div class="ps-body"><div class="ps-title">Search a Skill</div><div class="ps-desc">Browse or search for the service you need — plumber, electrician, cleaner and more.</div></div>
           </div>
-          <div class="hiw-s-step">
-            <div class="hiw-s-num">2</div>
-            <div>
-              <div class="hiw-s-title">Book Instantly</div>
-              <div class="hiw-s-desc">Enter your address, describe the job, and hit Book Now. Done in under a minute.</div>
-            </div>
+          <div class="pathway-step">
+            <div class="ps-num">2</div>
+            <div class="ps-body"><div class="ps-title">Book Instantly</div><div class="ps-desc">Enter your address and describe the job. No password, no sign-up required.</div></div>
           </div>
-          <div class="hiw-s-step">
-            <div class="hiw-s-num">3</div>
-            <div>
-              <div class="hiw-s-title">A Verified Pro Arrives</div>
-              <div class="hiw-s-desc">GamSkillHub dispatches an ID-verified, agency-approved worker directly to your door.</div>
-            </div>
+          <div class="pathway-step" style="margin-bottom:0">
+            <div class="ps-num">3</div>
+            <div class="ps-body"><div class="ps-title">A Verified Pro Arrives</div><div class="ps-desc">GamSkillHub dispatches an ID-verified, agency-approved worker to your door at your scheduled time.</div></div>
           </div>
         </div>
+        <div class="pathway-cta">
+          <button class="pathway-btn-primary" onclick="bookSearch()">BOOK NOW →</button>
+        </div>
+        <div class="pathway-divider">Best for quick everyday jobs</div>
+        <div style="height:20px"></div>
       </div>
 
-      <!-- RIGHT: Search + Book form -->
-      <div class="split-col book-col">
-        <div class="book-card">
-          <div class="book-card-tag">📋 BOOK A WORKER</div>
-          <h3 class="book-card-h">Find the right skill,<br>right now.</h3>
-          <p class="book-card-sub">Tell us what you need and we'll connect you with a vetted expert.</p>
-          <div class="book-search-wrap">
-            <input id="book-srch" class="book-search-input" type="text" placeholder="e.g. Plumbing, Electrician…" onkeydown="if(event.key==='Enter')bookSearch()">
-            <button class="book-search-btn" onclick="bookSearch()">BOOK NOW</button>
+      <!-- OPTION 2: SECURE ESCROW -->
+      <div class="pathway-card pathway-card-escrow">
+        <div class="pathway-header">
+          <div class="pathway-badge">🔒 OPTION 2 — ACCOUNT</div>
+          <div class="pathway-title">SECURE ESCROW<br>BOOKING</div>
+          <p class="pathway-sub">Maximum trust and protection. Your money is held safely until the job is done to your satisfaction.</p>
+        </div>
+        <div class="pathway-steps">
+          <div class="pathway-step">
+            <div class="ps-num">1</div>
+            <div class="ps-body"><div class="ps-title">Open an Account</div><div class="ps-desc">Quick sign-up with your Gambian phone number and a 4-digit PIN. Takes 60 seconds.</div><div class="ps-tag">✓ Free to sign up</div></div>
           </div>
-          <div class="book-popular">
-            <span class="book-pop-lbl">Popular:</span>
-            <span class="book-pop-tag" onclick="quickBook('Plumbing')">🔧 Plumbing</span>
-            <span class="book-pop-tag" onclick="quickBook('Electrical')">⚡ Electrical</span>
-            <span class="book-pop-tag" onclick="quickBook('Home Cleaning')">🧹 Cleaning</span>
-            <span class="book-pop-tag" onclick="quickBook('Carpentry')">🪚 Carpentry</span>
-            <span class="book-pop-tag" onclick="quickBook('Barber (Home)')">✂️ Barber</span>
+          <div class="pathway-step">
+            <div class="ps-num">2</div>
+            <div class="ps-body"><div class="ps-title">Search &amp; Book</div><div class="ps-desc">Browse verified workers, choose your skill, confirm address and job details.</div></div>
+          </div>
+          <div class="pathway-step">
+            <div class="ps-num highlight">3</div>
+            <div class="ps-body"><div class="ps-title">Pay — Held in Escrow</div><div class="ps-desc">Pay the agreed fee upfront. Funds are securely held by GamSkillHub — the worker receives nothing yet.</div><div class="ps-tag">🔒 Money fully protected</div></div>
+          </div>
+          <div class="pathway-step">
+            <div class="ps-num">4</div>
+            <div class="ps-body"><div class="ps-title">Pro Arrives &amp; Works</div><div class="ps-desc">A verified worker arrives and completes the job.</div></div>
+          </div>
+          <div class="pathway-step">
+            <div class="ps-num highlight">5</div>
+            <div class="ps-body"><div class="ps-title">You Approve — Finish Work</div><div class="ps-desc">Log into your account and click "Finish Work" once you're satisfied. Admin then releases payment to the worker.</div><div class="ps-tag">✅ You control the release</div></div>
+          </div>
+          <div class="pathway-step" style="margin-bottom:0">
+            <div class="ps-num">6</div>
+            <div class="ps-body">
+              <div class="ps-title">Payout Released</div>
+              <div class="ps-desc">Admin confirms and releases funds from escrow to the worker's account. Job complete.</div>
+              <div style="margin-top:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:7px;padding:10px 12px;font-size:11px;color:rgba(255,255,255,.8);line-height:1.6">
+                <strong style="color:#f87171">⚠ If worker fails or work is substandard:</strong><br>
+                Click "Cancel Payment" → State your reason → Upload photo evidence → Admin investigates → Full or partial refund issued if worker is at fault.
+              </div>
+            </div>
           </div>
         </div>
+        <div class="pathway-cta">
+          <button class="pathway-btn-primary" onclick="nav('client');switchClientAuth('register')">OPEN ACCOUNT →</button>
+          <button class="pathway-btn-secondary" onclick="nav('client')">LOG IN</button>
+        </div>
+        <div class="pathway-divider">Best for high-value or complex jobs</div>
+        <div style="height:20px"></div>
       </div>
 
     </div>
   </div>
-
-  <!-- ═══ WORKER SIDE (BLUE) ═══ -->
   <div class="split-section blue-side">
     <div class="split-inner">
-
-      <!-- LEFT: Pitch + CTA -->
-      <div class="split-col">
-        <div class="section-label" style="color:rgba(255,255,255,.6)">FOR SKILLED WORKERS</div>
-        <h2 class="section-h2" style="color:#fff">GET LISTED TO<br><em style="color:#FCD34D;font-size:110%">GROW YOUR WORK.</em></h2>
-        <p class="section-sub" style="color:rgba(255,255,255,.8)">Join The Gambia's fastest-growing skilled worker network. Reach clients who need your skills — anywhere in The Gambia.</p>
+      <div>
+        <div class="section-label" style="color:rgba(255,255,255,.7)">FOR SKILLED WORKERS</div>
+        <h2 class="section-h2" style="color:#fff">GET LISTED TO<br><em style="color:#FCD34D">GROW YOUR WORK.</em></h2>
+        <p class="section-sub">Join The Gambia's fastest-growing skilled worker network. Reach clients — anywhere in The Gambia.</p>
         <div class="ws-perks">
           <div class="ws-perk"><div class="ws-perk-ic">✓</div>Free to register — no upfront cost</div>
           <div class="ws-perk"><div class="ws-perk-ic">🔐</div>Agency-verified badge on your profile</div>
@@ -627,21 +602,16 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
         </div>
         <button class="ws-cta" onclick="nav('register')">GET LISTED — IT'S FREE →</button>
       </div>
-
-      <!-- RIGHT: How to sign up -->
-      <div class="split-col">
+      <div>
         <div class="ws-howto-title">HOW TO SIGN UP</div>
         <div class="ws-step"><div class="ws-step-num">1</div><div><div class="ws-step-title">Fill Your Personal Info</div><div class="ws-step-desc">Name, phone, location, years of experience. Takes 2 minutes.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">2</div><div><div class="ws-step-title">Select Your Skills</div><div class="ws-step-desc">Pick all the services you offer — plumbing, electrical, cleaning, carpentry and more.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">3</div><div><div class="ws-step-title">Upload Your Documents</div><div class="ws-step-desc">Profile photo + valid ID (National ID, passport or driver's licence). Certifications optional.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">4</div><div><div class="ws-step-title">Add Your Portfolio</div><div class="ws-step-desc">Upload photos of past work to build trust with clients and get booked faster.</div></div></div>
-        <div class="ws-step"><div class="ws-step-num">5</div><div><div class="ws-step-title">Get Approved &amp; Go Live</div><div class="ws-step-desc">Our team reviews every application within 24–48 hours. Once approved, clients can find and book you.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">2</div><div><div class="ws-step-title">Select Your Skills</div><div class="ws-step-desc">Pick all services you offer — plumbing, electrical, cleaning, carpentry and more.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">3</div><div><div class="ws-step-title">Upload Your Documents</div><div class="ws-step-desc">Profile photo + valid ID. Companies also upload Tax Clearance, GPPA and SSHFC docs.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">4</div><div><div class="ws-step-title">Add Portfolio</div><div class="ws-step-desc">Upload photos of past work to build trust with clients.</div></div></div>
+        <div class="ws-step"><div class="ws-step-num">5</div><div><div class="ws-step-title">Get Approved &amp; Go Live</div><div class="ws-step-desc">Our team reviews within 24–48 hours. Once approved, clients can find and book you.</div></div></div>
       </div>
-
     </div>
   </div>
-
-  <!-- ═══ WORKER GRID ═══ -->
   <div class="brw">
     <div class="bh"><h2 class="bt">BROWSE WORKERS</h2><div class="rc" id="rcount"></div></div>
     <div class="fr" id="fpills"><span class="pill on" onclick="filterBy('all',this)">All Skills</span></div>
@@ -654,12 +624,33 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   <div class="pwrap">
     <div class="phd"><h2>CLIENT<br><em style="font-style:normal;color:var(--am)">PORTAL</em></h2><p>Place orders, track bookings, rate workers.</p></div>
     <div id="cl-auth">
-      <div class="frow" style="max-width:480px">
-        <div class="fg"><label class="fl">Your Name *</label><input class="fi" id="cl-name" placeholder="Full name"></div>
-        <div class="fg"><label class="fl">Phone *</label><input class="fi" id="cl-phone" type="tel" placeholder="+220 7XX XXXX"></div>
+      <div style="background:var(--card);border:1px solid var(--b);border-radius:12px;padding:24px;margin-bottom:20px;max-width:520px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:14px">I AM A…</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+          <div id="role-client" class="role-card sel" onclick="selectRole('client')"><div class="role-card-icon">🏠</div><div class="role-card-title">CLIENT / HOMEOWNER</div><div class="role-card-sub">I need a skilled worker</div></div>
+          <div id="role-company" class="role-card" onclick="selectRole('company')"><div class="role-card-icon">🏢</div><div class="role-card-title">COMPANY / NGO</div><div class="role-card-sub">We hire for projects</div></div>
+        </div>
+        <input type="hidden" id="cl-role" value="client">
+        <div style="display:flex;gap:3px;background:var(--ch);border-radius:8px;padding:3px;margin-bottom:18px">
+          <button id="cl-tab-login" class="lmode-tab on" onclick="switchClientAuth('login')">LOG IN</button>
+          <button id="cl-tab-register" class="lmode-tab" onclick="switchClientAuth('register')">REGISTER</button>
+        </div>
+        <div id="cl-auth-login">
+          <div class="fg"><label class="fl">Phone Number *</label><input class="fi" id="cl-phone" type="tel" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')clientPinLogin()"></div>
+          <div class="fg"><label class="fl">4-Digit PIN *</label><input class="fi" id="cl-pin" type="password" maxlength="4" placeholder="••••" onkeydown="if(event.key==='Enter')clientPinLogin()"></div>
+          <div class="brow"><button class="btn bp" onclick="clientPinLogin()">Login →</button></div>
+          <div style="margin-top:12px;font-size:12px;color:var(--mt)">No account? <span style="color:var(--am);cursor:pointer;font-weight:600" onclick="switchClientAuth('register')">Register here →</span></div>
+        </div>
+        <div id="cl-auth-register" style="display:none">
+          <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="cl-name" placeholder="Your full name"></div>
+          <div class="fg"><label class="fl">Gambian Phone Number *</label><input class="fi" id="cl-phone-reg" type="tel" placeholder="+220 7XX XXXX"></div>
+          <div class="frow">
+            <div class="fg"><label class="fl">Create 4-Digit PIN *</label><input class="fi" id="cl-pin-new" type="password" maxlength="4" placeholder="••••"></div>
+            <div class="fg"><label class="fl">Confirm PIN *</label><input class="fi" id="cl-pin2" type="password" maxlength="4" placeholder="••••"></div>
+          </div>
+          <div class="brow"><button class="btn bp" onclick="clientPinRegister()">Create Account →</button></div>
+        </div>
       </div>
-      <div class="fg" style="max-width:480px"><label class="fl">Email (optional)</label><input class="fi" id="cl-email" type="email" placeholder="you@email.com"></div>
-      <div class="brow"><button class="btn bp" onclick="clientLogin()">Continue →</button></div>
     </div>
     <div id="cl-dash" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
@@ -667,20 +658,21 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
         <button class="nb" onclick="clientOut()">Log out</button>
       </div>
       <div class="ptabs" id="cl-ptabs">
-        <button class="pt on" onclick="clTab('order',this)">📋 New Order</button>
+        <button class="pt on" onclick="clTab('order',this)">📋 Book a Worker</button>
         <button class="pt" onclick="clTab('track',this)">📍 My Bookings <span class="badge" id="cl-cnt">0</span></button>
+        <button class="pt" onclick="clTab('reviews',this)">⭐ My Reviews</button>
+        <button class="pt" onclick="clTab('account',this)">👤 Account</button>
       </div>
+      <div id="cl-reviews-tab" style="display:none"></div>
+      <div id="cl-account-tab" style="display:none"></div>
       <div id="cl-order-tab">
         <div style="background:var(--card);border:1px solid var(--b);border-radius:11px;padding:22px;margin-bottom:20px">
           <div class="shtit">PLACE AN ORDER</div>
           <div class="frow">
-            <div class="fg"><label class="fl">Skill Needed *</label><select class="fse" id="ord-skill" onchange="updateOrderPrice()"><option value="">Select…</option></select></div>
+            <div class="fg"><label class="fl">Skill Needed *</label><select class="fse" id="ord-skill"><option value="">Select…</option></select></div>
             <div class="fg"><label class="fl">Preferred Date/Time</label><input class="fi" id="ord-dt" type="datetime-local"></div>
           </div>
-          <div id="ord-price-display" style="display:none;background:var(--sur);border:1px solid var(--bl);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--td)">
-            💰 Service fee: <strong id="ord-price-val" style="color:var(--am)">D0</strong> + Platform fee (5%): <strong id="ord-fee-val" style="color:var(--am)">D0</strong> = <strong id="ord-total-val" style="color:var(--tx)">D0</strong>
-          </div>
-          <div class="fg"><label class="fl">Your Address *</label><input class="fi" id="ord-addr" placeholder="Where should the worker come?"></div>
+          <div class="frow"><div class="fg"><label class="fl">Your Address *</label><input class="fi" id="ord-addr" placeholder="Where should the worker come?"></div><div class="fg"><label class="fl">Your Budget (GMD)</label><input class="fi" id="ord-budget" type="number" placeholder="e.g. 500"></div></div>
           <div class="fg"><label class="fl">Describe the Job *</label><textarea class="fta" id="ord-desc" placeholder="What needs to be done?"></textarea></div>
           <div class="brow"><button class="btn bp" onclick="placeOrder()">Submit Order ✓</button></div>
         </div>
@@ -708,10 +700,9 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
         </div>
       </div>
       <div class="ptabs" id="wp-ptabs">
-        <button class="pt on" onclick="wpTab('new',this)">🔔 New Orders <span class="badge" id="wp-cnt">0</span></button>
+        <button class="pt on" onclick="wpTab('new',this)">🔔 New Orders</button>
         <button class="pt" onclick="wpTab('active',this)">⚡ Active</button>
         <button class="pt" onclick="wpTab('done',this)">✅ Completed</button>
-        <button class="pt" onclick="wpTab('earnings',this)">💰 Earnings</button>
       </div>
       <div id="wp-content"><div class="sp"><div class="spin"></div></div></div>
     </div>
@@ -805,7 +796,7 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   <div class="awrap">
     <div class="atop">
       <div><h2>ADMIN<br><em style="font-style:normal;color:var(--am)">DASHBOARD</em></h2><div style="font-size:12px;color:var(--td);margin-top:5px">GamSkillHub Agency Panel</div></div>
-      <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><span id="adm-who" style="font-size:11px;color:var(--td)"></span><span id="mode-ind" style="font-size:11px;font-weight:700">🟡 DEMO</span><button class="nb" onclick="loadAdmin();toast('Refreshed','ok')" title="Refresh">🔄</button><button class="nb" onclick="adminOut()">Log Out</button></div>
+      <div style="display:flex;gap:7px;align-items:center"><span id="adm-who" style="font-size:11px;color:var(--td)"></span><button class="nb" onclick="adminOut()">Log Out</button></div>
     </div>
     <div class="tabbar">
       <button class="tb on" onclick="aTab('pending',this)">Pending <span class="cbg" id="pcnt">0</span></button>
@@ -813,9 +804,12 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
       <button class="tb" onclick="aTab('rejected',this)">Rejected</button>
       <button class="tb" onclick="aTab('orders',this)">📋 Orders <span class="cbg" id="ocnt">0</span></button>
       <button class="tb" onclick="aTab('assign',this)">🔀 Assign</button>
-      <button class="tb" onclick="aTab('payments',this)">💳 Payments <span class="cbg" id="paycnt">0</span></button>
       <button class="tb" onclick="aTab('skills',this)">🛠 Skills</button>
       <button class="tb" onclick="aTab('admins',this)">👥 Admins</button>
+      <button class="tb" onclick="aTab('kyc',this)">🪪 KYC</button>
+      <button class="tb" onclick="aTab('primesub',this)">🏢 Prime-Sub</button>
+      <button class="tb" onclick="aTab('refunds',this)">💰 Refunds <span class="cbg" id="refund-cnt">0</span></button>
+      <button class="tb" onclick="aTab('escrow',this)">🔐 Escrow <span class="cbg" id="escrow-cnt">0</span></button>
     </div>
     <div id="adm-content"><div class="sp"><div class="spin"></div></div></div>
   </div>
@@ -860,99 +854,6 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   </div>
 </div>
 
-<!-- ═══ PAYMENT MODAL ═══ -->
-<div class="ov" id="payMod" onclick="closeMod(event,'payMod')">
-  <div class="modal" style="max-width:540px">
-    <div class="mhd" style="padding-bottom:14px">
-      <div class="mtb"><div class="mn">PAYMENT</div><div class="msk" id="pay-worker-name"></div></div>
-      <button class="xb" onclick="closeMod(null,'payMod')">✕</button>
-    </div>
-    <div class="mbd" style="padding-top:0">
-      <div class="pay-escrow-badge">🔒 Escrow Protection — Your money is safe until job is done</div>
-      <div class="shtit" style="font-size:14px;margin-bottom:10px">SELECT PAYMENT METHOD</div>
-      <div class="pay-methods">
-        <div class="pay-opt sel" onclick="selectPayMethod('wave',this)" id="pm-wave">
-          <div class="sel-badge">✓</div>
-          <span class="pay-opt-ic">📱</span>
-          <div class="pay-opt-nm">Wave</div>
-          <div class="pay-opt-desc">Mobile Money</div>
-        </div>
-        <div class="pay-opt" onclick="selectPayMethod('bank',this)" id="pm-bank">
-          <div class="sel-badge">✓</div>
-          <span class="pay-opt-ic">🏦</span>
-          <div class="pay-opt-nm">Bank Transfer</div>
-          <div class="pay-opt-desc">Direct deposit</div>
-        </div>
-        <div class="pay-opt" onclick="selectPayMethod('cash',this)" id="pm-cash">
-          <div class="sel-badge">✓</div>
-          <span class="pay-opt-ic">💵</span>
-          <div class="pay-opt-nm">Cash</div>
-          <div class="pay-opt-desc">Pay on site</div>
-        </div>
-      </div>
-      <div class="pay-summary" id="pay-summary">
-        <div class="pay-row"><span class="pm-lb" id="pay-skill-label">Service Fee</span><span class="pm-am" id="pay-skill-amt">D500.00</span></div>
-        <div class="pay-row"><span class="pm-lb">Platform Fee (5%)</span><span class="pm-am" id="pay-fee-amt">D25.00</span></div>
-        <div class="pay-row"><span class="pm-lb">Escrow Security</span><span class="pm-am" style="color:var(--ok)">FREE</span></div>
-        <div class="pay-row total"><span class="pm-lb">Total</span><span class="pm-am" id="pay-total-amt">D525.00</span></div>
-        <div class="pay-srv-fee">Service fee covers worker assignment, quality guarantee, and support. Refundable if not satisfied.</div>
-      </div>
-      <!-- Wave -->
-      <div class="pay-wave-box on" id="pay-wave-box">
-        <div class="pay-wave-title">Wave Pay</div>
-        <div class="pay-wave-sub">Enter your Wave phone number to complete payment</div>
-        <input class="pay-wave-phone" id="pay-wave-phone" type="tel" placeholder="e.g. 220 7XX XXXX" maxlength="15">
-        <div class="pay-wave-ussd">Dial *165# → Pay Merchant → Enter Code</div>
-        <div class="pay-wave-status" id="pay-wave-status">Tap "Confirm Payment" to receive your USSD code</div>
-      </div>
-      <!-- Bank -->
-      <div class="pay-bank-box" id="pay-bank-box">
-        <div class="shtit" style="font-size:13px;margin-bottom:10px">BANK TRANSFER DETAILS</div>
-        <div class="pay-bank-row"><span class="pay-bank-lbl">Bank</span><span class="pay-bank-val">Trust Bank Ltd (Trust Bank Gambia)</span></div>
-        <div class="pay-bank-row"><span class="pay-bank-lbl">Account</span><span class="pay-bank-val">GamSkillHub Agency</span></div>
-        <div class="pay-bank-row"><span class="pay-bank-lbl">Number</span><span class="pay-bank-val">001-234-567-890</span></div>
-        <div class="pay-bank-row"><span class="pay-bank-lbl">Reference</span><span class="pay-bank-val" id="pay-bank-ref">GSH-000000</span></div>
-        <div class="pay-bank-row"><span class="pay-bank-lbl">Amount</span><span class="pay-bank-val" id="pay-bank-amt">D525.00</span></div>
-        <div style="margin-top:10px;font-size:11px;color:var(--td);line-height:1.6">After transferring, your order will be confirmed within 1-2 hours during business days. Use the reference code above.</div>
-      </div>
-      <!-- Cash -->
-      <div class="pay-cash-box" id="pay-cash-box">
-        <div class="pay-cash-ic">💵</div>
-        <div class="pay-cash-note">Pay the worker directly on-site in cash. <strong>No advance payment needed.</strong> The platform fee of <strong id="pay-cash-fee">D25.00</strong> will be collected separately.</div>
-      </div>
-      <div class="brow">
-        <button class="btn bg" onclick="closeMod(null,'payMod')">Cancel</button>
-        <button class="btn bp" id="pay-confirm-btn" onclick="confirmPayment()">Confirm Payment ✓</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ WORKER PAYOUT MODAL ═══ -->
-<div class="ov" id="payoutMod" onclick="closeMod(event,'payoutMod')">
-  <div class="modal" style="max-width:460px">
-    <div class="mhd" style="padding-bottom:14px">
-      <div class="mtb"><div class="mn">REQUEST PAYOUT</div><div class="msk">Withdraw your earnings</div></div>
-      <button class="xb" onclick="closeMod(null,'payoutMod')">✕</button>
-    </div>
-    <div class="mbd" style="padding-top:0">
-      <div style="text-align:center;margin-bottom:16px">
-        <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt)">Available Balance</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--am);margin-top:4px" id="payout-bal">D0.00</div>
-      </div>
-      <div class="fg"><label class="fl">Payout Amount (Dalasi)</label><input class="fi" id="payout-amt" type="number" placeholder="Enter amount"></div>
-      <div class="fg"><label class="fl">Payout Method</label>
-        <select class="fse" id="payout-method">
-          <option value="wave">Wave Mobile Money</option>
-          <option value="bank">Bank Transfer</option>
-        </select>
-      </div>
-      <div class="fg"><label class="fl">Receiving Phone/Account</label><input class="fi" id="payout-to" type="tel" placeholder="e.g. 220 7XX XXXX"></div>
-      <div class="brow"><button class="btn bg" onclick="closeMod(null,'payoutMod')">Cancel</button><button class="btn bp" onclick="submitPayout()">Request Payout ✓</button></div>
-    </div>
-  </div>
-</div>
-
 <!-- ═══ RATE MODAL ═══ -->
 <div class="ov" id="rateMod" onclick="closeMod(event,'rateMod')">
   <div class="modal" style="max-width:440px">
@@ -970,32 +871,26 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
   </div>
 </div>
 
-<!-- ═══ UNIFIED LOGIN MODAL ═══ -->
+<!-- ═══ UNIFIED LOGIN ═══ -->
 <div class="lov" id="loginMod">
-    <div class="lbox">
-      <div id="ltabs" class="lmode-tabs" style="display:none">
-        <button id="ltab-worker" class="lmode-tab on" onclick="switchLoginMode('worker')">WORKER</button>
-        <button id="ltab-admin" class="lmode-tab" onclick="switchLoginMode('admin')">ADMIN</button>
-      </div>
-      
-      <div id="lf-worker">
-        <h3 onclick="secretAdmin()" style="cursor:default">WORKER<br><em style="font-style:normal;color:var(--am)">LOGIN</em></h3>
-        <div class="lsub">Login with your phone number. Password is optional.</div>
-        <div class="fg"><label class="fl">Phone Number *</label><input class="fi" id="wp-phone-modal" type="tel" placeholder="+220 7XX XXXX"></div>
-        <div class="fg"><label class="fl">PIN / Password (optional)</label><input class="fi" id="wp-pw-modal" type="password" placeholder="Leave blank if none set"></div>
-        <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="loginWorkerModal()">Login →</button></div>
-      </div>
-
-      <div id="lf-admin" style="display:none">
-        <h3>ADMIN<br><em style="font-style:normal;color:var(--am)">LOGIN</em></h3>
-        <div class="lsub">Enter your agency admin credentials.</div>
-        <div class="fg"><label class="fl">Email</label><input class="fi" id="adm-em" type="email" placeholder="admin@gamskillhub.gm"></div>
-        <div class="fg"><label class="fl">Password</label><input class="fi" id="adm-pw" type="password" placeholder="Password"></div>
-        <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="tryLogin()">Admin Login →</button></div>
-      </div>
-      
-      <div class="lerr" id="lerr">❌ Incorrect credentials.</div>
+  <div class="lbox">
+    <h3 style="margin-bottom:6px">WELCOME<br><em style="font-style:normal;color:#0D9488">BACK</em></h3>
+    <div class="lsub">Log in to your GamSkillHub account.</div>
+    <div class="lmode-tabs">
+      <button class="lmode-tab on" id="ltab-worker" onclick="switchLoginMode('worker')">👷 Worker</button>
+      <button class="lmode-tab" id="ltab-admin" onclick="switchLoginMode('admin')">🔐 Admin</button>
     </div>
+    <div id="lf-worker">
+      <div class="fg"><label class="fl">Registered Phone Number</label><input class="fi" id="wp-phone-modal" type="tel" placeholder="+220 7XX XXXX" onkeydown="if(event.key==='Enter')loginWorkerModal()"></div>
+      <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" style="background:#0D9488;border-color:#0D9488" onclick="loginWorkerModal()">Login →</button></div>
+    </div>
+    <div id="lf-admin" style="display:none">
+      <div class="fg"><label class="fl">Email</label><input class="fi" id="adm-em" type="email" placeholder="admin@gamskillhub.gm"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" id="adm-pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')tryLogin()"></div>
+      <div class="brow"><button class="btn bg" onclick="closeLogin()">Cancel</button><button class="btn bp" onclick="tryLogin()">Login →</button></div>
+    </div>
+    <div class="lerr" id="lerr">❌ Incorrect credentials.</div>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -1005,7 +900,9 @@ nav{position:fixed;inset:0 0 auto 0;z-index:900;height:54px;display:flex;align-i
 const CFG = {
   supabaseUrl: 'https://lhzlqzpkqdppgnesitwo.supabase.co',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoemxxenBrcWRwcGduZXNpdHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NjY0ODEsImV4cCI6MjA5MTE0MjQ4MX0.zEqZv9O5LuC8Ma5mMQSGycwxnwXa4l7aL7dIZ6_Cosg',
-  adminEmail:  'admin@gamskillhub.gm',
+  adminEmail: 'admin@gamskillhub.gm',
+  adminPass:  'admin123',
+  adminName:  'Agency Admin',
 };
 
 /* ══ SKILLS ══ */
@@ -1029,19 +926,18 @@ const DW = [
   {id:'d6',name:'Baba Sowe',phone:'+220 760 2345',bio:'Professional welder. Gates, grills, roofing frames.',location:'Kanifing',shop_address:'Kanifing Industrial Area',years_experience:15,status:'approved',completed_jobs:98,rating:4.9,rating_count:27,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Welding','Roofing'],work_history:[{title:'Steel Gate',description:'Double-panel driveway gate'},{title:'Window Grills',description:'12 security grills'}]},
   {id:'d7',name:'Mariama Jobe',phone:'+220 730 1122',bio:'Home barber. Professional haircuts at your doorstep.',location:'Fajara',shop_address:'',years_experience:4,status:'approved',completed_jobs:210,rating:4.8,rating_count:44,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Barber (Home)'],work_history:[]},
   {id:'d8',name:'Ousman Fatty',phone:'+220 775 3344',bio:'Home cleaning specialist. Deep cleaning offices and homes.',location:'Kololi',shop_address:'',years_experience:5,status:'approved',completed_jobs:132,rating:4.7,rating_count:19,is_available:true,photo_url:'',id_doc_url:'has_id',skills:['Home Cleaning','Pest Control'],work_history:[]},
-  {id:'p1',name:'Isatou Sillah',phone:'+220 710 1111',email:'isatou.sillah@email.com',bio:'Experienced painter specializing in interior and exterior painting. Quality work at affordable prices.',location:'Banjul',shop_address:'Wellington Street, Banjul',years_experience:3,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Painting','General Labour'],work_history:[{title:'Office Interior Painting',description:'Full repaint of 6-room office in Banjul'},{title:'House Exterior',description:'Exterior painting of 3-bedroom house'}]},
-  {id:'p2',name:'Kebba Gaye',phone:'+220 720 2222',email:'kebba.gaye@email.com',bio:'Certified electrician and security systems installer. Experienced with CCTV, alarm systems, and electrical wiring.',location:'Fajara',shop_address:'Fajara Motors Road',years_experience:7,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Electrical','Security Systems'],work_history:[{title:'CCTV Installation',description:'8-camera system for warehouse'},{title:'House Rewiring',description:'Full electrical rewiring of 4-bedroom house'}]},
-  {id:'r1',name:'Musa Bah',phone:'+220 765 9999',email:'musa.bah@email.com',bio:'Former welder. Application was rejected due to incomplete ID verification. Has reapplied with corrected documents.',location:'Tabokoto',shop_address:'Tabokoto junction',years_experience:2,status:'rejected',completed_jobs:0,rating:4.0,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Welding'],work_history:[{title:'Gate Repair',description:'Small driveway gate welding job'}]},
+  {id:'p1',name:'Isatou Sillah',phone:'+220 710 1111',bio:'',location:'Banjul',years_experience:3,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Painting','General Labour'],work_history:[]},
+  {id:'p2',name:'Kebba Gaye',phone:'+220 720 2222',bio:'',location:'Fajara',years_experience:7,status:'pending',completed_jobs:0,rating:5,rating_count:0,is_available:true,photo_url:'',id_doc_url:'',skills:['Electrical','Security Systems'],work_history:[]},
 ];
 const DO = [
-  {id:'o1',client_name:'Alieu Bah',client_phone:'+220 711 0000',skill_needed:'Plumbing',description:'Leaking bathroom pipe needs fixing',client_address:'16 Atlantic Road, Kololi',status:'pending',created_at:new Date(Date.now()-3600000).toISOString(),worker_id:null,payment_method:'cash',payment_status:'pending',service_fee:500,commission:25,total_amount:525},
-  {id:'o2',client_name:'Hawa Njie',client_phone:'+220 722 0000',skill_needed:'Home Cleaning',description:'Full house deep clean, 3 bedrooms',client_address:'Kairaba Ave, Fajara',status:'accepted',created_at:new Date(Date.now()-86400000).toISOString(),worker_id:'d8',payment_method:'wave',payment_status:'escrow',service_fee:350,commission:18,total_amount:368,payment_reference:'WV-DEMO001'},
-  {id:'o3',client_name:'Yankuba Touray',client_phone:'+220 733 0000',skill_needed:'Electrical',description:'Install 3 ceiling fans',client_address:'Brusubi near school',status:'completed',created_at:new Date(Date.now()-172800000).toISOString(),worker_id:'d3',payment_method:'bank',payment_status:'released',service_fee:600,commission:30,total_amount:630,payment_reference:'BK-DEMO002',completed_at:new Date(Date.now()-86400000).toISOString()},
+  {id:'o1',client_name:'Alieu Bah',client_phone:'+220 711 0000',skill_needed:'Plumbing',description:'Leaking bathroom pipe needs fixing',client_address:'16 Atlantic Road, Kololi',status:'pending',created_at:new Date(Date.now()-3600000).toISOString(),worker_id:null},
+  {id:'o2',client_name:'Hawa Njie',client_phone:'+220 722 0000',skill_needed:'Home Cleaning',description:'Full house deep clean, 3 bedrooms',client_address:'Kairaba Ave, Fajara',status:'accepted',created_at:new Date(Date.now()-86400000).toISOString(),worker_id:'d8'},
+  {id:'o3',client_name:'Yankuba Touray',client_phone:'+220 733 0000',skill_needed:'Electrical',description:'Install 3 ceiling fans',client_address:'Brusubi near school',status:'completed',created_at:new Date(Date.now()-172800000).toISOString(),worker_id:'d3'},
 ];
 
 /* ══ STATE ══ */
-let SB=null, DEMO=false;
-let workers=[], adminW=[], allOrders=[], allPayments=[], skills=[...DEFAULT_SKILLS];
+let SB=null, DEMO=true;
+let workers=[], adminW=[], allOrders=[], skills=[...DEFAULT_SKILLS];
 let curFilter='all', curStep=1, pickedSkills=[], weN=0;
 let curAdminTab='pending', adminUser=null;
 let clientUser=null, workerUser=null;
@@ -1051,98 +947,14 @@ let qWorker=null;
 let UF={photo:null,id:null,cert:[],port:[]};
 const WC={}; // worker cache — avoids JSON in onclick
 
-/* ══ PAYMENT CONFIG ══ */
-const PAY_CFG = {
-  commission_rate: 0.05,   // 5% platform fee
-  min_service_fee: 200,    // D200 minimum service fee
-  currency: 'D',           // Dalasi
-  bank_name: 'Trust Bank Ltd',
-  bank_account: 'GamSkillHub Agency',
-  bank_number: '001-234-567-890',
-};
-// Default service fees per skill category
-const SKILL_PRICES = {
-  'Plumbing': 500, 'Electrical': 600, 'Carpentry': 700, 'Masonry': 800,
-  'Painting': 400, 'Roofing': 1000, 'Tiling': 600, 'Welding': 800,
-  'AC/HVAC': 500, 'Security Systems': 700, 'Landscaping': 500, 'General Labour': 300,
-  'Barber (Home)': 150, 'Home Cleaning': 350, 'Pest Control': 400,
-  'Home Nursing': 450, 'Laundry Service': 200, 'Auto Mechanic': 500,
-  'Solar Energy': 1500, 'IT/Tech Support': 400, 'General': 300,
-};
-const DEFAULT_PRICE = 500;
-
-let pendingPayment = null; // {orderId, workerId, skill, clientName, clientPhone, address, description, serviceFee, commission, total, paymentMethod}
-let selectedPayMethod = 'wave';
-let workerEarnings = { balance: 0, total_earned: 0, pending_payout: 0, transactions: [] };
-
-/* ══ SUPABASE QUERY HELPER ══ */
-// Builds worker queries with proper Supabase JS v2 chaining: .select() FIRST, then filters.
-// In v2, .eq(), .order(), .ilike(), .maybeSingle() etc. only exist AFTER .select().
-let _fullJoinWorks = null;
-async function queryWorkers(table, opts={}){
-  if(!SB) return {data:null,error:'No Supabase'};
-  function build(sel){
-    let q=SB.from(table).select(sel);
-    if(opts.filters){for(const[k,v]of Object.entries(opts.filters))q=q.eq(k,v);}
-    if(opts.ilike){for(const[k,v]of Object.entries(opts.ilike))q=q.ilike(k,v);}
-    if(opts.in_)q=q.in(opts.in_.col,opts.in_.vals);
-    if(opts.order)q=q.order(opts.order,{ascending:opts.ascending!==false});
-    if(opts.limit)q=q.limit(opts.limit);
-    if(opts.maybeSingle)q=q.maybeSingle();
-    if(opts.single)q=q.single();
-    return q;
-  }
-  try{
-    const r=await build('*,worker_skills(category_id),work_history(*)');
-    if(!r.error){_fullJoinWorks=true;return r;}
-    console.warn('Full join failed, trying simple:',r.error.message);
-  }catch(e){console.warn('Full join threw:',e.message);}
-  try{
-    const r=await build('*');
-    _fullJoinWorks=false;return r;
-  }catch(e2){return{data:null,error:e2.message};}
-}
-function mapWorker(w){
-  return {
-    ...w,
-    skills: _fullJoinWorks !== false
-      ? (w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean)
-      : (w.skills||[]),
-    work_history: w.work_history||[]
-  };
-}
-
 /* ══ INIT ══ */
 async function init() {
   try {
     if(CFG.supabaseUrl!=='YOUR_SUPABASE_URL'){
-      if(window.supabase && window.supabase.createClient){
-        SB=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
-        DEMO=false;
-        console.log('GamSkillHub: LIVE mode — Supabase connected');
-      } else {
-        console.error('GamSkillHub: Supabase JS library NOT loaded!');
-        DEMO=true;
-      }
+      SB=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
+      DEMO=false;
     }
-  } catch(e){console.error('Init error:',e); DEMO=true;}
-  
-  // Check for saved session
-  const saved = localStorage.getItem('gsh_admin');
-  if(saved){
-    try {
-      const {u, exp} = JSON.parse(saved);
-      if(Date.now() < exp){
-        adminUser = u;
-        const who = document.getElementById('adm-who');
-        if(who) who.textContent = u.name + ' (' + u.role + ')';
-        nav('admin');
-      } else {
-        localStorage.removeItem('gsh_admin');
-      }
-    } catch(e){}
-  }
-
+  } catch(e){console.warn('Demo mode');}
   try { await loadSkills(); } catch(e){}
   buildPills();
   buildPicker();
@@ -1160,7 +972,7 @@ function nav(p){
 
 /* ══ SKILLS ══ */
 async function loadSkills(){
-  if(!SB) return;
+  if(DEMO) return;
   try{
     const {data}=await SB.from('skill_categories').select('*').eq('is_active',true).order('name');
     if(data&&data.length) skills=data;
@@ -1205,7 +1017,7 @@ async function fetchWorkers(search=''){
   const box=document.getElementById('wbox');
   box.innerHTML='<div class="sp"><div class="spin"></div></div>';
   try{
-    if(SB){
+    if(!DEMO&&SB){
       let q=SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('status','approved');
       if(search) q=q.ilike('name','%'+search+'%');
       const {data,error}=await q;
@@ -1294,22 +1106,9 @@ function openProfile(id){
   document.getElementById('mCont').innerHTML=`
     <a class="ctab cc" href="tel:${x(w.phone)}">📞 ${x(w.phone)}</a>
     <a class="ctab cw" href="https://wa.me/${w.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
-    <button class="ctab co" onclick="closeMod(null,'profMod');openOrdModal('${w.id}')">📋 Place Order</button>
-    <div style="margin-top:12px;padding:10px;background:rgba(252,211,77,0.1);border-radius:8px;border:1px dashed var(--am);font-size:11px;color:var(--td)">
-      💳 <strong>Payment Info:</strong> Secure payments via Wave or Bank Transfer. Escrow protection enabled.<br><span style="font-size:10px;color:var(--mt)">Service fee: ${PAY_CFG.currency}${(SKILL_PRICES[(w.skills||[])[0]]||DEFAULT_PRICE).toLocaleString()}.00</span>
-    </div>`;
+    <button class="ctab co" onclick="closeMod(null,'profMod');openOrdModal('${w.id}')">📋 Place Order</button>`;
   const ids=document.getElementById('mIdSec');
-  if(w.id_doc_url){
-    ids.style.display='block';
-    const idLink=document.getElementById('mIdLink');
-    idLink.href=w.id_doc_url==='has_id'?'#':w.id_doc_url;
-    // If it's a base64 image, show preview
-    if(w.id_doc_url.startsWith('data:')){
-      idLink.innerHTML='✅ <span style="font-size:11px">ID Verified (embedded)</span>';
-    } else {
-      idLink.innerHTML='✅ View ID Document';
-    }
-  } else ids.style.display='none';
+  if(w.id_doc_url){document.getElementById('mIdLink').href=w.id_doc_url==='has_id'?'#':w.id_doc_url;ids.style.display='block';}else ids.style.display='none';
   document.getElementById('mTags').innerHTML=(w.skills||[]).map(s=>`<span class="tag">${x(s)}</span>`).join('')||'<span style="color:var(--mt)">None listed</span>';
   const ph=document.getElementById('mPort');
   const wh=w.work_history||[];
@@ -1321,6 +1120,7 @@ function openProfile(id){
       wh.map(i=>`<div class="pi"><div class="pi-ic">${sk?.icon||'🔨'}</div><div class="pi-lb">${x(i.title)}</div></div>`).join('');
   }
   openMod('profMod');
+  loadWorkerReviews(w.id);
 }
 
 /* ══ ORDER MODAL ══ */
@@ -1336,19 +1136,16 @@ function openOrdModal(id){
 async function submitQuickOrder(){
   const nm=g('om-nm'),ph=g('om-ph'),ad=g('om-ad'),dc=g('om-dc');
   if(!nm||!ph||!ad){toast('Fill in required fields.','er');return;}
-  const skill = document.getElementById('om-sk').value || 'General';
-  const serviceFee = SKILL_PRICES[skill] || DEFAULT_PRICE;
-  const commission = Math.round(serviceFee * PAY_CFG.commission_rate);
-  const total = serviceFee + commission;
-
-  // Store payment data and open payment modal
-  pendingPayment = {
-    workerId: qWorker?.id || null,
-    skill, clientName: nm, clientPhone: ph, address: ad, description: dc,
-    serviceFee, commission, total, paymentMethod: null
-  };
-  closeMod(null,'ordMod');
-  openPaymentModal(skill, qWorker?.name || 'Assigned Worker', serviceFee, commission, total);
+  try{
+    const p={worker_id:qWorker?.id||null,skill_needed:document.getElementById('om-sk').value||'General',
+      description:dc,client_address:ad,client_name:nm,client_phone:ph,
+      status:qWorker?'assigned':'pending',user_id:clientUser?.id||null};
+    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
+    else await wait(380);
+    closeMod(null,'ordMod');
+    toast('Order placed! We\'ll confirm shortly. ✓','ok');
+    ['om-nm','om-ph','om-ad','om-dc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
 }
 
 /* ══ MODAL HELPERS ══ */
@@ -1364,7 +1161,7 @@ async function clientLogin(){
   const nm=g('cl-name'),ph=g('cl-phone');
   if(!nm||!ph){toast('Name and phone required.','er');return;}
   try{
-    if(SB){
+    if(!DEMO&&SB){
       let {data:ex}=await SB.from('users').select('*').eq('phone',ph).maybeSingle();
       if(!ex){const {data,error}=await SB.from('users').insert([{name:nm,phone:ph,email:g('cl-email')}]).select().single();if(error)throw error;clientUser=data;}
       else clientUser=ex;
@@ -1378,27 +1175,22 @@ async function clientLogin(){
 }
 function clientOut(){clientUser=null;document.getElementById('cl-auth').style.display='block';document.getElementById('cl-dash').style.display='none';}
 
-function clTab(t,el){
-  document.querySelectorAll('#cl-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
-  document.getElementById('cl-order-tab').style.display=t==='order'?'block':'none';
-  document.getElementById('cl-track-tab').style.display=t==='track'?'block':'none';
-  if(t==='track')loadClientOrders();
-}
+// clTab defined in injected JS above
 
 async function placeOrder(){
   if(!clientUser){toast('Please log in first.','er');return;}
   const sk=g('ord-skill'),ad=g('ord-addr'),dc=g('ord-desc');
   if(!sk||!ad){toast('Skill and address are required.','er');return;}
-  const serviceFee = SKILL_PRICES[sk] || DEFAULT_PRICE;
-  const commission = Math.round(serviceFee * PAY_CFG.commission_rate);
-  const total = serviceFee + commission;
-
-  pendingPayment = {
-    workerId: null,
-    skill: sk, clientName: clientUser.name, clientPhone: clientUser.phone, address: ad, description: dc,
-    serviceFee, commission, total, paymentMethod: null
-  };
-  openPaymentModal(sk, 'Any Available Worker', serviceFee, commission, total);
+  try{
+    const p={user_id:clientUser.id,skill_needed:sk,description:dc,client_address:ad,
+      client_name:clientUser.name,client_phone:clientUser.phone,status:'pending',
+      scheduled_at:document.getElementById('ord-dt').value||null};
+    if(!DEMO&&SB){const {error}=await SB.from('orders').insert([p]);if(error)throw error;}
+    else await wait(380);
+    toast('Order placed! ✓','ok');
+    ['ord-skill','ord-addr','ord-desc','ord-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    clTab('track',document.querySelectorAll('.pt')[1]);
+  }catch(e){toast('Failed: '+(e.message||'Try again.'),'er');}
 }
 
 async function loadClientOrders(){
@@ -1406,32 +1198,38 @@ async function loadClientOrders(){
   box.innerHTML='<div class="sp"><div class="spin"></div></div>';
   let orders=[];
   try{
-    if(SB&&clientUser){
+    if(!DEMO&&SB&&clientUser){
       const {data}=await SB.from('orders').select('*,workers(name,phone,photo_url,location,shop_address)').eq('user_id',clientUser.id).order('created_at',{ascending:false});
       orders=data||[];
     }else{
       await wait(250);
-      orders=[...DO].map(o=>({...o,workers:o.worker_id?DW.find(w=>w.id===o.worker_id):null}));
+      orders=DO.slice(0,2).map(o=>({...o,workers:o.worker_id?DW.find(w=>w.id===o.worker_id):null}));
     }
   }catch(e){orders=[];}
   document.getElementById('cl-cnt').textContent=orders.length;
   if(!orders.length){box.innerHTML='<div class="empty"><div class="empi">📋</div><h3>No Bookings Yet</h3><p>Place your first order to get started.</p></div>';return;}
   box.innerHTML=orders.map(o=>{
-    const w=o.workers;
-    const pm=o.payment_method||'cash';
-    const ps=o.payment_status||(pm==='cash'?'pending':'pending');
-    const payBadge = `<span class="pay-status-badge pay-st-${ps}">${pm==='wave'?'📱':pm==='bank'?'🏦':'💵'} ${ps}</span>`;
     const wk=o.workers;
     const acts=[];
-    if(o.status==='accepted') acts.push(`<button class="asm ag" onclick="updOrder('${o.id}','worker_arrived')">✓ Worker Arrived</button>`);
-    if(o.status==='worker_arrived') acts.push(`<button class="asm aa" onclick="updOrder('${o.id}','completed')">✓ Mark Complete</button>`);
+    if(o.status==='accepted') acts.push(`<button class="asm ag" onclick="orderAction('${o.id}','worker_arrived','')">✓ Worker Arrived</button>`);
+    if(o.status==='worker_arrived'||o.status==='completed_by_worker'||o.status==='work_started'){
+      if(o.booking_flow==='escrow'){
+        acts.push(`<button class="asm ag" onclick="clientFinishWork('${o.id}')">✅ Finish Work — Release Payment</button>`);
+        acts.push(`<button class="refund-btn" onclick="openDisputeMod('${o.id}')">⚠ Cancel Payment</button>`);
+      } else {
+        acts.push(`<button class="asm ag" onclick="orderAction('${o.id}','verify_release','')">✅ Verify &amp; Release</button>`);
+        acts.push(`<button class="asm ar" onclick="openDisputeMod('${o.id}')">⚠ Dispute</button>`);
+      }
+    }
     if(o.status==='completed') acts.push(`<button class="asm ab" onclick="openRateMod('${o.id}','${o.worker_id||''}','${x(wk?.name||'')}')">⭐ Rate Worker</button>`);
-    if(['pending','assigned'].includes(o.status)) acts.push(`<button class="asm ar" onclick="updOrder('${o.id}','cancelled')">Cancel</button>`);
-    return `<div class="oc">
-      <div class="oct"><div class="ocs">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span> ${payBadge}</div>
+    if(['pending','assigned','requested'].includes(o.status)) acts.push(`<button class="asm ar" onclick="orderAction('${o.id}','cancel','')">Cancel</button>`);
+    if(['disputed','cancelled'].includes(o.status)) acts.push(`<button class="refund-btn" onclick="requestRefund('${o.id}')">💰 Request Refund</button>`);
+    if(o.status==='funds_released') acts.push(`<button class="asm ab" onclick="openReviewForm('${o.id}','${o.worker_id||''}','${x(wk?.name||'')}')" >⭐ Write Review</button>`);
+    return `<div class="oc" data-flow="${o.booking_flow||'express'}">
+      ${o.booking_flow==='escrow'?'<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(62,110,176,.12);border:1px solid rgba(62,110,176,.28);color:var(--inf);font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:10px;letter-spacing:.5px">🔒 ESCROW BOOKING</div>':''}
+      <div class="oct"><div class="ocs">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
       <div class="ocm"><span>📅 ${fd(o.created_at)}</span><span>📍 ${x(o.client_address)}</span>${wk?`<span>👷 ${x(wk.name)}</span>`:'<span>⏳ Awaiting worker</span>'}</div>
       ${o.description?`<div class="ocd">${x(o.description)}</div>`:''}
-      ${o.service_fee?`<div style="font-size:11px;color:var(--am);margin-bottom:6px">💰 ${pm==='wave'?'📱':pm==='bank'?'🏦':'💵'} D${Number(o.service_fee).toLocaleString()} service fee${o.payment_status==='escrow'?' · 🔒 Held in escrow':''}${o.payment_status==='released'?' · ✅ Payment released':''}</div>`:''}
       ${wk&&o.status!=='pending'?`<div class="wk-detail">👷 <strong>${x(wk.name)}</strong> · <a href="tel:${x(wk.phone)}">📞 ${x(wk.phone)}</a>${wk.location?' · 📍 '+x(wk.location):''}${wk.shop_address?' · Shop: '+x(wk.shop_address):''}</div>`:''}
       ${acts.length?`<div class="oca">${acts.join('')}</div>`:''}
     </div>`;
@@ -1443,7 +1241,7 @@ async function updOrder(id,status){
     const u={status};
     if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
     if(status==='completed')u.completed_at=new Date().toISOString();
-    if(SB){const {error}=await SB.from('orders').update(u).eq('id',id);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',id);if(error)throw error;}
     else{const o=DO.find(x=>x.id===id);if(o)Object.assign(o,u);}
     toast('Updated ✓','ok');
     loadClientOrders();
@@ -1463,7 +1261,7 @@ async function submitRating(){
   if(!rateScore){toast('Select a star rating.','er');return;}
   try{
     const p={order_id:rateOId,worker_id:rateWId,user_id:clientUser?.id||null,score:rateScore,comment:g('rate-cm')};
-    if(SB){const {error}=await SB.from('ratings').insert([p]);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('ratings').insert([p]);if(error)throw error;}
     else await wait(280);
     closeMod(null,'rateMod');toast('Rating submitted ✓','ok');
     loadClientOrders();fetchWorkers();
@@ -1474,16 +1272,10 @@ async function submitRating(){
 async function workerLogin(){
   const ph=g('wp-phone');if(!ph){toast('Enter your registered phone.','er');return;}
   try{
-    if(SB){
-      const {data,error}=await queryWorkers('workers',{filters:{phone:ph,status:'approved'},limit:1,order:'created_at',ascending:false});
-      if(error||!data||!data.length){
-        // Check if worker exists but isn't approved
-        const {data:pd}=await queryWorkers('workers',{filters:{phone:ph},limit:1});
-        if(pd&&pd.length) toast('Your account is '+pd[0].status+'. Not approved yet.','er');
-        else toast('Not found.','er');
-        return;
-      }
-      workerUser=mapWorker(data[0]);
+    if(!DEMO&&SB){
+      const {data,error}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').eq('phone',ph).eq('status','approved').maybeSingle();
+      if(error||!data){toast('Not found or not approved yet.','er');return;}
+      workerUser={...data,skills:(data.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean)};
     }else{
       await wait(280);
       workerUser=DW.find(w=>w.phone===ph&&w.status==='approved');
@@ -1494,8 +1286,7 @@ async function workerLogin(){
     document.getElementById('wp-auth').style.display='none';
     document.getElementById('wp-dash').style.display='block';
     updAvail();loadWpOrders();
-    toast('Welcome back, ' + workerUser.name, 'ok');
-  }catch(e){toast('Login failed: '+(e.message||'Check your phone number.'),'er');}
+  }catch(e){toast('Login failed.','er');}
 }
 function workerOut(){workerUser=null;document.getElementById('wp-auth').style.display='block';document.getElementById('wp-dash').style.display='none';}
 function updAvail(){
@@ -1506,28 +1297,23 @@ function updAvail(){
 async function toggleAvail(){
   const nv=!(workerUser?.is_available!==false);
   try{
-    if(SB)await SB.from('workers').update({is_available:nv}).eq('id',workerUser.id);
+    if(!DEMO&&SB)await SB.from('workers').update({is_available:nv}).eq('id',workerUser.id);
     workerUser.is_available=nv;updAvail();
     toast(nv?'You are now Available ✓':'Set as Busy','ok');
   }catch(e){toast('Failed.','er');}
 }
 
-function wpTab(t,el){
-  curWpTab=t;document.querySelectorAll('#wp-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
-  if(t==='earnings'){renderWorkerEarnings();return;}
-  loadWpOrders();
-}
+// wpTab defined in injected JS above
 
 async function loadWpOrders(){
   if(!workerUser)return;
-  const box = document.getElementById('wp-orders') || document.getElementById('wp-content');
-  if(!box) return;
+  const box=document.getElementById('wp-content');
   box.innerHTML='<div class="sp"><div class="spin"></div></div>';
   let orders=[];
   try{
     const smap={new:['pending','assigned'],active:['accepted','worker_arrived'],done:['completed']};
     const stats=smap[curWpTab]||['pending'];
-    if(SB){
+    if(!DEMO&&SB){
       let q=SB.from('orders').select('*').in('status',stats);
       if(curWpTab!=='new')q=q.eq('worker_id',workerUser.id);
       const {data}=await q.order('created_at',{ascending:false});
@@ -1537,14 +1323,15 @@ async function loadWpOrders(){
       orders=DO.filter(o=>stats.includes(o.status)&&(curWpTab==='new'||(o.worker_id===workerUser.id)));
     }
   }catch(e){orders=[];}
-  const cnt = document.getElementById('wp-cnt');
-  if(cnt) cnt.textContent = orders.length;
-  if(!orders.length){box.innerHTML=`<div class="empty"><div class="empi">📋</div><h3>No ${curWpTab} jobs</h3><p>Jobs will appear here.</p></div>`;return;}
+  if(!orders.length){
+    box.innerHTML=`<div class="empty"><div class="empi">${curWpTab==='new'?'📭':'✅'}</div><h3>${curWpTab==='new'?'No New Orders':'No Jobs Here'}</h3><p>${curWpTab==='new'?'Check back for new assignments.':'Jobs appear here.'}</p></div>`;
+    return;
+  }
   box.innerHTML=orders.map(o=>{
     const acts=[];
-    if(curWpTab==='new') acts.push(`<button class="asm ag" onclick="wAccept('${o.id}')">✓ Accept Job</button>`);
-    if(o.status==='accepted') acts.push(`<button class="asm aa" onclick="wUpdStatus('${o.id}','worker_arrived')">📍 I\'ve Arrived</button>`);
-    if(o.status==='worker_arrived') acts.push(`<button class="asm ab" onclick="wUpdStatus('${o.id}','completed')">✅ Mark Complete</button>`);
+    if(curWpTab==='new') acts.push(`<button class="asm ag" onclick="wAccept('${o.id}')">✓ Accept</button><button class="asm aa" onclick="submitCounterOffer('${o.id}')">💬 Counter-Offer</button>`);
+    if(o.status==='accepted') acts.push(`<button class="asm aa" onclick="orderAction('${o.id}','start_work','')">🔨 Start Work</button>`);
+    if(o.status==='work_started') acts.push(`<button class="asm ab" onclick="orderAction('${o.id}','signal_complete','')">✅ Signal Completion</button>`);
     return `<div style="background:var(--card);border:1px solid var(--b);border-radius:9px;padding:16px;margin-bottom:9px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:7px">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase">${x(o.skill_needed)}</div>
@@ -1564,7 +1351,7 @@ async function loadWpOrders(){
 async function wAccept(oId){
   try{
     const u={status:'accepted',worker_id:workerUser.id,accepted_at:new Date().toISOString()};
-    if(SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
     else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
     toast('Job accepted! ✓','ok');loadWpOrders();
   }catch(e){toast('Failed.','er');}
@@ -1574,7 +1361,7 @@ async function wUpdStatus(oId,status){
   if(status==='worker_arrived')u.arrived_at=new Date().toISOString();
   if(status==='completed')u.completed_at=new Date().toISOString();
   try{
-    if(SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
     else{const o=DO.find(x=>x.id===oId);if(o)Object.assign(o,u);}
     toast('Status updated ✓','ok');loadWpOrders();
   }catch(e){toast('Failed.','er');}
@@ -1606,26 +1393,11 @@ function dzd(e,id,t){e.preventDefault();dzout(id);const f=e.dataTransfer.files;i
 
 async function uploadFile(file,bucket,path){
   if(!SB||!file)return null;
-  // Try Supabase Storage first
   try{
     const {error}=await SB.storage.from(bucket).upload(path,file,{upsert:true});
-    if(!error){
-      const url=SB.storage.from(bucket).getPublicUrl(path).data?.publicUrl||null;
-      if(url){console.log('Uploaded to storage:',url);return url;}
-    }
-    console.warn('Storage upload failed:',error?.message,'— falling back to base64');
-  }catch(e){console.warn('Storage upload error:',e.message,'— falling back to base64');}
-  // Fallback: convert to base64 data URL (stored directly in DB column)
-  try{
-    const dataUrl = await new Promise((resolve,reject)=>{
-      const reader=new FileReader();
-      reader.onload=()=>resolve(reader.result);
-      reader.onerror=()=>reject(new Error('FileReader failed'));
-      reader.readAsDataURL(file);
-    });
-    console.log('File stored as base64 ('+Math.round(file.size/1024)+'KB)');
-    return dataUrl;
-  }catch(e2){console.warn('Base64 fallback failed:',e2.message);return null;}
+    if(error)throw error;
+    return SB.storage.from(bucket).getPublicUrl(path).data?.publicUrl||null;
+  }catch(e){console.warn('Upload fail:',e);return null;}
 }
 
 /* ══ REGISTRATION ══ */
@@ -1686,8 +1458,8 @@ async function submitApp(){
   const btn=document.getElementById('sbtn');
   btn.disabled=true;btn.textContent='Submitting…';
   try{
-    const payload={name:g('rn'),phone:g('rp'),email:g('re'),location:g('rl'),shop_address:g('rsa'),years_experience:parseInt(g('rx'))||0,bio,password:g('rpin'),status:'pending',is_available:true};
-    if(SB){
+    const payload={name:g('rn'),phone:g('rp'),email:g('re'),location:g('rl'),shop_address:g('rsa'),years_experience:parseInt(g('rx'))||0,bio,status:'pending',is_available:true};
+    if(!DEMO&&SB){
       const wId=`${payload.name.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}`;
       if(UF.photo) payload.photo_url=await uploadFile(UF.photo,'worker-photos',`${wId}/photo`);
       if(UF.id) payload.id_doc_url=await uploadFile(UF.id,'worker-docs',`${wId}/id`);
@@ -1699,7 +1471,7 @@ async function submitApp(){
       }
       const wh=getWE();
       if(wh.length)await SB.from('work_history').insert(wh.map(e=>({...e,worker_id:wk.id})));
-    }else{toast('Connection error — registration NOT saved.','er');btn.disabled=false;btn.textContent='Submit Application ✓';return;}
+    }else await wait(700);
     document.getElementById('reg-ok').classList.add('on');
     document.querySelectorAll('.fstep').forEach(s=>s.classList.remove('on'));
     document.querySelectorAll('.snd').forEach(s=>{s.classList.remove('ac');s.classList.add('dn');});
@@ -1723,143 +1495,77 @@ function resetForm(){
 
 /* ══ ADMIN LOGIN ══ */
 function openAdminLogin(){if(adminUser){nav('admin');return;}document.getElementById('loginMod').classList.add('on');setTimeout(()=>document.getElementById('adm-pw').focus(),80);}
-function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';const pw=document.getElementById('adm-pw');if(pw)pw.value='';const ph=document.getElementById('wp-phone-modal');if(ph)ph.value='';}
+function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';document.getElementById('adm-pw').value='';}
 
 async function tryLogin(){
-  const em = (document.getElementById('adm-em')?.value || '').trim().toLowerCase();
-  const pw = (document.getElementById('adm-pw')?.value || '').trim();
-  const err = document.getElementById('lerr');
-  if(err) err.style.display = 'none';
-
-  try {
-    let adm = null;
-    
-    // 1. Try Supabase first if available
-    if (SB) {
-      try {
-        const { data, error } = await SB.from('admin_users').select('*').eq('email', em).eq('password', pw).maybeSingle();
-        if (!error && data) adm = data;
-      } catch (e) { console.warn('Supabase auth failed:', e); }
-    }
-
-    // 2. Absolute Fallback (Matches both email and password)
-    if (!adm && (em === 'admin@gamskillhub.gm' || em === 'admin') && pw === 'Admin@2024!') {
-      adm = { name: 'Agency Admin', email: 'admin@gamskillhub.gm', role: 'super_admin' };
-    }
-
-    if (!adm) {
-      if(err) err.style.display = 'block';
-      return;
-    }
-
-    adminUser = adm;
-    // Save session for 24 hours
-    localStorage.setItem('gsh_admin', JSON.stringify({u: adm, exp: Date.now() + 86400000}));
-    
-    const who = document.getElementById('adm-who');
-    if(who) who.textContent = adm.name + ' (' + adm.role + ')';
-    
-    closeLogin();
-    nav('admin');
-    loadAdmin();
-    toast('Welcome, Admin', 'ok');
-  } catch (e) {
-    if(err) err.style.display = 'block';
-    console.error('Login error:', e);
-  }
+  const em=g('adm-em'),pw=g('adm-pw');
+  try{
+    let adm=null;
+    if(!DEMO&&SB){const {data}=await SB.from('admin_users').select('*').eq('email',em).eq('password',pw).maybeSingle();adm=data;}
+    else if(pw==='Admin@2024!'){adm={name:'Agency Admin',email:'admin@gamskillhub.gm',role:'super_admin'};}
+    if(!adm){document.getElementById('lerr').style.display='block';return;}
+    adminUser=adm;
+    document.getElementById('adm-who').textContent=adm.name+' ('+adm.role+')';
+    closeLogin();nav('admin');loadAdmin();
+  }catch(e){document.getElementById('lerr').style.display='block';}
 }
-function adminOut(){adminUser=null;localStorage.removeItem('gsh_admin');nav('home');}
+function adminOut(){adminUser=null;nav('home');}
 
 /* ══ ADMIN DASHBOARD ══ */
 async function loadAdmin(){
-  adminW=[];allOrders=[];
-  console.log('loadAdmin — SB:', !!SB, 'DEMO:', DEMO);
   try{
-    if(SB){
-      console.log('Fetching workers from Supabase...');
-      const {data:wd,error:werr}=await queryWorkers('workers',{order:'created_at',ascending:false});
-      console.log('Workers:', wd?.length, 'error:', werr?.message);
-      adminW=(wd||[]).map(mapWorker);
-      try{
-        const {data:od}=await SB.from('orders').select('*,workers(name,phone)').order('created_at',{ascending:false});
-        allOrders=od||[];
-      }catch(oe){console.warn('Orders query failed:',oe.message);allOrders=[];}
-    }else{
-      console.warn('No Supabase — demo data');
-      await wait(200);adminW=[...DW];allOrders=[...DO].map(o=>({...o,workers:o.worker_id?DW.find(w=>w.id===o.worker_id):null}));
-    }
-  }catch(e){console.error('loadAdmin error:',e);}
+    if(!DEMO&&SB){
+      const {data:wd}=await SB.from('workers').select('*,worker_skills(category_id),work_history(*)').order('created_at',{ascending:false});
+      adminW=(wd||[]).map(w=>({...w,skills:(w.worker_skills||[]).map(ws=>skills.find(c=>c.id===ws.category_id)?.name).filter(Boolean),work_history:w.work_history||[]}));
+      const {data:od}=await SB.from('orders').select('*,workers(name,phone),users(name,phone)').order('created_at',{ascending:false});
+      allOrders=od||[];
+    }else{await wait(200);adminW=[...DW];allOrders=[...DO];}
+  }catch(e){adminW=[...DW];allOrders=[...DO];}
   adminW.forEach(w=>{WC[w.id]=w;});
   document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
-  document.getElementById('ocnt').textContent=allOrders.filter(o=>!['completed','cancelled'].includes(o.status)).length;
-  updateModeIndicator();
+  document.getElementById('ocnt').textContent=allOrders.filter(o=>o.status==='pending').length;
   renderAdmin();
-}
-function updateModeIndicator(){
-  const el=document.getElementById('mode-ind');
-  if(!el)return;
-  if(SB&&!DEMO){el.innerHTML='🟢 LIVE';el.style.color='var(--ok)';el.title='Connected to Supabase — real data';}
-  else{el.innerHTML='🟡 DEMO';el.style.color='var(--am)';el.title='Demo mode — sample data';}
 }
 
-function aTab(t,el){
-  curAdminTab=t;
-  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));el.classList.add('on');
-  renderAdmin();
-}
+// aTab defined in injected JS above
 
 function renderAdmin(){
   const box=document.getElementById('adm-content');
   if(curAdminTab==='pending'||curAdminTab==='approved'||curAdminTab==='rejected') renderAWorkers(box);
-  else if(curAdminTab==='orders') renderAOrders(box);
+  else if(curAdminTab==='orders'){renderAOrders(box);const alerts=renderReassignAlerts();if(alerts){const d=document.createElement('div');d.innerHTML=alerts;box.insertBefore(d,box.firstChild);}}
   else if(curAdminTab==='assign') renderAssign(box);
-  else if(curAdminTab==='payments') renderPayments(box);
   else if(curAdminTab==='skills') renderSkills(box);
   else if(curAdminTab==='admins') renderAdmins(box);
+  else if(curAdminTab==='kyc') renderKYC(box);
+  else if(curAdminTab==='primesub') renderPrimeSub(box);
+  else if(curAdminTab==='refunds') renderAdminRefunds(box);
+  else if(curAdminTab==='escrow') renderAdminEscrow(box);
 }
 
 function renderAWorkers(box){
   const list=adminW.filter(w=>w.status===curAdminTab);
   if(!list.length){box.innerHTML=`<div class="empty"><div class="empi">✅</div><h3>All Clear</h3><p>No ${curAdminTab} workers.</p></div>`;return;}
-  box.innerHTML=list.map(w=>{
-    const wh=(w.work_history||[]);
-    const hasCerts=w.cert_urls&&w.cert_urls.length||w.cert_count>0;
-    const hasPhoto=!!w.photo_url;
-    const hasId=!!w.id_doc_url;
-    return `
-    <div class="acard" style="flex-direction:column;align-items:stretch;gap:12px">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="aav" style="${hasPhoto?'padding:0':''}">${hasPhoto?`<img src="${x(w.photo_url)}" onerror="this.parentElement.style.padding='';this.style.display='none'">`:(initials(w.name))}</div>
-        <div class="ainfo">
-          <div class="anm">${x(w.name)}</div>
-          <div class="amet">
-            <span>📞 ${x(w.phone)}</span><span>📍 ${x(w.location||'N/A')}</span>
-            <span>${w.years_experience||0}yrs</span>
-            <span class="sta sta-${w.status}">${w.status}</span>
-          </div>
+  box.innerHTML=list.map(w=>`
+    <div class="acard">
+      <div class="aav">${w.photo_url?`<img src="${x(w.photo_url)}" onerror="this.style.display='none'">`:''} ${initials(w.name)}</div>
+      <div class="ainfo">
+        <div class="anm">${x(w.name)}</div>
+        <div class="amet">
+          <span>📞 ${x(w.phone)}</span><span>📍 ${x(w.location||'N/A')}</span>
+          <span>🛠 ${(w.skills||[]).map(x).join(', ')||'None'}</span>
+          <span>${w.years_experience||0}yrs</span>
+          ${w.id_doc_url?'<span style="color:var(--ok)">🪪 ID on file</span>':'<span style="color:var(--er)">⚠ No ID</span>'}
+          ${w.photo_url?'<span style="color:var(--ok)">📷 Photo</span>':''}
+          <span class="sta sta-${w.status}">${w.status}</span>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--td)">
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Skills</strong><br>${(w.skills||[]).map(s=>`<span class="tag" style="margin:2px 2px 0 0">${x(s)}</span>`).join('')||'<span style="color:var(--er)">None</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Email</strong><br>${x(w.email)||'<span style="color:var(--mt)">Not provided</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Shop / Work Address</strong><br>${x(w.shop_address)||'<span style="color:var(--mt)">Not provided</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Experience</strong><br>${w.years_experience||0} years · ${w.completed_jobs||0} jobs done</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">ID Document</strong><br>${hasId?`<a href="${x(w.id_doc_url)}" target="_blank" style="color:var(--ok)">✅ View ID</a>${w.id_doc_url.startsWith('data:')?' <span style="color:var(--mt);font-size:9px">(embedded)</span>':''}`:'<span style="color:var(--er)">⚠ No ID uploaded</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Photo</strong><br>${hasPhoto?`<a href="${x(w.photo_url)}" target="_blank" style="color:var(--ok)">✅ View Photo</a>${w.photo_url.startsWith('data:')?' <span style="color:var(--mt);font-size:9px">(embedded)</span>':''}`:'<span style="color:var(--er)">⚠ No photo</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Certifications</strong><br>${hasCerts?'✅ '+hasCerts+' on file':'<span style="color:var(--mt)">None uploaded</span>'}</div>
-        <div><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Rating</strong><br>★ ${parseFloat(w.rating||5).toFixed(1)} (${w.rating_count||0} reviews)</div>
-      </div>
-      ${(hasPhoto||hasId)?`<div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px;background:var(--sur);border:1px solid var(--b);border-radius:7px">${hasPhoto?`<div style="text-align:center"><div style="font-size:9px;color:var(--mt);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Photo</div><img src="${x(w.photo_url)}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--am)" onerror="this.parentElement.style.display='none'"></div>`:''}${hasId?`<div style="text-align:center"><div style="font-size:9px;color:var(--mt);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">ID Document</div><img src="${x(w.id_doc_url)}" style="max-width:120px;max-height:80px;border-radius:8px;border:2px solid var(--ok)" onerror="this.outerHTML='<a href=\\'${x(w.id_doc_url)}\\' target=\\'_blank\\' style=\\'color:var(--ok);font-size:12px\\'>📄 Open ID Document</a>'"></div>`:''}</div>`:''}
-      ${w.bio?`<div style="font-size:12px;color:var(--td);line-height:1.6;padding:8px 10px;background:var(--sur);border:1px solid var(--b);border-radius:7px"><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Bio</strong><br>${x(w.bio)}</div>`:''}
-      ${wh.length?`<div style="font-size:11px;color:var(--td)"><strong style="color:var(--mt);font-size:9px;text-transform:uppercase;letter-spacing:1px">Work History</strong><br>${wh.map(h=>`<span style="display:inline-block;background:var(--sur);border:1px solid var(--b);border-radius:6px;padding:4px 8px;margin:3px 3px 0 0;font-size:10px">🔨 ${x(h.title)}${h.description?' — '+x(h.description):''}</span>`).join('')}</div>`:''}
       <div class="aacts">
-        <button class="aview" onclick="openProfile('${w.id}')">Full Profile</button>
-        ${w.status==='pending'?`<button class="aappr" id="btn-appr-${w.id}" onclick="approveWorker('${w.id}')">✓ Approve</button>`:''}
-        ${w.status==='pending'?`<button class="arej" id="btn-rej-${w.id}" onclick="rejectWorker('${w.id}')">✕ Reject</button>`:''}
-        ${w.status==='rejected'?`<button class="aappr" id="btn-rstr-${w.id}" onclick="restoreWorker('${w.id}')">↩ Restore to Approved</button>`:''}
-        ${w.status==='approved'?`<button class="arej" id="btn-rej-${w.id}" onclick="rejectWorker('${w.id}')">✕ Suspend</button>`:''}
+        <button class="aview" onclick="openProfile('${w.id}')">View</button>
+        ${w.status!=='approved'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">✓ Approve</button>`:''}
+        ${w.status!=='rejected'?`<button class="arej" onclick="setStatus('${w.id}','rejected')">✕ Reject</button>`:''}
+        ${w.status==='rejected'?`<button class="aappr" onclick="setStatus('${w.id}','approved')">↩ Restore</button>`:''}
       </div>
-    </div>`;}).join('');
+    </div>`).join('');
 }
 
 function renderAOrders(box){
@@ -1867,17 +1573,12 @@ function renderAOrders(box){
   box.innerHTML=allOrders.map(o=>{
     const wk=o.workers;
     const acts=[];
-    if(o.status==='pending') acts.push(`<button class="asm ab" onclick="curAdminTab='assign';renderAdmin()">Assign Worker</button>`);
     if(!['completed','cancelled'].includes(o.status)) acts.push(`<button class="asm ag" onclick="aSetOrder('${o.id}','completed')">✓ Complete</button>`);
     if(!['cancelled'].includes(o.status)) acts.push(`<button class="asm ar" onclick="aSetOrder('${o.id}','cancelled')">Cancel</button>`);
-    const payMethod=o.payment_method||'cash';
-    const payStatus=o.payment_status||'pending';
     return `<div class="orow">
-      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span>${payMethod?`<span class="pay-status-badge pay-st-${payStatus}" style="margin-left:4px">${payMethod==='wave'?'📱':payMethod==='bank'?'🏦':'💵'} ${payStatus}</span>`:''}</div>
-      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📞 ${x(o.client_phone)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span>${wk?`<span>👷 ${x(wk.name||wk)}</span>`:'<span style="color:var(--am)">⏳ No worker assigned</span>'}</div>
+      <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status.replace('_',' ')}</span></div>
+      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📞 ${x(o.client_phone)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span>${wk?`<span>👷 ${x(wk.name||wk)}</span>`:'<span style="color:var(--am)">⏳ No worker</span>'}</div>
       ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:7px">${x(o.description)}</div>`:''}
-      ${o.service_fee?`<div style="font-size:11px;color:var(--am);margin-bottom:7px">💰 Service: D${Number(o.service_fee).toLocaleString()} · Commission: D${Number(o.commission||0).toLocaleString()} · Total: D${Number(o.total_amount||Number(o.service_fee)+Number(o.commission||0)).toLocaleString()}${o.payment_reference?' · Ref: '+x(o.payment_reference):''}</div>`:''}
-      ${wk&&wk.phone?`<div class="wk-detail">👷 <strong>${x(wk.name)}</strong> · <a href="tel:${x(wk.phone)}">📞 ${x(wk.phone)}</a>${wk.location?' · 📍 '+x(wk.location):''}${wk.shop_address?' · Shop: '+x(wk.shop_address):''}</div>`:''}
       ${acts.length?`<div class="ora">${acts.join('')}</div>`:''}
     </div>`;
   }).join('');
@@ -1885,25 +1586,18 @@ function renderAOrders(box){
 
 function renderAssign(box){
   const unassigned=allOrders.filter(o=>['pending','assigned'].includes(o.status));
-  const allW=adminW.filter(w=>w.status==='approved'||w.status==='pending');
   const approved=adminW.filter(w=>w.status==='approved');
-  if(!allW.length){
-    box.innerHTML=`<div class="empty"><div class="empi">👷</div><h3>No Workers Available</h3><p>No approved or pending workers to assign. Approve workers from the Pending tab first.</p></div>`;
-    return;
-  }
   box.innerHTML=`<div class="shtit">MANUALLY ASSIGN ORDERS</div>
-    ${!unassigned.length?`<div class="empty"><div class="empi">✅</div><h3>No Pending Orders</h3><p>All orders have been assigned or there are no orders yet. Orders placed by clients will appear here.</p></div>`:
+    ${!unassigned.length?`<div class="empty"><div class="empi">✅</div><h3>No Pending Orders</h3><p>All orders assigned.</p></div>`:
     unassigned.map(o=>`<div class="orow">
       <div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status}</span></div>
-      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📞 ${x(o.client_phone||'')}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span></div>
+      <div class="orm"><span>👤 ${x(o.client_name)}</span><span>📍 ${x(o.client_address)}</span><span>📅 ${fd(o.created_at)}</span></div>
       ${o.description?`<div style="font-size:12px;color:var(--td);margin-bottom:9px">${x(o.description)}</div>`:''}
-      ${o.service_fee?`<div style="font-size:11px;color:var(--am);margin-bottom:7px">💰 D${Number(o.service_fee).toLocaleString()}</div>`:''}
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <select class="asel" id="asel-${o.id}">
           <option value="">Select worker…</option>
-          <optgroup label="— Matching Skill —">${allW.filter(w=>(w.skills||[]).some(s=>s.toLowerCase()===o.skill_needed.toLowerCase())).map(w=>`<option value="${w.id}">${x(w.name)} · ${x(w.location||'')}${w.status==='pending'?' (Pending)':''}</option>`).join('')}</optgroup>
-          <optgroup label="— All Approved Workers —">${approved.map(w=>`<option value="${w.id}">${x(w.name)} · ${(w.skills||[]).map(x).join(', ')}</option>`).join('')}</optgroup>
-          ${approved.length!==allW.length?`<optgroup label="— Pending Workers —">${adminW.filter(w=>w.status==='pending').map(w=>`<option value="${w.id}">${x(w.name)} · ${(w.skills||[]).map(x).join(', ')} [PENDING]</option>`).join('')}</optgroup>`:''}
+          <optgroup label="— Matching Skill —">${approved.filter(w=>(w.skills||[]).some(s=>s.toLowerCase()===o.skill_needed.toLowerCase())).map(w=>`<option value="${w.id}">${x(w.name)} · ${x(w.location||'')}</option>`).join('')}</optgroup>
+          <optgroup label="— All Approved —">${approved.map(w=>`<option value="${w.id}">${x(w.name)} · ${(w.skills||[]).map(x).join(', ')}</option>`).join('')}</optgroup>
         </select>
         <button class="asm ag" onclick="doAssign('${o.id}')">Assign →</button>
       </div>
@@ -1915,7 +1609,7 @@ async function doAssign(oId){
   const wId=sel?.value;if(!wId){toast('Select a worker.','er');return;}
   try{
     const u={worker_id:wId,status:'assigned',assigned_by_admin:true};
-    if(SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
     else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
     toast('Order assigned ✓','ok');loadAdmin();
   }catch(e){toast('Failed.','er');}
@@ -1924,7 +1618,7 @@ async function doAssign(oId){
 async function aSetOrder(oId,status){
   try{
     const u={status};if(status==='completed')u.completed_at=new Date().toISOString();
-    if(SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('orders').update(u).eq('id',oId);if(error)throw error;}
     else{const o=allOrders.find(o=>o.id===oId);if(o)Object.assign(o,u);}
     toast('Updated ✓','ok');loadAdmin();
   }catch(e){toast('Failed.','er');}
@@ -1938,7 +1632,7 @@ function renderSkills(box){
     <hr class="sep">
     <div class="shtit" style="font-size:16px">ADD NEW SKILL</div>
     <div class="addbox">
-      <div class="fg"><label class="fl">Icon</label><input class="fi" id="sk-ic" placeholder="" maxlength="4"></div>
+      <div class="fg"><label class="fl">Icon</label><input class="fi" id="sk-ic" placeholder="🔨" maxlength="4"></div>
       <div class="fg"><label class="fl">Skill Name *</label><input class="fi" id="sk-nm" placeholder="e.g. Home Nursing"></div>
       <div class="fg"><label class="fl">Description</label><input class="fi" id="sk-dc" placeholder="Short description"></div>
       <div class="fg"><label class="fl">&nbsp;</label><button class="btn bp" style="width:100%;font-size:13px" onclick="addSkill()">Add +</button></div>
@@ -1951,7 +1645,7 @@ async function addSkill(){
   if(skills.some(s=>s.name.toLowerCase()===nm.toLowerCase())){toast('Skill already exists.','er');return;}
   try{
     let ns={name:nm,icon,description:desc,is_active:true};
-    if(SB){const {data,error}=await SB.from('skill_categories').insert([ns]).select().single();if(error)throw error;ns=data;}
+    if(!DEMO&&SB){const {data,error}=await SB.from('skill_categories').insert([ns]).select().single();if(error)throw error;ns=data;}
     else ns.id=Date.now();
     skills.push(ns);
     buildPills();buildPicker();fillSkillSelect('ord-skill');
@@ -1962,7 +1656,7 @@ async function addSkill(){
 async function delSkill(id){
   if(!confirm('Remove this skill?'))return;
   try{
-    if(SB){const {error}=await SB.from('skill_categories').delete().eq('id',id);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('skill_categories').delete().eq('id',id);if(error)throw error;}
     skills=skills.filter(s=>s.id!==id);
     buildPills();buildPicker();fillSkillSelect('ord-skill');
     toast('Skill removed.','ok');renderAdmin();
@@ -1972,7 +1666,7 @@ async function delSkill(id){
 async function renderAdmins(box){
   let admins=[];
   try{
-    if(SB){const {data}=await SB.from('admin_users').select('*').order('created_at');admins=data||[];}
+    if(!DEMO&&SB){const {data}=await SB.from('admin_users').select('*').order('created_at');admins=data||[];}
     else admins=[{id:'a1',name:'Agency Admin',email:'admin@gamskillhub.gm',role:'super_admin',created_at:new Date().toISOString()}];
   }catch(e){admins=[];}
   box.innerHTML=`<div class="shtit">ADMIN USERS</div>
@@ -1995,7 +1689,7 @@ async function addAdmin(){
   const nm=g('na-nm'),em=g('na-em'),pw=g('na-pw');
   if(!nm||!em||!pw){toast('All fields required.','er');return;}
   try{
-    if(SB){const {error}=await SB.from('admin_users').insert([{name:nm,email:em,password:pw,role:'admin'}]);if(error)throw error;}
+    if(!DEMO&&SB){const {error}=await SB.from('admin_users').insert([{name:nm,email:em,password:pw,role:'admin'}]);if(error)throw error;}
     toast('"'+nm+'" added as admin ✓','ok');renderAdmins(document.getElementById('adm-content'));
   }catch(e){toast('Failed. Email may exist already.','er');}
 }
@@ -2003,491 +1697,19 @@ async function addAdmin(){
 async function delAdmin(id){
   if(!confirm('Remove this admin user?'))return;
   try{
-    if(SB)await SB.from('admin_users').delete().eq('id',id);
+    if(!DEMO&&SB)await SB.from('admin_users').delete().eq('id',id);
     toast('Removed.','ok');renderAdmins(document.getElementById('adm-content'));
   }catch(e){toast('Failed.','er');}
 }
 
-async function _updateWorkerStatus(id, newStatus, btnId){
-  // Disable button immediately for feedback
-  const btn = btnId ? document.getElementById(btnId) : null;
-  if(btn){ btn.disabled=true; btn.style.opacity='0.5'; btn.textContent='Processing…'; }
+async function setStatus(id,status){
   try{
-    let pass = null;
-    if(newStatus === 'approved'){
-      pass = Math.random().toString(36).slice(-8);
-    }
-    let dbOk = true; // track whether DB update succeeded
-    // Try Supabase first
-    if(SB){
-      const {error:err1}=await SB.from('workers').update({status:newStatus}).eq('id',id);
-      if(err1){
-        console.warn('Supabase update failed:', err1.message);
-        dbOk = false;
-        // Check if it's an RLS (permissions) error — offer graceful fallback
-        const msg = (err1.message || '').toLowerCase();
-        if(msg.includes('policy') || msg.includes('permission') || msg.includes('row-level') || msg.includes('denied')){
-          toast('Database permission error. Worker updated locally only (will revert on refresh). Run the RLS fix SQL in Supabase.','er');
-        } else {
-          toast('Database error: ' + err1.message,'er');
-        }
-        // Nullify pass so we don't show fake credentials for an unsaved approval
-        pass = null;
-      } else {
-        // DB update succeeded — also try to set password for newly approved workers
-        if(pass){
-          try{ await SB.from('workers').update({password:pass}).eq('id',id); }
-          catch(pe){ console.warn('Password column not available, skipping auto-password'); pass=null; }
-        }
-      }
-    }
-    // Always update local state so the UI responds immediately
-    const w=adminW.find(w=>w.id===id);
-    if(w) w.status=newStatus;
-    // Also update DW so demo data stays in sync
-    const dw=DW.find(w=>w.id===id);
-    if(dw) dw.status=newStatus;
+    if(!DEMO&&SB){const {error}=await SB.from('workers').update({status}).eq('id',id);if(error)throw error;}
+    const w=adminW.find(w=>w.id===id);if(w)w.status=status;
     document.getElementById('pcnt').textContent=adminW.filter(w=>w.status==='pending').length;
-    renderAdmin();
-    fetchWorkers();
-    // Show result toast only if DB update succeeded (or we're in DEMO mode)
-    if(dbOk){
-      if(newStatus==='approved'){
-        toast('Worker approved! ✓','ok');
-        if(pass && w){
-          console.log('NOTIFICATION: Worker ' + w.name + ' approved. Credentials: ' + w.phone + ' / ' + pass);
-          alert('WORKER APPROVED!\n\nPlease send these credentials to the worker:\nPhone: ' + w.phone + '\nPassword: ' + pass);
-        }
-      } else if(newStatus==='rejected'){
-        toast('Worker rejected/suspended','ok');
-      } else {
-        toast('Worker status updated','ok');
-      }
-    }
-    // If DB failed, the error toast was already shown above — don't double-toast
-  }catch(e){
-    console.error('updateWorkerStatus error:', e);
-    toast('Failed: ' + (e.message || 'Unknown error'),'er');
-    // Re-enable button on failure so user can retry
-    if(btn){ btn.disabled=false; btn.style.opacity='1'; btn.textContent=newStatus==='approved'?'✓ Approve':newStatus==='rejected'?'✕ Reject':'↩ Restore'; }
-  }
-}
-
-function approveWorker(id){ _updateWorkerStatus(id,'approved','btn-appr-'+id); }
-function rejectWorker(id){ _updateWorkerStatus(id,'rejected','btn-rej-'+id); }
-function restoreWorker(id){ _updateWorkerStatus(id,'approved','btn-rstr-'+id); }
-
-// Legacy alias — kept for any remaining references
-async function setStatus(id,status){ _updateWorkerStatus(id,status,null); }
-
-/* ══ PAYMENT FUNCTIONS ══ */
-function updateOrderPrice() {
-  const skill = document.getElementById('ord-skill').value;
-  const display = document.getElementById('ord-price-display');
-  if (!skill) { display.style.display = 'none'; return; }
-  const fee = SKILL_PRICES[skill] || DEFAULT_PRICE;
-  const commission = Math.round(fee * PAY_CFG.commission_rate);
-  document.getElementById('ord-price-val').textContent = 'D' + fee.toLocaleString() + '.00';
-  document.getElementById('ord-fee-val').textContent = 'D' + commission.toLocaleString() + '.00';
-  document.getElementById('ord-total-val').textContent = 'D' + (fee + commission).toLocaleString() + '.00';
-  display.style.display = 'block';
-}
-
-function openPaymentModal(skill, workerName, serviceFee, commission, total) {
-  document.getElementById('pay-worker-name').textContent = workerName + ' · ' + skill;
-  document.getElementById('pay-skill-label').textContent = skill + ' Service Fee';
-  document.getElementById('pay-skill-amt').textContent = PAY_CFG.currency + serviceFee.toLocaleString() + '.00';
-  document.getElementById('pay-fee-amt').textContent = PAY_CFG.currency + commission.toLocaleString() + '.00';
-  document.getElementById('pay-total-amt').textContent = PAY_CFG.currency + total.toLocaleString() + '.00';
-  document.getElementById('pay-bank-ref').textContent = 'GSH-' + Date.now().toString(36).toUpperCase();
-  document.getElementById('pay-bank-amt').textContent = PAY_CFG.currency + total.toLocaleString() + '.00';
-  document.getElementById('pay-cash-fee').textContent = PAY_CFG.currency + commission.toLocaleString() + '.00';
-  selectedPayMethod = 'wave';
-  selectPayMethod('wave', document.getElementById('pm-wave'));
-  document.getElementById('pay-wave-phone').value = pendingPayment?.clientPhone || '';
-  document.getElementById('pay-wave-status').textContent = 'Tap "Confirm Payment" to receive your USSD code';
-  document.getElementById('pay-confirm-btn').disabled = false;
-  openMod('payMod');
-}
-
-function selectPayMethod(method, el) {
-  selectedPayMethod = method;
-  document.querySelectorAll('.pay-opt').forEach(e => e.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('pay-wave-box').classList.toggle('on', method === 'wave');
-  document.getElementById('pay-bank-box').classList.toggle('on', method === 'bank');
-  document.getElementById('pay-cash-box').classList.toggle('on', method === 'cash');
-  document.getElementById('pay-confirm-btn').textContent = method === 'cash' ? 'Place Order (Cash) ✓' : 'Confirm Payment ✓';
-}
-
-async function confirmPayment() {
-  if (!pendingPayment) return;
-  const btn = document.getElementById('pay-confirm-btn');
-  btn.disabled = true;
-  btn.textContent = 'Processing...';
-
-  try {
-    const pp = pendingPayment;
-    let paymentStatus = 'pending';
-    let payRef = 'GSH-' + Date.now().toString(36).toUpperCase();
-
-    if (selectedPayMethod === 'wave') {
-      const phone = document.getElementById('pay-wave-phone').value.trim();
-      if (!phone) { toast('Enter your Wave phone number', 'er'); btn.disabled = false; btn.textContent = 'Confirm Payment ✓'; return; }
-      // Simulate Wave payment flow
-      document.getElementById('pay-wave-status').textContent = '⏳ Initiating Wave payment...';
-      await wait(1200);
-      document.getElementById('pay-wave-status').textContent = '📱 USSD push sent to ' + phone + '...';
-      await wait(1500);
-      document.getElementById('pay-wave-status').textContent = '✅ Payment of ' + PAY_CFG.currency + pp.total.toLocaleString() + '.00 received!';
-      paymentStatus = 'escrow';
-      payRef = 'WV-' + Date.now().toString(36).toUpperCase();
-    } else if (selectedPayMethod === 'bank') {
-      paymentStatus = 'pending'; // Awaiting bank confirmation
-      payRef = document.getElementById('pay-bank-ref').textContent;
-      toast('Bank transfer initiated! Use reference: ' + payRef, 'ok');
-      await wait(500);
-    } else {
-      // Cash - no advance payment
-      paymentStatus = 'unpaid';
-      payRef = 'CSH-' + Date.now().toString(36).toUpperCase();
-    }
-
-    // Create the order
-    const orderPayload = {
-      worker_id: pp.workerId,
-      skill_needed: pp.skill,
-      description: pp.description,
-      client_address: pp.address,
-      client_name: pp.clientName,
-      client_phone: pp.clientPhone,
-      status: pp.workerId ? 'assigned' : 'pending',
-      user_id: clientUser?.id || null,
-      payment_method: selectedPayMethod,
-      payment_status: paymentStatus,
-      payment_reference: payRef,
-      service_fee: pp.serviceFee,
-      commission: pp.commission,
-      total_amount: pp.total,
-      scheduled_at: document.getElementById('ord-dt')?.value || null,
-    };
-
-    let orderId;
-    if (SB) {
-      const { data, error } = await SB.from('orders').insert([orderPayload]).select().single();
-      if (error) throw error;
-      orderId = data.id;
-    } else {
-      orderId = 'o' + Date.now();
-      orderPayload.id = orderId;
-      orderPayload.created_at = new Date().toISOString();
-      // Map worker info for demo mode
-      if(pp.workerId) orderPayload.workers = DW.find(w=>w.id===pp.workerId) || null;
-      DO.unshift(orderPayload);
-    }
-
-    // Create payment record
-    const paymentPayload = {
-      order_id: orderId,
-      client_name: pp.clientName,
-      client_phone: pp.clientPhone,
-      worker_id: pp.workerId,
-      amount: pp.total,
-      service_fee: pp.serviceFee,
-      commission: pp.commission,
-      worker_payout: pp.serviceFee - pp.commission,
-      method: selectedPayMethod,
-      status: paymentStatus,
-      reference: payRef,
-    };
-
-    if (SB) {
-      await SB.from('payments').insert([paymentPayload]);
-    } else {
-      paymentPayload.id = 'pay' + Date.now();
-      paymentPayload.created_at = new Date().toISOString();
-      allPayments.unshift(paymentPayload);
-    }
-
-    closeMod(null, 'payMod');
-    toast(
-      selectedPayMethod === 'cash'
-        ? 'Order placed! Pay worker D' + pp.serviceFee.toLocaleString() + ' cash on-site. ✓'
-        : selectedPayMethod === 'wave'
-          ? 'Payment confirmed! D' + pp.total.toLocaleString() + '.00 held in escrow. ✓'
-          : 'Order placed! Awaiting bank transfer confirmation.',
-      'ok'
-    );
-
-    // Clear form
-    ['om-nm', 'om-ph', 'om-ad', 'om-dc', 'ord-skill', 'ord-addr', 'ord-desc', 'ord-dt'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-    pendingPayment = null;
-
-    // Refresh views
-    if (clientUser) loadClientOrders();
-    fetchWorkers();
-    if (adminUser) loadAdmin();
-
-    // Switch to track tab if in client portal
-    const trackTab = document.querySelector('#cl-ptabs .pt:nth-child(2)');
-    if (trackTab && clientUser) clTab('track', trackTab);
-
-  } catch (e) {
-    toast('Payment failed: ' + (e.message || 'Try again.'), 'er');
-    btn.disabled = false;
-    btn.textContent = 'Confirm Payment ✓';
-  }
-}
-
-// Worker earnings tab
-function renderWorkerEarnings() {
-  const box = document.getElementById('wp-content');
-  if (!workerUser) return;
-
-  // Calculate earnings from demo data
-  const completedOrders = allOrders.filter(o =>
-    o.worker_id === workerUser.id && o.status === 'completed'
-  );
-  const totalEarned = completedOrders.reduce((sum, o) => sum + (Number(o.service_fee) || 0) - (Number(o.commission) || 0), 0);
-  const activeOrders = allOrders.filter(o =>
-    o.worker_id === workerUser.id && ['assigned', 'accepted', 'worker_arrived'].includes(o.status)
-  );
-  const pendingPayout = activeOrders.reduce((sum, o) => sum + (Number(o.service_fee) || 0) - (Number(o.commission) || 0), 0);
-  const availableBalance = totalEarned - workerEarnings.pending_payout;
-
-  // Build transaction history
-  allOrders.filter(o => o.worker_id === workerUser.id && (o.status === 'completed' || o.payment_status)).forEach(o => {
-    workerEarnings.transactions.push({
-      id: o.id, desc: (o.skill_needed || 'Service') + ' - ' + (o.client_name || 'Client'),
-      date: o.completed_at || o.created_at, amount: (Number(o.service_fee) || 0) - (Number(o.commission) || 0),
-      status: o.payment_status || 'pending', method: o.payment_method || 'cash'
-    });
-  });
-
-  box.innerHTML = `
-    <div class="earn-card">
-      <div class="earn-bal">
-        <div class="earn-bal-label">Total Earnings</div>
-        <div class="earn-bal-amt"><span class="earn-bal-curr">D</span>${totalEarned.toLocaleString()}</div>
-      </div>
-      <div class="earn-stats">
-        <div class="earn-stat"><div class="earn-stat-val">${completedOrders.length}</div><div class="earn-stat-lbl">Jobs Done</div></div>
-        <div class="earn-stat"><div class="earn-stat-val">${activeOrders.length}</div><div class="earn-stat-lbl">Active</div></div>
-        <div class="earn-stat"><div class="earn-stat-val">D${pendingPayout.toLocaleString()}</div><div class="earn-stat-lbl">Pending</div></div>
-      </div>
-      <div style="text-align:center;margin-bottom:14px">
-        <button class="btn bp" onclick="openPayoutModal()" ${totalEarned <= 0 ? 'disabled' : ''}>Request Payout →</button>
-      </div>
-    </div>
-    <div class="earn-card">
-      <div class="shtit" style="font-size:14px">TRANSACTION HISTORY</div>
-      ${!workerEarnings.transactions.length ? '<div style="text-align:center;padding:30px;color:var(--mt)">No transactions yet. Complete jobs to earn!</div>' :
-        workerEarnings.transactions.map(t => `
-          <div class="earn-tx">
-            <div class="earn-tx-icon ${t.status === 'released' ? 'in' : ''}">${t.status === 'released' ? '💰' : '⏳'}</div>
-            <div class="earn-tx-info">
-              <div class="earn-tx-desc">${x(t.desc)}</div>
-              <div class="earn-tx-date">${fd(t.date)} · ${t.method}</div>
-            </div>
-            <div class="earn-tx-amt pos">+D${t.amount.toLocaleString()}</div>
-          </div>
-        `).join('')
-      }
-    </div>
-    <div style="margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--b);border-radius:9px;font-size:11px;color:var(--td);line-height:1.7">
-      <strong style="color:var(--tx)">How Payments Work:</strong><br>
-      💰 You receive <strong>D${(SKILL_PRICES[(workerUser.skills||[])[0]] || DEFAULT_PRICE).toLocaleString()}</strong> per completed job<br>
-      📊 Platform fee: 5% (D${Math.round((SKILL_PRICES[(workerUser.skills||[])[0]] || DEFAULT_PRICE) * PAY_CFG.commission_rate).toLocaleString()})<br>
-      🔒 Payment held in escrow until client confirms completion<br>
-      📱 Payouts via Wave or Bank Transfer within 24-48 hours
-    </div>
-  `;
-}
-
-function openPayoutModal() {
-  document.getElementById('payout-bal').textContent = 'D' + workerEarnings.total_earned.toLocaleString();
-  document.getElementById('payout-to').value = workerUser?.phone || '';
-  openMod('payoutMod');
-}
-
-async function submitPayout() {
-  const amt = parseFloat(document.getElementById('payout-amt').value);
-  const method = document.getElementById('payout-method').value;
-  const to = document.getElementById('payout-to').value.trim();
-  if (!amt || amt <= 0) { toast('Enter a valid amount', 'er'); return; }
-  if (amt > workerEarnings.total_earned) { toast('Amount exceeds available balance', 'er'); return; }
-  if (!to) { toast('Enter receiving phone/account', 'er'); return; }
-
-  const payoutPayload = {
-    worker_id: workerUser.id,
-    worker_name: workerUser.name,
-    amount: amt,
-    method: method,
-    payout_to: to,
-    status: 'pending',
-    type: 'payout',
-  };
-
-  try {
-    if (SB) {
-      await SB.from('payments').insert([payoutPayload]);
-    } else {
-      payoutPayload.id = 'po' + Date.now();
-      payoutPayload.created_at = new Date().toISOString();
-      allPayments.unshift(payoutPayload);
-    }
-    closeMod(null, 'payoutMod');
-    toast('Payout request of D' + amt.toLocaleString() + '.00 submitted! Processing within 24-48 hours. ✓', 'ok');
-    workerEarnings.pending_payout += amt;
-  } catch (e) {
-    toast('Payout failed: ' + (e.message || 'Try again'), 'er');
-  }
-}
-
-// Admin payment management
-async function renderPayments(box) {
-  let payments = [];
-  try {
-    if (SB) {
-      const { data } = await SB.from('payments').select('*').order('created_at', { ascending: false });
-      payments = data || [];
-    } else {
-      // Build demo payments from orders
-      payments = (DO || []).map(o => {
-        const wk = o.worker_id ? DW.find(w=>w.id===o.worker_id) : null;
-        return {
-        id: 'pay-' + o.id,
-        order_id: o.id,
-        client_name: o.client_name,
-        worker_id: o.worker_id,
-        worker_name: wk ? wk.name : null,
-        amount: o.total_amount || (o.service_fee || 500) + (o.commission || 25),
-        service_fee: o.service_fee || 500,
-        commission: o.commission || 25,
-        worker_payout: (o.service_fee || 500) - (o.commission || 25),
-        method: o.payment_method || 'cash',
-        status: o.payment_status || 'pending',
-        reference: o.payment_reference || 'GSH-DEMO',
-        created_at: o.created_at,
-        type: 'payment',
-      };});
-    }
-  } catch (e) { payments = []; }
-
-  allPayments = payments;
-  const totalRev = payments.filter(p => p.type !== 'payout').reduce((s, p) => s + (Number(p.amount) || 0), 0);
-  const totalComm = payments.filter(p => p.type !== 'payout').reduce((s, p) => s + (Number(p.commission) || 0), 0);
-  const escrowAmt = payments.filter(p => p.status === 'escrow').reduce((s, p) => s + (Number(p.amount) || 0), 0);
-  const payoutReqs = payments.filter(p => p.type === 'payout' && p.status === 'pending');
-
-  if (document.getElementById('paycnt')) document.getElementById('paycnt').textContent = payoutReqs.length;
-
-  box.innerHTML = `
-    <div class="shtit">PAYMENT DASHBOARD</div>
-    <div class="pay-admin-stats">
-      <div class="pay-admin-stat"><div class="pay-admin-stat-val">D${totalRev.toLocaleString()}</div><div class="pay-admin-stat-lbl">Total Revenue</div></div>
-      <div class="pay-admin-stat"><div class="pay-admin-stat-val">D${totalComm.toLocaleString()}</div><div class="pay-admin-stat-lbl">Platform Fees</div></div>
-      <div class="pay-admin-stat"><div class="pay-admin-stat-val">D${escrowAmt.toLocaleString()}</div><div class="pay-admin-stat-lbl">In Escrow</div></div>
-      <div class="pay-admin-stat"><div class="pay-admin-stat-val">${payoutReqs.length}</div><div class="pay-admin-stat-lbl">Payout Requests</div></div>
-    </div>
-    ${payoutReqs.length ? `
-      <div class="shtit" style="font-size:16px;margin-bottom:10px">PENDING PAYOUTS</div>
-      ${payoutReqs.map(p => `
-        <div class="orow">
-          <div class="ort"><div class="ors">${x(p.worker_name || 'Worker')} - ${x(p.method)}</div></div>
-          <div class="orm"><span>Amount: D${Number(p.amount).toLocaleString()}</span><span>To: ${x(p.payout_to || 'N/A')}</span><span>${fd(p.created_at)}</span></div>
-          <div class="ora">
-            <button class="asm ag" onclick="approvePayout('${p.id}')">✓ Approve</button>
-            <button class="asm ar" onclick="rejectPayout('${p.id}')">✕ Reject</button>
-          </div>
-        </div>
-      `).join('')}
-      <hr class="sep">
-    ` : ''}
-    <div class="shtit" style="font-size:16px;margin-bottom:10px">ALL TRANSACTIONS</div>
-    ${!payments.length ? '<div class="empty"><div class="empi">💳</div><h3>No Payments</h3><p>Payment transactions will appear here.</p></div>' :
-      payments.map(p => `
-        <div class="orow">
-          <div class="ort">
-            <div class="ors">${p.type === 'payout' ? '📤 Payout' : '📥 Payment'}</div>
-            <span class="pay-status-badge pay-st-${p.status}">${p.status}</span>
-            <span style="font-size:10px;color:var(--mt);margin-left:4px">${p.method === 'wave' ? '📱' : p.method === 'bank' ? '🏦' : '💵'} ${p.method || 'cash'}</span>
-          </div>
-          <div class="orm">
-            <span>Client: ${x(p.client_name || 'N/A')}</span>${p.worker_name?`<span>Worker: ${x(p.worker_name)}</span>`:''}
-            <span>Ref: ${x(p.reference || 'N/A')}</span>
-            <span>${fd(p.created_at)}</span>
-          </div>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--am)">D${Number(p.amount).toLocaleString()}</span>
-            ${p.type !== 'payout' && p.status === 'escrow' ? `<button class="asm ag" onclick="releasePayment('${p.order_id}','${p.id}')">🔓 Release to Worker</button>` : ''}
-            ${p.type !== 'payout' && p.status === 'escrow' ? `<button class="asm ar" onclick="refundPayment('${p.order_id}','${p.id}')">↩ Refund</button>` : ''}
-          </div>
-        </div>
-      `).join('')
-    }
-  `;
-}
-
-async function releasePayment(orderId, payId) {
-  if (!confirm('Release payment to worker? This cannot be undone.')) return;
-  try {
-    if (SB) {
-      await SB.from('payments').update({ status: 'released', released_at: new Date().toISOString() }).eq('id', payId);
-      await SB.from('orders').update({ payment_status: 'released' }).eq('id', orderId);
-    } else {
-      const p = allPayments.find(x => x.id === payId);
-      if (p) p.status = 'released';
-      const o = DO.find(x => x.id === orderId);
-      if (o) o.payment_status = 'released';
-    }
-    toast('Payment released to worker ✓', 'ok');
-    renderPayments(document.getElementById('adm-content'));
-  } catch (e) { toast('Failed.', 'er'); }
-}
-
-async function refundPayment(orderId, payId) {
-  if (!confirm('Refund this payment to the client?')) return;
-  try {
-    if (SB) {
-      await SB.from('payments').update({ status: 'refunded', refunded_at: new Date().toISOString() }).eq('id', payId);
-      await SB.from('orders').update({ payment_status: 'refunded', status: 'cancelled' }).eq('id', orderId);
-    } else {
-      const p = allPayments.find(x => x.id === payId);
-      if (p) p.status = 'refunded';
-      const o = DO.find(x => x.id === orderId);
-      if (o) { o.payment_status = 'refunded'; o.status = 'cancelled'; }
-    }
-    toast('Payment refunded to client ✓', 'ok');
-    renderPayments(document.getElementById('adm-content'));
-  } catch (e) { toast('Failed.', 'er'); }
-}
-
-async function approvePayout(payId) {
-  try {
-    if (SB) {
-      await SB.from('payments').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', payId);
-    } else {
-      const p = allPayments.find(x => x.id === payId);
-      if (p) p.status = 'approved';
-    }
-    toast('Payout approved ✓', 'ok');
-    renderPayments(document.getElementById('adm-content'));
-  } catch (e) { toast('Failed.', 'er'); }
-}
-
-async function rejectPayout(payId) {
-  if (!confirm('Reject this payout request?')) return;
-  try {
-    if (SB) {
-      await SB.from('payments').update({ status: 'rejected' }).eq('id', payId);
-    } else {
-      const p = allPayments.find(x => x.id === payId);
-      if (p) p.status = 'rejected';
-    }
-    toast('Payout rejected', 'er');
-    renderPayments(document.getElementById('adm-content'));
-  } catch (e) { toast('Failed.', 'er'); }
+    renderAdmin();fetchWorkers();
+    toast('Worker '+(status==='approved'?'approved ✓':'rejected'),status==='approved'?'ok':'er');
+  }catch(e){toast('Failed.','er');}
 }
 
 /* ══ UTILS ══ */
@@ -2510,125 +1732,380 @@ function anim(id,target){
 }
 
 
-/* ══ BOOK SEARCH (from green section) ══ */
-function bookSearch(){
-  const q = document.getElementById('book-srch').value.trim();
-  if(q){ document.getElementById('srch').value=q; fetchWorkers(q); }
-  nav('home');
-  setTimeout(()=>document.getElementById('wbox').scrollIntoView({behavior:'smooth'}),200);
+/* ══ THEME ══ */
+function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme')||'dark';const next=cur==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',next);localStorage.setItem('gsh-theme',next);}
+(function(){const t=localStorage.getItem('gsh-theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);})();
+
+/* ══ ROLE SELECTOR ══ */
+function selectRole(role){document.getElementById('cl-role').value=role;['client','company'].forEach(r=>{const el=document.getElementById('role-'+r);if(el)el.className='role-card'+(r===role?' sel':'');});}
+
+/* ══ CLIENT AUTH SWITCH ══ */
+function switchClientAuth(mode){
+  const le=document.getElementById('cl-auth-login');const re=document.getElementById('cl-auth-register');
+  if(le)le.style.display=mode==='login'?'block':'none';
+  if(re)re.style.display=mode==='register'?'block':'none';
+  const t1=document.getElementById('cl-tab-login');const t2=document.getElementById('cl-tab-register');
+  if(t1)t1.classList.toggle('on',mode==='login');if(t2)t2.classList.toggle('on',mode==='register');
 }
-function quickBook(skill){
-  curFilter=skill;
-  document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.textContent.includes(skill)));
-  renderWorkers();
-  nav('home');
-  setTimeout(()=>document.getElementById('wbox').scrollIntoView({behavior:'smooth'}),200);
+
+/* ══ CLIENT TAB ══ */
+function clTab(t,el){
+  document.querySelectorAll('#cl-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  document.getElementById('cl-order-tab').style.display=t==='order'?'block':'none';
+  document.getElementById('cl-track-tab').style.display=t==='track'?'block':'none';
+  document.getElementById('cl-reviews-tab').style.display=t==='reviews'?'block':'none';
+  document.getElementById('cl-account-tab').style.display=t==='account'?'block':'none';
+  if(t==='track')loadClientOrders();
+  if(t==='reviews')loadCustomerReviews();
+  if(t==='account')renderCustomerAccount();
+}
+
+/* ══ WORKER TAB ══ */
+function wpTab(t,el){curWpTab=t;document.querySelectorAll('#wp-ptabs .pt').forEach(b=>b.classList.remove('on'));el.classList.add('on');loadWpOrders();}
+
+/* ══ ADMIN TAB ══ */
+function aTab(t,el){curAdminTab=t;document.querySelectorAll('#pg-admin .tb').forEach(b=>b.classList.remove('on'));if(el)el.classList.add('on');renderAdmin();}
+
+/* ══ PIN LOGIN ══ */
+async function clientPinLogin(){
+  const phone=(document.getElementById('cl-phone')?.value||'').replace(/\s+/g,'');
+  const pin=(document.getElementById('cl-pin')?.value||'').trim();
+  if(!phone||pin.length<4){toast('Enter phone + 4-digit PIN.','er');return;}
+  try{
+    if(!DEMO&&SB){const{data,error}=await SB.rpc('verify_client_pin',{p_phone:phone,p_pin:pin});if(error)throw error;if(data&&data.error){toast('❌ '+data.error,'er');return;}clientUser=data;}
+    else{await wait(300);clientUser={id:'demo-'+Date.now(),name:'Client',phone,role:'client'};}
+    document.getElementById('cl-hi').textContent=clientUser.name||clientUser.phone;
+    document.getElementById('cl-auth').style.display='none';document.getElementById('cl-dash').style.display='block';
+    fillSkillSelect('ord-skill');loadClientOrders();toast('Welcome back! ✓','ok');
+  }catch(e){toast('Login failed: '+(e.message||e),'er');}
+}
+
+/* ══ PIN REGISTER ══ */
+async function clientPinRegister(){
+  const name=(document.getElementById('cl-name')?.value||'').trim();
+  const phone=(document.getElementById('cl-phone-reg')?.value||document.getElementById('cl-phone')?.value||'').replace(/\s+/g,'');
+  const pin=(document.getElementById('cl-pin-new')?.value||document.getElementById('cl-pin')?.value||'').trim();
+  const pin2=(document.getElementById('cl-pin2')?.value||'').trim();
+  const role=document.getElementById('cl-role')?.value||'client';
+  if(!name||!phone){toast('Name and phone required.','er');return;}
+  if(pin.length<4){toast('PIN must be 4 digits.','er');return;}
+  if(pin!==pin2){toast('PINs do not match.','er');return;}
+  try{
+    if(!DEMO&&SB){
+      const{data:ex}=await SB.from('users').select('id,name,phone,role').eq('phone',phone).maybeSingle();
+      if(ex){clientUser=ex;}
+      else{const{data,error}=await SB.from('users').insert([{name,phone,pin_hash:pin,pin,role,account_type:role}]).select().single();if(error)throw error;clientUser=data;}
+    }else{await wait(300);clientUser={id:'demo-'+Date.now(),name,phone,role};}
+    document.getElementById('cl-hi').textContent=clientUser.name;
+    document.getElementById('cl-auth').style.display='none';document.getElementById('cl-dash').style.display='block';
+    fillSkillSelect('ord-skill');loadClientOrders();toast('Account created! ✓','ok');
+  }catch(e){toast('Registration failed: '+(e.message||e),'er');}
 }
 
 /* ══ LOGIN PORTAL ══ */
-let loginMode = 'worker';
-function openLoginPortal(){
-  document.getElementById('loginMod').classList.add('on');
-  if(document.getElementById('ltabs')) document.getElementById('ltabs').style.display = 'none';
-  switchLoginMode('worker');
-  setTimeout(()=>document.getElementById('wp-phone-modal')?.focus(),80);
-}
-let adminClicks = 0;
-function secretAdmin(){
-  adminClicks++;
-  if(adminClicks >= 5){
-    document.getElementById('ltabs').style.display = 'flex';
-    switchLoginMode('admin');
-    adminClicks = 0;
-    toast('Admin mode activated', 'ok');
-  }
-}
+function openLoginPortal(){document.getElementById('loginMod').classList.add('on');switchLoginMode('worker');setTimeout(()=>document.getElementById('wp-phone-modal')?.focus(),80);}
 function switchLoginMode(mode){
-  loginMode = mode;
-  document.getElementById('lf-worker').style.display = mode==='worker'?'block':'none';
-  document.getElementById('lf-admin').style.display  = mode==='admin'?'block':'none';
-  document.getElementById('ltab-worker').classList.toggle('on', mode==='worker');
-  document.getElementById('ltab-admin').classList.toggle('on',  mode==='admin');
-  document.getElementById('lerr').style.display='none';
+  const lfw=document.getElementById('lf-worker');const lfa=document.getElementById('lf-admin');
+  const tw=document.getElementById('ltab-worker');const ta=document.getElementById('ltab-admin');const le=document.getElementById('lerr');
+  if(lfw)lfw.style.display=mode==='worker'?'block':'none';if(lfa)lfa.style.display=mode==='admin'?'block':'none';
+  if(tw)tw.classList.toggle('on',mode==='worker');if(ta)ta.classList.toggle('on',mode==='admin');
+  if(le)le.style.display='none';
 }
-async function loginWorkerModal(){
-  const ph = document.getElementById('wp-phone-modal').value.trim();
-  const pw = document.getElementById('wp-pw-modal').value.trim();
-  const err = document.getElementById('lerr');
-  if(!ph){toast('Enter your phone number.','er');return;}
-  
+function closeLogin(){document.getElementById('loginMod').classList.remove('on');document.getElementById('lerr').style.display='none';const pw=document.getElementById('adm-pw');if(pw)pw.value='';const ph=document.getElementById('wp-phone-modal');if(ph)ph.value='';}
+async function loginWorkerModal(){const ph=document.getElementById('wp-phone-modal')?.value?.trim();if(!ph){toast('Enter your registered phone.','er');return;}document.getElementById('wp-phone').value=ph;closeLogin();nav('wportal');await workerLogin();}
+
+/* ══ BOOK SEARCH ══ */
+function bookSearch(){const q=document.getElementById('book-srch')?.value?.trim();if(q){document.getElementById('srch').value=q;fetchWorkers(q);}nav('home');setTimeout(()=>document.getElementById('wbox')?.scrollIntoView({behavior:'smooth'}),200);}
+function quickBook(skill){curFilter=skill;document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.textContent.includes(skill)));renderWorkers();nav('home');setTimeout(()=>document.getElementById('wbox')?.scrollIntoView({behavior:'smooth'}),200);}
+
+/* ══ EDGE BASE ══ */
+const EDGE_BASE=CFG.supabaseUrl+'/functions/v1';
+
+/* ══ ESCROW ACTION ══ */
+async function orderAction(orderId,action,phone){
+  try{
+    if(!DEMO&&SB){
+      const{error}=await SB.rpc('transition_order',{p_order_id:orderId,p_action:action,p_actor_id:clientUser?.id||workerUser?.id||null});
+      if(error)throw error;
+      if(phone)fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId,event_type:action,phone})}).catch(()=>{});
+    }else{const o=DO.find(x=>x.id===orderId);if(o)o.status={accept:'accepted',start_work:'work_started',signal_complete:'completed_by_worker',verify_release:'funds_released',dispute:'disputed',cancel:'cancelled'}[action]||o.status;}
+    const msgs={accept:'Job accepted!',start_work:'Work started!',signal_complete:'Completion signalled.',verify_release:'Payment released! ✓',dispute:'Dispute raised.',cancel:'Order cancelled.'};
+    toast(msgs[action]||'Updated ✓',action==='dispute'?'er':'ok');
+    loadClientOrders();if(adminUser)loadAdmin();if(workerUser)loadWpOrders();
+    if(action==='verify_release'&&!DEMO&&SB){fetch(EDGE_BASE+'/generate-invoice',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId})}).then(r=>r.json()).then(d=>{if(d.invoice_html)openInvoiceModal(d.invoice_html,d.invoice_number);}).catch(()=>{});}
+  }catch(e){toast('Failed: '+(e.message||e),'er');}
+}
+
+/* ══ COUNTER OFFER ══ */
+async function submitCounterOffer(orderId){const amount=prompt('Enter your counter-offer amount (GMD):');if(!amount||isNaN(amount))return;try{if(!DEMO&&SB){await SB.from('orders').update({counter_offer:parseFloat(amount),status:'negotiating'}).eq('id',orderId);}toast('Counter-offer sent: GMD '+amount+' ✓','ok');loadWpOrders();loadClientOrders();}catch(e){toast('Failed.','er');}}
+
+/* ══ INVOICE ══ */
+function openInvoiceModal(ihtml,num){let m=document.getElementById('invoiceMod');if(!m){m=document.createElement('div');m.id='invoiceMod';m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';m.innerHTML='<div style="background:#fff;border-radius:14px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto" id="invoiceInner"></div>';m.onclick=e=>{if(e.target===m)m.style.display='none';};document.body.appendChild(m);}document.getElementById('invoiceInner').innerHTML=ihtml+'<div style="padding:16px;text-align:center"><button onclick="window.print()" style="background:#3A7728;color:#fff;border:none;padding:10px 24px;border-radius:7px;font-weight:700;cursor:pointer;margin-right:8px">🖨 Print</button><button onclick="document.getElementById('invoiceMod').style.display='none'" style="background:#f0f0f0;border:none;padding:10px 20px;border-radius:7px;cursor:pointer">Close</button></div>';m.style.display='flex';toast('Invoice ready ✓','ok');}
+
+/* ══ IMAGE COMPRESSION ══ */
+function compressImage(file,maxW,quality){return new Promise(resolve=>{const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');const ratio=Math.min(maxW/img.width,maxW/img.height,1);canvas.width=img.width*ratio;canvas.height=img.height*ratio;canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);canvas.toBlob(b=>resolve(b),'image/jpeg',quality||0.75);};img.src=e.target.result;};reader.readAsDataURL(file);});}
+
+/* ══ KYC ══ */
+function kycBadge(w){if(w.gppa_verified)return '<span class="trust-badge">✓ Verified by GamSkill</span>';if(w.kyc_status==='pending_review')return '<span style="background:rgba(245,158,11,.15);color:#d97706;padding:2px 9px;border-radius:100px;font-size:10px;font-weight:700">KYC PENDING</span>';return '';}
+async function adminApproveKYC(wId){try{if(!DEMO&&SB){await SB.from('workers').update({gppa_verified:true,kyc_status:'approved'}).eq('id',wId);const w=adminW.find(x=>x.id===wId);if(w?.phone){fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({event_type:'kyc_approved',phone:w.company_phone||w.phone})}).catch(()=>{}); }}toast('KYC approved ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
+function renderKYC(box){const pending=adminW.filter(w=>w.kyc_status==='pending_review'||(!w.gppa_verified&&w.status==='approved'));if(!pending.length){box.innerHTML='<div class="empty"><div class="empi">✅</div><h3>All Clear</h3></div>';return;}box.innerHTML='<div class="shtit">KYC REVIEW</div>'+pending.map(w=>`<div class="acard"><div class="aav">${initials(w.name)}</div><div class="ainfo"><div class="anm">${x(w.name)} ${kycBadge(w)}</div><div class="amet"><span>📞 ${x(w.company_phone||w.phone)}</span><span>${w.worker_type||'individual'}</span>${w.id_doc_url?`<a href="${w.id_doc_url}" target="_blank" style="color:var(--am)">🪪 ID</a>`:''}</div></div><div class="aacts"><button class="aappr" onclick="adminApproveKYC('${w.id}')">✓ Approve</button><button class="arej" onclick="setStatus('${w.id}','rejected')">✕ Reject</button></div></div>`).join('');}
+
+/* ══ PRIME-SUB ══ */
+async function renderPrimeSub(box){const approved=adminW.filter(w=>w.status==='approved'&&w.worker_type==='company'&&w.gppa_verified);const pending=allOrders.filter(o=>['pending','requested'].includes(o.status));box.innerHTML='<div class="shtit">PRIME-SUB CONTRACTING</div>'+((!approved.length)?'<div class="empty"><div class="empi">🏢</div><h3>No Verified Companies</h3></div>':pending.map(o=>`<div class="orow"><div class="ort"><div class="ors">${x(o.skill_needed)}</div><span class="sta sta-${o.status}">${o.status}</span></div><div class="orm"><span>👤 ${x(o.client_name)}</span><span>📍 ${x(o.client_address)}</span></div><div style="display:flex;gap:8px;margin-top:9px"><select class="asel" id="prime-${o.id}"><option value="">Assign company…</option>${approved.map(w=>`<option value="${w.id}">${x(w.name)}</option>`).join('')}</select><button class="asm ag" onclick="assignPrime('${o.id}')">Assign →</button></div></div>`).join('')||'<div class="empty"><div class="empi">✅</div><h3>All Assigned</h3></div>');}
+async function assignPrime(oId){const sel=document.getElementById('prime-'+oId);const wId=sel?.value;if(!wId){toast('Select a company.','er');return;}try{if(!DEMO&&SB){const{error}=await SB.from('orders').update({worker_id:wId,status:'assigned',assigned_by_admin:true}).eq('id',oId);if(error)throw error;}toast('Prime contract assigned ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
+
+/* ══ REFUNDS ══ */
+async function requestRefund(orderId){const reason=prompt('Why are you requesting a refund?');if(!reason?.trim())return;try{if(!DEMO&&SB){const{data,error}=await SB.rpc('process_refund',{p_order_id:orderId,p_customer_id:clientUser?.id||null,p_reason:reason});if(error)throw error;if(data?.error){toast('❌ '+data.error,'er');return;}fetch(EDGE_BASE+'/notify-whatsapp',{method:'POST',headers:{'Content-Type':'application/json','apikey':CFG.supabaseKey},body:JSON.stringify({order_id:orderId,event_type:'refund_requested'})}).catch(()=>{});}else{await wait(300);}toast('Refund requested. Admin will process within 24hrs ✓','ok');loadClientOrders();}catch(e){toast('Failed: '+(e.message||e),'er');}}
+
+async function renderAdminRefunds(box){box.innerHTML='<div class="sp"><div class="spin"></div></div>';try{let refunds=[];if(!DEMO&&SB){const{data}=await SB.from('refunds').select('*,orders(skill_needed,client_name),users(name,phone)').order('requested_at',{ascending:false});refunds=data||[];}const cnt=refunds.filter(r=>r.status==='requested').length;const el=document.getElementById('refund-cnt');if(el)el.textContent=cnt;if(!refunds.length){box.innerHTML='<div class="empty"><div class="empi">💰</div><h3>No Refunds</h3></div>';return;}box.innerHTML='<div class="shtit">REFUND REQUESTS</div>'+refunds.map(r=>`<div class="orow"><div class="ort"><div class="ors">Refund — ${x(r.orders?.skill_needed||'Order')}</div><span class="sta sta-${r.status==='requested'?'pending':'completed'}">${r.status.toUpperCase()}</span></div><div class="orm"><span>👤 ${x(r.users?.name||'Client')}</span><span>📞 ${x(r.users?.phone||'')}</span><span>💰 GMD ${r.amount||0}</span><span>📅 ${fd(r.requested_at)}</span></div><div class="ocd">${x(r.reason||'')}</div>${r.status==='requested'?`<div class="ora"><button class="asm ag" onclick="processRefund('${r.id}','approved')">✓ Approve</button><button class="asm ar" onclick="processRefund('${r.id}','rejected')">✕ Reject</button></div>`:''}</div>`).join('');}catch(e){box.innerHTML='<div class="empty"><div class="empi">⚠️</div></div>';}}
+async function processRefund(id,status){try{if(!DEMO&&SB){await SB.from('refunds').update({status,processed_at:new Date().toISOString()}).eq('id',id);}toast(status==='approved'?'Refund approved ✓':'Refund rejected','ok');renderAdminRefunds(document.getElementById('adm-content'));}catch(e){toast('Failed.','er');}}
+
+/* ══ REVIEWS ══ */
+let reviewState={orderId:null,workerId:null,workerName:'',score:0};
+function openReviewForm(orderId,workerId,workerName){reviewState={orderId,workerId,workerName,score:0};document.querySelectorAll('.review-form').forEach(f=>f.remove());const form=document.createElement('div');form.className='review-form';form.id='active-review-form';form.innerHTML=`<div class="review-form-title">⭐ Review — ${x(workerName)}</div><div class="fg"><label class="fl">Star Rating *</label><div class="star-picker">${[1,2,3,4,5].map(i=>`<span class="star-pick" onclick="pickStar(${i})">★</span>`).join('')}</div></div><div class="fg"><label class="fl">Title</label><input class="fi" id="rev-title" placeholder="e.g. Excellent work!"></div><div class="fg"><label class="fl">Your Review *</label><textarea class="fta" id="rev-body" placeholder="Describe the quality of work, punctuality, and professionalism…" style="min-height:80px"></textarea></div><div class="brow"><button class="btn bg" onclick="document.getElementById('active-review-form').remove()">Cancel</button><button class="btn bp" onclick="submitCustomerReview()">Submit Review ✓</button></div>`;const box=document.getElementById('cl-track-tab');if(box)box.insertBefore(form,box.firstChild);form.scrollIntoView({behavior:'smooth'});}
+function pickStar(n){reviewState.score=n;document.querySelectorAll('.star-pick').forEach((s,i)=>s.classList.toggle('on',i<n));}
+async function submitCustomerReview(){if(!reviewState.score){toast('Select a star rating.','er');return;}const body=document.getElementById('rev-body')?.value?.trim();if(!body){toast('Write your review first.','er');return;}const title=document.getElementById('rev-title')?.value?.trim();try{if(!DEMO&&SB){const{error}=await SB.from('reviews').insert([{order_id:reviewState.orderId,worker_id:reviewState.workerId,customer_id:clientUser?.id||null,score:reviewState.score,title:title||null,body,is_verified:true}]);if(error)throw error;}else await wait(300);document.getElementById('active-review-form')?.remove();toast('Review submitted! Thank you ✓','ok');loadClientOrders();}catch(e){toast('Failed: '+(e.message||e),'er');}}
+async function loadCustomerReviews(){const box=document.getElementById('cl-reviews-tab');if(!box)return;box.innerHTML='<div class="sp"><div class="spin"></div></div>';try{let reviews=[];if(!DEMO&&SB&&clientUser){const{data}=await SB.from('reviews').select('*,workers(name)').eq('customer_id',clientUser.id).order('created_at',{ascending:false});reviews=data||[];}if(!reviews.length){box.innerHTML='<div class="empty"><div class="empi">⭐</div><h3>No Reviews Yet</h3><p>Complete a job and share your experience.</p></div>';return;}box.innerHTML='<div class="shtit">YOUR REVIEWS</div>'+reviews.map(r=>`<div class="rev-card"><div class="rev-header"><div><div class="rev-author">${x(r.workers?.name||'Worker')}</div><div class="rev-date">${fd(r.created_at)}</div></div><div class="rev-stars">${'★'.repeat(r.score)}${'☆'.repeat(5-r.score)}</div></div>${r.title?`<div class="rev-title">${x(r.title)}</div>`:''}<div class="rev-body">${x(r.body)}</div><div class="rev-verified">✓ Verified Purchase</div></div>`).join('');}catch(e){box.innerHTML='<div class="empty"><div class="empi">⚠️</div></div>';}}
+async function loadWorkerReviews(workerId){if(!workerId||DEMO)return;try{const{data}=await SB.from('reviews').select('score,title,body,created_at,users(name)').eq('worker_id',workerId).eq('is_visible',true).order('created_at',{ascending:false}).limit(5);if(!data?.length)return;const box=document.getElementById('mPort');if(!box)return;box.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1;margin-top:12px"><div class="mst">CLIENT REVIEWS</div>'+data.map(r=>`<div class="rev-card"><div class="rev-header"><div class="rev-author">${x(r.users?.name||'Client')}</div><div class="rev-stars">${'★'.repeat(r.score)}${'☆'.repeat(5-r.score)}</div></div>${r.title?`<div class="rev-title">${x(r.title)}</div>`:''}<div class="rev-body">${x(r.body)}</div><div class="rev-verified">✓ Verified Booking</div></div>`).join('')+'</div>');}catch(e){}}
+
+/* ══ CUSTOMER ACCOUNT ══ */
+function renderCustomerAccount(){const box=document.getElementById('cl-account-tab');if(!box||!clientUser)return;box.innerHTML=`<div class="cust-card"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px"><div><div class="cust-name">${x(clientUser.name||'My Account')}</div><div class="cust-meta">📞 ${x(clientUser.phone||'')} · Role: ${clientUser.role||'client'}</div></div><span class="cust-stat">🛒 ${clientUser.total_orders||0} Orders</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn bg" style="font-size:12px" onclick="changePin()">🔑 Change PIN</button><button class="btn bg" style="font-size:12px;color:var(--er)" onclick="clientOut()">Log Out</button></div></div><div class="shtit" style="margin-top:20px">PRIVACY & SECURITY</div><div style="background:var(--card);border:1px solid var(--b);border-radius:9px;padding:14px;font-size:12px;color:var(--td);line-height:1.7">🔒 Your personal info is never shared with workers directly.<br>📞 All contact is routed through GamSkillHub agency.<br>💳 Payments held in escrow — released only when you verify completion.</div>`;}
+async function changePin(){const newPin=prompt('Enter your new 4-digit PIN:');if(!newPin||newPin.length!==4||isNaN(newPin)){toast('PIN must be exactly 4 digits.','er');return;}try{if(!DEMO&&SB&&clientUser){await SB.from('users').update({pin_hash:newPin,pin:newPin}).eq('id',clientUser.id);}toast('PIN updated ✓','ok');}catch(e){toast('Failed.','er');}}
+
+/* ══ REASSIGN ALERTS ══ */
+function renderReassignAlerts(){const needs=allOrders.filter(o=>o.status==='pending'&&o.reassign_count>0);if(!needs.length)return '';return '<div style="margin-bottom:16px"><div class="shtit" style="color:var(--er)">⚠ AUTO-REASSIGN NEEDED</div>'+needs.map(o=>`<div class="reassign-alert"><span>🔄</span><div><strong>${x(o.skill_needed)}</strong> — Worker didn't accept in 1hr (reassigned ${o.reassign_count}x)<br><span style="color:var(--td)">Client: ${x(o.client_name)}</span></div><select class="asel" id="rsel-${o.id}" style="margin-left:auto">${adminW.filter(w=>w.status==='approved').map(w=>`<option value="${w.id}">${x(w.name)}</option>`).join('')}</select><button class="asm ag" onclick="doReassign('${o.id}')">Assign →</button></div>`).join('')+'</div>';}
+async function doReassign(oId){const sel=document.getElementById('rsel-'+oId);const wId=sel?.value;if(!wId){toast('Select a worker.','er');return;}try{if(!DEMO&&SB){await SB.from('orders').update({worker_id:wId,status:'assigned',assigned_by_admin:true,last_assigned_at:new Date().toISOString(),auto_reassign_at:new Date(Date.now()+3600000).toISOString()}).eq('id',oId);}toast('Reassigned ✓','ok');loadAdmin();}catch(e){toast('Failed.','er');}}
+
+/* ══ WORKER MODAL CONTACTS — use company phone ══ */
+function getWorkerContact(w){return w.company_phone||w.phone;}
+
+/* ══ SECRET ADMIN ══ */
+document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key==='A'){document.getElementById('loginMod').classList.add('on');switchLoginMode('admin');setTimeout(()=>document.getElementById('adm-pw')?.focus(),80);}});
+
+
+/* ══ DISPUTE MODAL ══ */
+let disputeOrderId = null;
+let evidenceFiles = [];
+
+function openDisputeMod(orderId) {
+  disputeOrderId = orderId;
+  evidenceFiles = [];
+  document.getElementById('dispute-reason-type').value = '';
+  document.getElementById('dispute-details').value = '';
+  document.getElementById('ev-previews').innerHTML = '';
+  document.getElementById('disputeMod').classList.add('on'); /* escrow_frozen on submit */
+}
+function closeDisputeMod() {
+  document.getElementById('disputeMod').classList.remove('on');
+  disputeOrderId = null;
+}
+function disputeReasonChanged() {
+  const val = document.getElementById('dispute-reason-type').value;
+  const detail = document.getElementById('dispute-details');
+  if (val === 'worker_no_show') detail.placeholder = 'e.g. Worker was scheduled for 10am on June 3rd but never arrived and stopped responding…';
+  else if (val === 'poor_quality') detail.placeholder = 'e.g. The electrical work was incomplete — two sockets were left unfinished and the worker left without notice…';
+  else detail.placeholder = 'Please describe the issue in detail…';
+}
+function handleEvidenceFiles(inp) {
+  const files = Array.from(inp.files);
+  evidenceFiles.push(...files);
+  const prev = document.getElementById('ev-previews');
+  files.forEach(f => {
+    const r = new FileReader();
+    r.onload = e => {
+      const img = document.createElement('img');
+      img.className = 'ev-thumb';
+      img.src = e.target.result;
+      prev.appendChild(img);
+    };
+    r.readAsDataURL(f);
+  });
+}
+async function submitDispute() {
+  const reasonType = document.getElementById('dispute-reason-type').value;
+  const details = document.getElementById('dispute-details').value.trim();
+  if (!reasonType) { toast('Please select a reason.','er'); return; }
+  if (!details || details.length < 20) { toast('Please describe the issue (at least 20 characters).','er'); return; }
+  const fullReason = reasonType + ': ' + details;
+
+  // Upload evidence images first if any
+  let evidenceUrls = [];
   try {
-    if(SB) {
-      // If password entered, try phone+password match
-      if(pw){
-        const {data, error} = await queryWorkers('workers',{filters:{phone:ph,password:pw},limit:1,order:'created_at',ascending:false});
-        if(!error && data && data.length){
-          // Find an approved worker first, otherwise use any
-          const approved = data.filter(w=>w.status==='approved');
-          workerUser = mapWorker(approved[0] || data[0]);
+    if (!DEMO && SB && evidenceFiles.length > 0) {
+      for (const file of evidenceFiles) {
+        const compressed = await compressImage(file, 1200, 0.78);
+        const fname = `disputes/${disputeOrderId}/${Date.now()}-${file.name}`;
+        const { data: upData, error: upErr } = await SB.storage.from('worker-docs').upload(fname, compressed, { upsert: true });
+        if (!upErr) {
+          const { data: urlData } = SB.storage.from('worker-docs').getPublicUrl(fname);
+          if (urlData?.publicUrl) evidenceUrls.push(urlData.publicUrl);
         }
       }
-      // Fallback: phone-only login — get approved workers with this phone
-      if(!workerUser){
-        const {data: data2, error: err2} = await queryWorkers('workers',{filters:{phone:ph,status:'approved'},limit:1,order:'created_at',ascending:false});
-        if(err2) throw err2;
-        if(!data2 || !data2.length) { 
-          // Try phone-only without status filter (pending workers exist but aren't approved yet)
-          const {data: data3, error: err3} = await queryWorkers('workers',{filters:{phone:ph},limit:1,order:'created_at',ascending:false});
-          if(data3 && data3.length){
-            toast('Your account is ' + data3[0].status + '. Admin has not approved you yet.','er');
-          } else {
-            if(err) err.style.display='block'; 
-          }
-          return; 
-        }
-        workerUser = mapWorker(data2[0]);
-      }
-    } else {
-      await wait(280);
-      workerUser = DW.find(w => w.phone === ph && w.status === 'approved');
-      if (!workerUser) { if(err) err.style.display='block'; return; }
     }
-    WC[workerUser.id]=workerUser;
-    document.getElementById('wp-hi').textContent=workerUser.name;
-    document.getElementById('wp-auth').style.display='none';
-    document.getElementById('wp-dash').style.display='block';
-    updAvail();loadWpOrders();
-    toast('Welcome back, ' + workerUser.name, 'ok');
-    closeLogin();
-    nav('wportal');
-  } catch(e) {
-    if(err) err.style.display='block';
-    console.error('Worker login error:', e);
-  }
+
+    if (!DEMO && SB) {
+      const { data, error } = await SB.rpc('raise_dispute_with_evidence', {
+        p_order_id:     disputeOrderId,
+        p_client_id:    clientUser?.id || null,
+        p_reason:       fullReason,
+        p_evidence_urls: evidenceUrls
+      });
+      if (error) throw error;
+      if (data?.error) { toast('❌ ' + data.error, 'er'); return; }
+      // WhatsApp admin
+      fetch(EDGE_BASE + '/notify-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
+        body: JSON.stringify({ order_id: disputeOrderId, event_type: 'dispute_urgent' })
+      }).catch(() => {});
+    } else {
+      const o = DO.find(x => x.id === disputeOrderId);
+      if (o) { o.status = 'disputed'; }
+    }
+    closeDisputeMod();
+    toast('Dispute raised. Escrow frozen. Admin has been notified. ✓', 'ok');
+    loadClientOrders();
+  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
 }
 
-/* ══ HIDDEN ADMIN SHORTCUT ══ */
-document.addEventListener('keydown',function(e){
-  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){
-    document.getElementById('loginMod').classList.add('on');
-    switchLoginMode('admin');
-    setTimeout(()=>document.getElementById('adm-pw')?.focus(),80);
-  }
-});
-
-
-/* ══ THEME ══ */
-function toggleTheme(){
-  const cur=document.documentElement.getAttribute('data-theme')||'dark';
-  const next=cur==='light'?'dark':'light';
-  document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem('gsh-theme',next);
+/* ══ CLIENT: FINISH WORK ══ */
+async function clientFinishWork(orderId) {
+  if (!confirm('Confirm that the work has been completed to your satisfaction?\n\nClicking OK will notify the admin to release payment to the worker.')) return;
+  try {
+    if (!DEMO && SB) {
+      const { data, error } = await SB.rpc('client_finish_job', {
+        p_order_id:  orderId,
+        p_client_id: clientUser?.id || null
+      });
+      if (error) throw error;
+      if (data?.error) { toast('❌ ' + data.error, 'er'); return; }
+      fetch(EDGE_BASE + '/notify-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
+        body: JSON.stringify({ order_id: orderId, event_type: 'release_funds' })
+      }).catch(() => {});
+    } else {
+      const o = DO.find(x => x.id === orderId);
+      if (o) o.status = 'client_verified';
+    }
+    toast('Job marked complete! Admin will release payment shortly. ✓', 'ok');
+    loadClientOrders();
+    if (adminUser) loadAdmin();
+  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
 }
-(function(){
-  const t=localStorage.getItem('gsh-theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-  document.documentElement.setAttribute('data-theme',t);
-})();
+
+/* ══ ADMIN: RELEASE ESCROW ══ */
+async function adminReleaseEscrow(orderId) {
+  if (!confirm('Release escrow funds to the worker?')) return;
+  try {
+    if (!DEMO && SB) {
+      const { data, error } = await SB.rpc('admin_release_escrow', {
+        p_order_id: orderId,
+        p_admin_id: null
+      });
+      if (error) throw error;
+      // Generate invoice
+      fetch(EDGE_BASE + '/generate-invoice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': CFG.supabaseKey },
+        body: JSON.stringify({ order_id: orderId })
+      }).then(r => r.json()).then(d => {
+        if (d.invoice_html) openInvoiceModal(d.invoice_html, d.invoice_number);
+      }).catch(() => {});
+    } else {
+      const o = allOrders.find(x => x.id === orderId);
+      if (o) { o.status = 'funds_released'; o.payment_status = 'released'; }
+    }
+    toast('Escrow released to worker ✓ Invoice generated.', 'ok');
+    loadAdmin();
+  } catch(e) { toast('Failed: ' + (e.message || e), 'er'); }
+}
+
+
+/* ══ ADMIN ESCROW RELEASE TAB ══ */
+async function renderAdminEscrow(box) {
+  box.innerHTML = '<div class="sp"><div class="spin"></div></div>';
+  try {
+    let pending = [];
+    if (!DEMO && SB) {
+      const { data } = await SB.from('orders')
+        .select('*, users(name,phone), workers(name,phone,company_phone)')
+        .eq('status', 'client_verified')
+        .order('client_verified_at', { ascending: false });
+      pending = data || [];
+    } else {
+      pending = allOrders.filter(o => o.status === 'client_verified');
+    }
+    const cnt = pending.length;
+    const el = document.getElementById('escrow-cnt');
+    if (el) el.textContent = cnt;
+
+    if (!pending.length) {
+      box.innerHTML = '<div class="empty"><div class="empi">🔐</div><h3>No Pending Releases</h3><p>Orders awaiting escrow release will appear here.</p></div>';
+      return;
+    }
+    box.innerHTML = '<div class="shtit">ESCROW PENDING RELEASE</div>' +
+      '<p style="font-size:13px;color:var(--td);margin-bottom:18px">Client has confirmed job completion. Review and release funds to the worker.</p>' +
+      pending.map(o => `
+        <div class="release-card">
+          <div class="release-card-title">✅ ${x(o.skill_needed)} — Client Verified</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;color:var(--td);margin-bottom:12px">
+            <div>👤 Client: <strong>${x(o.client_name||o.users?.name||'N/A')}</strong></div>
+            <div>👷 Worker: <strong>${x(o.workers?.name||'N/A')}</strong></div>
+            <div>📍 ${x(o.client_address)}</div>
+            <div>💰 Escrow: <strong>GMD ${o.escrow_amount||o.agreed_amount||o.budget_amount||'TBD'}</strong></div>
+            <div>📅 Verified: ${fd(o.client_verified_at)}</div>
+            <div>📞 ${x(o.workers?.company_phone||o.workers?.phone||'')}</div>
+          </div>
+          ${o.description ? `<div style="font-size:12px;color:var(--td);margin-bottom:12px;padding:10px;background:var(--card);border-radius:7px">${x(o.description)}</div>` : ''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="asm ag" style="padding:8px 20px;font-size:12px" onclick="adminReleaseEscrow('${o.id}')">💸 Release Funds to Worker</button>
+            <button class="asm ar" onclick="openDisputeMod('${o.id}')">⚠ Flag Issue</button>
+          </div>
+        </div>`).join('');
+  } catch(e) { box.innerHTML = '<div class="empty"><div class="empi">⚠️</div><h3>Failed to load</h3></div>'; }
+}
 
 /* ══ BOOT ══ */
 init();
 </script>
+
+<!-- ═══ DISPUTE MODAL ═══ -->
+<div class="dispute-modal" id="disputeMod">
+  <div class="dispute-box">
+    <div class="dispute-title">⚠ Cancel Payment</div>
+    <p class="dispute-sub">Your escrow funds are protected. Raising a dispute will freeze the payment immediately while admin investigates.</p>
+    <div class="dispute-warn">
+      📋 <strong>What happens next:</strong> Escrow is frozen instantly. Admin reviews your case within 24hrs. If the worker is found at fault, you receive a full or partial refund.
+    </div>
+    <div class="fg"><label class="fl">Reason for dispute *</label>
+      <select class="fse" id="dispute-reason-type" onchange="disputeReasonChanged()">
+        <option value="">Select a reason…</option>
+        <option value="worker_no_show">Worker never showed up</option>
+        <option value="work_abandoned">Worker abandoned the job</option>
+        <option value="poor_quality">Work quality is unacceptable</option>
+        <option value="wrong_service">Wrong service was performed</option>
+        <option value="overcharged">Charged more than agreed</option>
+        <option value="other">Other reason</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Describe what happened *</label>
+      <textarea class="fta" id="dispute-details" placeholder="Please describe the issue in detail. Be specific about dates, times, and what went wrong…" style="min-height:88px"></textarea>
+    </div>
+    <div class="fg"><label class="fl">Photo Evidence <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--mt)">(optional but recommended)</span></label>
+      <div class="evidence-zone" id="ev-zone">
+        <input type="file" accept="image/*" multiple onchange="handleEvidenceFiles(this)">
+        <div style="font-size:22px;margin-bottom:6px">📸</div>
+        <div style="font-size:13px;font-weight:500;color:var(--td)">Upload photos of the issue</div>
+        <div style="font-size:11px;color:var(--mt);margin-top:3px">JPG or PNG · Multiple OK</div>
+        <div class="evidence-previews" id="ev-previews"></div>
+      </div>
+    </div>
+    <div class="brow">
+      <button class="btn bg" onclick="closeDisputeMod()">Cancel</button>
+      <button class="btn bp" style="background:var(--er);border-color:var(--er)" onclick="submitDispute()">🚨 Freeze &amp; Dispute</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
-
-
