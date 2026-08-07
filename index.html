@@ -630,7 +630,7 @@ audio{width:100%;border-radius:8px;margin-top:10px;display:none}
           <h2 class="sec-h2">Latest Jobs in The Gambia</h2>
           <p class="sec-sub">Browse recently posted jobs and see what's happening in the marketplace.</p>
         </div>
-        <button class="btn bp" onclick="nav('post-job')" style="padding:14px 28px;font-size:15px">Post a Job →</button>
+        <button class="btn bp" onclick="nav('browse-jobs')" style="padding:14px 28px;font-size:15px">Explore More Jobs →</button>
       </div>
       <div id="home-job-feed" class="job-feed-grid">
         <div class="sp"><div class="spin"></div></div>
@@ -861,6 +861,22 @@ audio{width:100%;border-radius:8px;margin-top:10px;display:none}
     <div class="modal-box" style="max-width:600px"><div class="modal-handle"></div><div class="modal-body"><button class="modal-close" onclick="closeModal('jobDetailMod')">×</button><div id="jd-content"></div></div></div>
   </div>
 
+  <!-- Browse Jobs Page -->
+  <div class="pg" id="pg-browse-jobs">
+    <div class="sec-inner" style="padding-top:40px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:20px">
+        <div>
+          <h1 class="sec-h2" style="font-size:32px;margin-bottom:8px">All Available Jobs</h1>
+          <p class="sec-sub">Browse all open opportunities across The Gambia.</p>
+        </div>
+        <button class="btn bs" onclick="nav('home')">← Back Home</button>
+      </div>
+      <div id="browse-jobs-feed" class="job-feed-grid">
+        <div class="sp"><div class="spin"></div></div>
+      </div>
+    </div>
+  </div>
+
 <script>
 const CFG={url:'https://lhzlqzpkqdppgnesitwo.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoemxxenBrcWRwcGduZXNpdHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NjY0ODEsImV4cCI6MjA5MTE0MjQ4MX0.zEqZv9O5LuC8Ma5mMQSGycwxnwXa4l7aL7dIZ6_Cosg',edge:'https://lhzlqzpkqdppgnesitwo.supabase.co/functions/v1',adminEmail:'admin@gamskillhub.gm',adminPass:'admin123'};
 let SB=null,DEMO=false;
@@ -907,14 +923,15 @@ function toast(msg,type='ok'){
 }
 
 /* ── NAV ── */
-	function nav(p){
-	  document.querySelectorAll('.pg').forEach(e=>e.classList.remove('on'));
-	  document.getElementById('pg-'+p)?.classList.add('on');
-	  window.scrollTo(0,0);
-	  if(p==='home')loadHomeFeed();
-	  if(p==='provider'&&providerUser){loadFeed();loadMyBids();}
-	  if(p==='client'&&clientUser)loadClientJobs();
-	}
+		function nav(p){
+		  document.querySelectorAll('.pg').forEach(e=>e.classList.remove('on'));
+		  document.getElementById('pg-'+p)?.classList.add('on');
+		  window.scrollTo(0,0);
+		  if(p==='home')loadHomeFeed();
+		  if(p==='browse-jobs')loadBrowseJobs();
+		  if(p==='provider'&&providerUser){loadFeed();loadMyBids();}
+		  if(p==='client'&&clientUser)loadClientJobs();
+		}
 function openModal(id){document.getElementById(id)?.classList.add('on');}
 function closeModal(id){document.getElementById(id)?.classList.remove('on');}
 document.querySelectorAll('.modal-overlay').forEach(el=>{
@@ -983,41 +1000,75 @@ function doHeroSearch(){
 	  }).join('');
 	}
 
-	async function openJobDetail(id){
-	  const box=document.getElementById('jd-content');
-	  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
-	  openModal('jobDetailMod');
-	  try{
-	    let job=null;
-	    if(!DEMO&&SB){
-	      const{data}=await SB.from('jobs').select('*,users(name,phone)').eq('id',id).single();
-	      job=data;
-	    }
-	    if(!job)throw new Error('Job not found');
-	    const cat=CATS.find(c=>c.n===job.category)||{i:'📋'};
-	    const photos=job.media_urls||[];
-	    box.innerHTML=`
-	      <div style="margin-bottom:20px">
-	        <div class="job-card-cat" style="margin-bottom:12px">${x(job.category)}</div>
-	        <h2 class="sec-h2" style="font-size:28px;margin-bottom:12px">${x(job.title)}</h2>
-	        <div class="jd-meta-row"><span>📍</span> ${x(job.location_area)}, ${x(job.location_district)}</div>
-	        <div class="jd-meta-row"><span>📅</span> Posted ${fda(job.created_at)}</div>
-	        ${job.budget_min||job.budget_max?`<div class="jd-meta-row"><span>💰</span> GMD ${job.budget_min||0}${job.budget_max?' – '+job.budget_max:''}</div>`:''}
-	      </div>
-	      ${photos.length?`<div class="jd-photos">${photos.map(p=>`<img src="${x(p)}" onclick="window.open('${x(p)}','_blank')">`).join('')}</div>`:''}
-	      <div class="jd-desc">${x(job.description)}</div>
-	      <div class="jd-poster">
-	        <div class="jd-poster-av">${ini(job.users?.name)}</div>
-	        <div>
-	          <div style="font-size:14px;font-weight:700;color:var(--tx)">${x(job.users?.name||'Anonymous Client')}</div>
-	          <div style="font-size:12px;color:var(--td)">Verified Client</div>
-	        </div>
-	      </div>
-	      <div style="margin-top:24px">
-	        <button class="btn bp" style="width:100%;padding:15px;font-size:16px" onclick="closeModal('jobDetailMod');nav('provider')">Bid on this Job →</button>
-	      </div>`;
-	  }catch(e){box.innerHTML=`<div class="empty"><h3>Error loading job</h3><p>${e.message}</p></div>`;}
-	}
+		async function openJobDetail(id){
+		  const box=document.getElementById('jd-content');
+		  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
+		  openModal('jobDetailMod');
+		  try{
+		    let job=null;
+		    if(!DEMO&&SB){
+		      const{data}=await SB.from('jobs').select('*,users(name,phone)').eq('id',id).single();
+		      job=data;
+		    }
+		    if(!job)throw new Error('Job not found');
+		    const cat=CATS.find(c=>c.n===job.category)||{i:'📋'};
+		    const photos=job.media_urls||[];
+		    box.innerHTML=`
+		      <div style="margin-bottom:20px">
+		        <div class="job-card-cat" style="margin-bottom:12px">${x(job.category)}</div>
+		        <h2 class="sec-h2" style="font-size:28px;margin-bottom:12px">${x(job.title)}</h2>
+		        <div class="jd-meta-row"><span>📍</span> ${x(job.location_area)}, ${x(job.location_district)}</div>
+		        <div class="jd-meta-row"><span>📅</span> Posted ${fda(job.created_at)}</div>
+		        ${job.budget_min||job.budget_max?`<div class="jd-meta-row"><span>💰</span> GMD ${job.budget_min||0}${job.budget_max?' – '+job.budget_max:''}</div>`:''}
+		      </div>
+		      ${photos.length?`<div class="jd-photos">${photos.map(p=>`<img src="${x(p)}" onclick="window.open('${x(p)}','_blank')">`).join('')}</div>`:''}
+		      <div class="jd-desc">${x(job.description)}</div>
+		      <div class="jd-poster">
+		        <div class="jd-poster-av">${ini(job.users?.name)}</div>
+		        <div>
+		          <div style="font-size:14px;font-weight:700;color:var(--tx)">${x(job.users?.name||'Anonymous Client')}</div>
+		          <div style="font-size:12px;color:var(--td)">Verified Client</div>
+		        </div>
+		      </div>
+		      <div style="margin-top:24px">
+		        <button class="btn bp" style="width:100%;padding:15px;font-size:16px" onclick="closeModal('jobDetailMod');nav('provider')">Bid on this Job →</button>
+		      </div>`;
+		  }catch(e){box.innerHTML=`<div class="empty"><h3>Error loading job</h3><p>${e.message}</p></div>`;}
+		}
+
+		async function loadBrowseJobs(){
+		  const box=document.getElementById('browse-jobs-feed');
+		  box.innerHTML='<div class="sp"><div class="spin"></div></div>';
+		  try{
+		    let jobs=[];
+		    if(!DEMO&&SB){
+		      const{data}=await SB.from('jobs').select('*').eq('status','open').order('created_at',{ascending:false}).limit(100);
+		      jobs=data||[];
+		    }
+		    if(!jobs.length){
+		      box.innerHTML=`<div class="empty"><div class="empi">📋</div><h3>No jobs available</h3></div>`;
+		      return;
+		    }
+		    box.innerHTML=jobs.map(job=>{
+		      const cat=CATS.find(c=>c.n===job.category)||{i:'📋'};
+		      const img=job.media_urls&&job.media_urls.length?job.media_urls[0]:null;
+		      return `
+		        <div class="job-card" onclick="openJobDetail('${job.id}')">
+		          ${img?`<img src="${x(img)}" class="job-card-img" alt="${x(job.title)}">`:`<div class="job-card-placeholder">${cat.i}</div>`}
+		          <div class="job-card-body">
+		            <div class="job-card-cat">${x(job.category)}</div>
+		            <div class="job-card-title">${x(job.title)}</div>
+		            <div class="job-card-loc"><span>📍</span> ${x(job.location_area)}, ${x(job.location_district)}</div>
+		            <div class="job-card-desc">${x(job.description)}</div>
+		            <div class="job-card-footer">
+		              <div class="job-card-time">${fda(job.created_at)}</div>
+		              <div class="job-card-btn">View Details →</div>
+		            </div>
+		          </div>
+		        </div>`;
+		    }).join('');
+		  }catch(e){box.innerHTML=`<div class="empty"><h3>Error loading jobs</h3></div>`;}
+		}
 	
 	/* ── CATEGORY GRIDS ── */
 	function buildCatGrid(){}
